@@ -1,0 +1,10 @@
+{
+  "provider": {
+    "adastry": {
+      "url": "https://api.pasklab.com",
+      "endpoints": {
+        "login": "/auth/login"
+      }
+    }
+  }
+}

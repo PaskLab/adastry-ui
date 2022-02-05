@@ -20,12 +20,16 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
     "prettier": "^2.4.1",
-    "prettier-plugin-svelte": "^2.4.0",
+    "prettier-plugin-svelte": "^2.6.0",
+    "sass": "^1.49.7",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "zod": "^3.11.6"
+  }
 }
