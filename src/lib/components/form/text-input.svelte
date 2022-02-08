@@ -1,10 +1,13 @@
 <script lang="ts">
   import { z, ZodString } from 'zod';
+  import InputError from './_validation-error.svelte';
 
   export let name = '';
   export let id = 'form-' + name;
-  export let label = true;
-  export let value = '';
+  export let label: string | boolean = true;
+  export let value: string;
+  export let placeholder = '';
+  export let autocomplete = false;
   export let error = false;
   export let schema: ZodString = z.string({
     required_error: 'Required',
@@ -38,7 +41,7 @@
 </script>
 
 {#if label}
-  <label class="form-label fs-6 fw-bolder text-dark" for="{id}">{name}</label>
+  <label class="form-label fs-6 fw-bolder text-dark" for="{id}">{label.length ? label : name}</label>
 {/if}
 
 <input
@@ -50,17 +53,13 @@
     : ''}"
   type="text"
   name="{name}"
-  autocomplete="off"
+  placeholder="{placeholder}"
+  autocomplete="{autocomplete ? 'on' : 'off' }"
   on:focusout|once="{initValidation}"
   bind:value
 />
-{#if error}
-  <div class="fv-plugins-message-container invalid-feedback">
-    {#each errorMessages as message}
-      <div>{message}</div>
-    {/each}
-  </div>
-{/if}
+
+<InputError error="{error}" errorMessages="{errorMessages}" />
 
 <style>
   label {
