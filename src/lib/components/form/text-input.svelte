@@ -41,7 +41,8 @@
 </script>
 
 {#if label}
-  <label class="form-label fs-6 fw-bolder text-dark" for="{id}">{label.length ? label : name}</label>
+  <label class="form-label fs-6 fw-bolder text-dark" for="{id}">{label.length ? label : name}</label
+  >
 {/if}
 
 <input
@@ -54,7 +55,7 @@
   type="text"
   name="{name}"
   placeholder="{placeholder}"
-  autocomplete="{autocomplete ? 'on' : 'off' }"
+  autocomplete="{autocomplete ? 'on' : 'off'}"
   on:focusout|once="{initValidation}"
   bind:value
 />
@@ -62,7 +63,7 @@
 <InputError error="{error}" errorMessages="{errorMessages}" />
 
 <style>
-  label {
+  label:first-letter {
     text-transform: capitalize;
   }
 </style>

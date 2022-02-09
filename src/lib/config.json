@@ -3,7 +3,8 @@
     "adastry": {
       "url": "https://api.pasklab.com",
       "endpoints": {
-        "login": "/auth/login"
+        "login": "/auth/login",
+        "createUserAccount": "/user"
       }
     }
   }

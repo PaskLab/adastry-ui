@@ -1,6 +1,14 @@
 <script lang="ts">
   import { assets } from '$app/paths';
   import SignInForm from './auth/_sign-in.svelte';
+  import { setContext, getContext } from 'svelte';
+  import { writable, Writable } from 'svelte/store';
+
+  // Component Routing
+  let selectedForm: typeof SignInForm;
+
+  setContext('selectedForm', writable(SignInForm));
+  getContext<Writable<typeof SignInForm>>('selectedForm').subscribe((v) => (selectedForm = v));
 </script>
 
 <div class="d-flex flex-column flex-root">
@@ -45,7 +53,7 @@
       <div class="d-flex flex-center flex-column flex-column-fluid">
         <!--begin::Wrapper-->
         <div class="w-lg-500px p-10 p-lg-15 mx-auto">
-          <SignInForm />
+          <svelte:component this="{selectedForm}" />
         </div>
         <!--end::Wrapper-->
       </div>
@@ -57,23 +65,31 @@
           <a
             href="https://keenthemes.com"
             class="text-muted text-hover-primary px-2"
-            target="_blank">About</a
+            target="_blank"
           >
+            About
+          </a>
           <a
             href="https://1.envato.market/EA4JP"
             class="text-muted text-hover-primary px-2"
-            target="_blank">Pricing</a
+            target="_blank"
           >
+            Pricing
+          </a>
           <a
             href="https://1.envato.market/EA4JP"
             class="text-muted text-hover-primary px-2"
-            target="_blank">Privacy</a
+            target="_blank"
           >
+            Privacy
+          </a>
           <a
             href="https://devs.keenthemes.com"
             class="text-muted text-hover-primary px-2"
-            target="_blank">Support</a
+            target="_blank"
           >
+            Terms & Conditions
+          </a>
         </div>
         <!--end::Links-->
       </div>

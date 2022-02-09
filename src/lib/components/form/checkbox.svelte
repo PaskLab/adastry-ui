@@ -1,17 +1,13 @@
 <script lang="ts">
-  import { z, ZodString } from 'zod';
+  import { z, ZodBoolean, ZodNullable } from 'zod';
   import InputError from './_validation-error.svelte';
 
   export let name = '';
   export let id = 'form-' + name;
   export let label: string | boolean = true;
-  export let value: string;
-  export let placeholder = '';
+  export let checked: boolean;
   export let error = false;
-  export let schema: ZodString = z.string({
-    required_error: 'Required',
-    invalid_type_error: 'Must be a string'
-  });
+  export let schema: ZodNullable<ZodBoolean> = z.boolean().nullable();
 
   let init = false;
   let errorMessages: string[] = [];
@@ -21,7 +17,7 @@
   }
 
   export function validate(): boolean {
-    let result = schema.safeParse(value);
+    let result = schema.safeParse(checked);
 
     error = !result.success;
     errorMessages = [];
@@ -34,30 +30,22 @@
   }
 
   $: if (init) {
-    value = value;
+    checked = checked;
     validate();
   }
 </script>
 
-{#if label}
-  <label class="form-label fs-6 fw-bolder text-dark" for="{id}">{label.length ? label : name}</label
-  >
-{/if}
-
-<input
-  id="{id}"
-  class="form-control form-control-lg form-control-solid {error
-    ? 'is-invalid'
-    : init && value.length
-    ? 'is-valid'
-    : ''}"
-  type="password"
-  name="{name}"
-  placeholder="{placeholder}"
-  autocomplete="off"
-  on:focusout|once="{initValidation}"
-  bind:value
-/>
+<label class="form-check form-check-custom form-check-solid form-check-inline">
+  <input
+    on:focusout="{initValidation}"
+    id="{id}"
+    class="form-check-input"
+    type="checkbox"
+    name="{name}"
+    bind:checked
+  />
+  <slot>{label && label.length ? label : name}</slot>
+</label>
 
 <InputError error="{error}" errorMessages="{errorMessages}" />
 
