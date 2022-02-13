@@ -28,7 +28,7 @@
     const fields = [usernameField.validate(), passwordField.validate()];
     if (fields.every((field) => field)) {
       wait = true;
-      login(username, password)
+      login(username.trim(), password.trim())
         .then((res) => {
           if (res.statusCode === 201) {
             jwt.set(res.token);
@@ -51,20 +51,20 @@
   });
 </script>
 
-<form class="form w-100" novalidate="novalidate" id="sign-in-form">
-  <div class="text-center mb-10">
-    <h1 class="text-dark mb-3">Sign In</h1>
-    <div class="text-gray-400 fw-bold fs-4">
-      New Here?
-      <button
-        on:click|preventDefault="{displaySignUpForm}"
-        class="btn btn-link btn-color-primary fw-bolder fs-4 mb-1 mt-1 "
-      >
-        Create an Account
-      </button>
-    </div>
+<div class="text-center mb-10">
+  <h1 class="text-dark mb-3">Sign In</h1>
+  <div class="text-gray-400 fw-bold fs-4">
+    New Here?
+    <button
+      on:click|preventDefault="{displaySignUpForm}"
+      class="btn btn-sm btn-color-primary fw-bolder fs-4 mb-1 mt-1 btn-active-light-primary px-2"
+    >
+      Create an Account
+    </button>
   </div>
+</div>
 
+<form class="form w-100" novalidate="novalidate" id="sign-in-form">
   <div class="fv-row mb-10">
     <TextInput
       bind:this="{usernameField}"
@@ -110,12 +110,13 @@
   <p slot="body" class="text-center">Please verify your authentication credentials.</p>
 </Modal>
 
-<style>
-  .indicator-label.wait {
-    display: none;
-  }
-
-  .indicator-progress.wait {
-    display: inline;
+<style lang="scss">
+  .wait {
+    &.indicator-label {
+      display: none;
+    }
+    &.indicator-progress {
+      display: inline;
+    }
   }
 </style>

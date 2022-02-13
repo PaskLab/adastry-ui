@@ -49,7 +49,7 @@
     ];
     if (fields.every((field) => field)) {
       wait = true;
-      create(username, password, name)
+      create(username.trim(), password.trim(), name.trim())
         .then((res) => {
           console.log(res);
           if (res.statusCode === 200 || res.statusCode === 201) {
@@ -133,7 +133,9 @@
     >
       <span class="form-check-label fw-bold text-gray-700 fs-6">
         I Agree to the
-        <a href="/terms-and-conditions" class="ms-1 link-primary">Terms and conditions</a>.
+        <a href="/terms-and-conditions" target="_blank" class="ms-1 link-primary"
+          >Terms and conditions</a
+        >.
       </span>
     </Checkbox>
   </div>
@@ -188,16 +190,17 @@
   </p>
 </Modal>
 
-<style>
+<style lang="scss">
   .modal-error-message:first-letter {
     text-transform: capitalize;
   }
 
-  .indicator-label.wait {
-    display: none;
-  }
-
-  .indicator-progress.wait {
-    display: inline;
+  .wait {
+    &.indicator-label {
+      display: none;
+    }
+    &.indicator-progress {
+      display: inline;
+    }
   }
 </style>
