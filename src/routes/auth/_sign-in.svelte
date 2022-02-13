@@ -23,6 +23,7 @@
   let wait = false;
   let errorModal: typeof Modal;
   let credentialModal: typeof Modal;
+  let expiredModal: typeof Modal;
 
   function submit(): void {
     const fields = [usernameField.validate(), passwordField.validate()];
@@ -48,6 +49,10 @@
 
   onMount(() => {
     initSession();
+    if (!$isTokenValid && $jwt.length) {
+      expiredModal.open();
+      jwt.set('');
+    }
   });
 </script>
 
@@ -108,6 +113,11 @@
 <Modal bind:this="{credentialModal}" hideAction="true" outClick="true">
   <svelte:fragment slot="title">Invalid username or password</svelte:fragment>
   <p slot="body" class="text-center">Please verify your authentication credentials.</p>
+</Modal>
+
+<Modal bind:this="{expiredModal}" hideAction="true">
+  <svelte:fragment slot="title">Session Expired</svelte:fragment>
+  <p slot="body" class="text-center">The session have expired, please sign-in again.</p>
 </Modal>
 
 <style lang="scss">
