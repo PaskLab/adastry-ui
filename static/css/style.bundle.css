@@ -39,7 +39,6 @@
   --bs-warning-rgb: 255, 199, 0;
   --bs-danger-rgb: 241, 65, 108;
   --bs-dark-rgb: 24, 28, 50;
-  --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 24, 28, 50;
   --bs-body-bg-rgb: 255, 255, 255;
@@ -66,7 +65,6 @@ body {
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
-  text-align: var(--bs-body-text-align);
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
@@ -4817,7 +4815,6 @@ fieldset:disabled .btn {
   float: left;
   padding-right: 0.5rem;
   color: #7e8299;
-  content: var(--bs-breadcrumb-divider, '/');
 }
 .breadcrumb-item.active {
   color: #009ef7;
@@ -5770,8 +5767,6 @@ fieldset:disabled .btn {
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
-  text-align: left;
-  text-align: start;
   text-decoration: none;
   text-shadow: none;
   text-transform: none;
@@ -28931,10 +28926,6 @@ a:hover {
   background-repeat: no-repeat;
   background-position: center;
   background-color: transparent;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%237239EA'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.06463 4.42111C1.96161 4.22088 1.9809 3.9637 2.12863 3.78597L5.12847 0.177181C5.31402 -0.046034 5.63049 -0.060261 5.83532 0.145404C6.04015 0.351069 6.05578 0.698744 5.87023 0.921959L3.19406 4.14137L5.84414 7.06417C6.03896 7.27904 6.03835 7.62686 5.84278 7.84105C5.64721 8.05524 5.33073 8.05469 5.13591 7.83982L2.14806 4.54449C2.1141 4.50704 2.08629 4.46541 2.06463 4.42111Z'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: transparent;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%237239EA'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.93537 4.57889C6.03839 4.77912 6.0191 5.0363 5.87137 5.21403L2.87153 8.82282C2.68598 9.04603 2.36951 9.06026 2.16468 8.8546C1.95985 8.64893 1.94422 8.30126 2.12977 8.07804L4.80594 4.85863L2.15586 1.93583C1.96104 1.72096 1.96165 1.37314 2.15722 1.15895C2.35279 0.944757 2.66927 0.945311 2.86409 1.16018L5.85194 4.45551C5.8859 4.49296 5.91371 4.53459 5.93537 4.57889Z'/%3e%3c/svg%3e");
 }
 .menu-title-info .menu-item .menu-link {
@@ -30611,10 +30602,6 @@ a:hover {
   background-position: center;
   background-color: transparent;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.06463 4.42111C1.96161 4.22088 1.9809 3.9637 2.12863 3.78597L5.12847 0.177181C5.31402 -0.046034 5.63049 -0.060261 5.83532 0.145404C6.04015 0.351069 6.05578 0.698744 5.87023 0.921959L3.19406 4.14137L5.84414 7.06417C6.03896 7.27904 6.03835 7.62686 5.84278 7.84105C5.64721 8.05524 5.33073 8.05469 5.13591 7.83982L2.14806 4.54449C2.1141 4.50704 2.08629 4.46541 2.06463 4.42111Z'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: transparent;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.93537 4.57889C6.03839 4.77912 6.0191 5.0363 5.87137 5.21403L2.87153 8.82282C2.68598 9.04603 2.36951 9.06026 2.16468 8.8546C1.95985 8.64893 1.94422 8.30126 2.12977 8.07804L4.80594 4.85863L2.15586 1.93583C1.96104 1.72096 1.96165 1.37314 2.15722 1.15895C2.35279 0.944757 2.66927 0.945311 2.86409 1.16018L5.85194 4.45551C5.8859 4.49296 5.91371 4.53459 5.93537 4.57889Z'/%3e%3c/svg%3e");
 }
 .menu-state-bg-primary .menu-item.here > .menu-link {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -45958,23 +45945,7 @@ body[data-kt-sticky-landing-header='on'] {
     padding-top: 70px;
   }
 }
-html {
-  font-family: sans-serif;
-  text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: transparent;
-}
-body,
-html {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-size: 13px !important;
-  font-weight: 400;
-  font-family: Poppins, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+
 @media (max-width: 991.98px) {
   body,
   html {

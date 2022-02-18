@@ -4,7 +4,7 @@
   import TextInput from '$lib/components/form/text-input.svelte';
   import PasswordInput from '$lib/components/form/password-input.svelte';
   import Modal from '$lib/components/global/modal.svelte';
-  import { jwt, isTokenValid, initSession } from '$lib/stores/session.store';
+  import { jwt, isTokenValid, darkMode } from '$lib/stores/session.store';
   import { login } from '$lib/auth/auth';
   import { getContext } from 'svelte';
   import SignUpForm from './_sign-up.svelte';
@@ -48,7 +48,6 @@
   }
 
   onMount(() => {
-    initSession();
     if (!$isTokenValid && $jwt.length) {
       expiredModal.open();
       jwt.set('');
@@ -58,7 +57,7 @@
 
 <div class="text-center mb-10">
   <h1 class="text-dark mb-3">Sign In</h1>
-  <div class="text-gray-400 fw-bold fs-4">
+  <div class="{$darkMode ? 'text-white' : 'text-gray-400'} fw-bold fs-4">
     New Here?
     <button
       on:click|preventDefault="{displaySignUpForm}"

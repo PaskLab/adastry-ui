@@ -5,7 +5,7 @@
   export let name = '';
   export let id = 'form-' + name;
   export let label: string | boolean = true;
-  export let checked: boolean;
+  export let checked = false;
   export let error = false;
   export let schema: ZodNullable<ZodBoolean> = z.boolean().nullable();
 

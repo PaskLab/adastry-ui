@@ -5,7 +5,7 @@
   export let name = '';
   export let id = 'form-' + name;
   export let label: string | boolean = true;
-  export let value: string;
+  export let value: string | undefined = undefined;
   export let placeholder = '';
   export let error = false;
   export let schema: ZodString = z
@@ -148,6 +148,6 @@
 
   .is-invalid,
   .is-valid {
-    background-position: right calc(2.375em + 0.375rem) center;
+    background-position: right calc(2.375em + 0.375rem) center !important;
   }
 </style>

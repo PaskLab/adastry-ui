@@ -4,7 +4,7 @@
   export let isOpen = false;
   export let backdrop = true;
   export let action = close;
-  export let callback: () => void;
+  export let callback = () => undefined;
   export let actionBtnText = 'Confirm';
   export let closeBtnText = 'Close';
   export let hideClose = false;

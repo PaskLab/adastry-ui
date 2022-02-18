@@ -5,7 +5,7 @@
   export let name = '';
   export let id = 'form-' + name;
   export let label: string | boolean = true;
-  export let value: string;
+  export let value: string | undefined = undefined;
   export let placeholder = '';
   export let error = false;
   export let schema: ZodString = z.string({

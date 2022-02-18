@@ -14,6 +14,7 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "@types/csso": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "eslint": "^7.32.0",
@@ -30,6 +31,7 @@
   },
   "type": "module",
   "dependencies": {
+    "csso": "^5.0.2",
     "zod": "^3.11.6"
   }
 }

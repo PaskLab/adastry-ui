@@ -9,6 +9,7 @@
   import Checkbox from '$lib/components/form/checkbox.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import { create } from '$lib/auth/auth';
+  import { darkMode } from '$lib/stores/session.store';
 
   // Component Routing
   const selectedForm = getContext('selectedForm');
@@ -77,7 +78,9 @@
 <div class="mb-8">
   <button
     on:click="{displaySignInForm}"
-    class="btn btn-sm btn-active-light-primary fw-bolder fs-6 btn-color-gray-700 position-relative"
+    class="btn btn-sm btn-active-light-primary fw-bolder fs-6 {$darkMode
+      ? 'btn-color-white'
+      : 'btn-color-gray-700'} position-relative"
     style="right: 20px;"
   >
     <span class="svg-icon svg-icon-muted svg-icon-2hx">
@@ -131,7 +134,9 @@
         required_error: 'Required'
       })}"
     >
-      <span class="form-check-label fw-bold text-gray-700 fs-6">
+      <span
+        class="form-check-label fw-bold {$darkMode ? 'btn-color-white' : 'btn-color-gray-700'} fs-6"
+      >
         I Agree to the
         <a href="/terms-and-conditions" target="_blank" class="ms-1 link-primary"
           >Terms and conditions</a
