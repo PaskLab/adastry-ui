@@ -4,7 +4,10 @@
       "url": "https://api.pasklab.com",
       "endpoints": {
         "login": "/auth/login",
-        "createUserAccount": "/user"
+        "createUser": "/user",
+        "accountList": "/account/list",
+        "addAccount": "/account",
+        "updateAccount": "/account"
       }
     }
   }

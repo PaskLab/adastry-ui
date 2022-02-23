@@ -5,27 +5,28 @@
   import TextInput from '$lib/components/form/text-input.svelte';
   import CreatePasswordInput from '$lib/components/form/create-password.svelte';
   import PasswordInput from '$lib/components/form/password-input.svelte';
+  import SubmitBtn from '$lib/components/form/submit-btn.svelte';
   import LeftIcon from '$lib/components/icons/left-arrow.svelte';
   import Checkbox from '$lib/components/form/checkbox.svelte';
   import Modal from '$lib/components/global/modal.svelte';
-  import { create } from '$lib/auth/auth';
+  import { create } from '$lib/api/auth';
   import { darkMode } from '$lib/stores/session.store';
 
   // Component Routing
-  const selectedForm = getContext('selectedForm');
+  const mainView = getContext('mainView');
   function displaySignInForm(): void {
-    selectedForm.set(SignInForm);
+    mainView.set(SignInForm);
   }
 
   // Form
   let usernameField: typeof TextInput;
-  let username: string;
+  let username = '';
   let nameField: typeof TextInput;
   let name = '';
   let passwordField: typeof CreatePasswordInput;
   let password = '';
   let confirmPasswordField: typeof PasswordInput;
-  let confirmPassword: string;
+  let confirmPassword = '';
   let acceptTermsField: typeof Checkbox;
   let confirmSchema: ZodLiteral<string>;
 
@@ -52,8 +53,7 @@
       wait = true;
       create(username.trim(), password.trim(), name.trim())
         .then((res) => {
-          console.log(res);
-          if (res.statusCode === 200 || res.statusCode === 201) {
+          if ([200, 201].includes(res.statusCode)) {
             successModal.open();
           } else {
             wait = false;
@@ -77,6 +77,7 @@
 
 <div class="mb-8">
   <button
+    type="button"
     on:click="{displaySignInForm}"
     class="btn btn-sm btn-active-light-primary fw-bolder fs-6 {$darkMode
       ? 'btn-color-white'
@@ -102,6 +103,7 @@
         name="username"
         bind:value="{username}"
         schema="{z.string().nonempty()}"
+        customClass="form-control-lg form-control-solid"
       />
     </div>
     <div class="col-xl-6">
@@ -111,11 +113,17 @@
         placeholder="*Optional*"
         bind:value="{name}"
         schema="{z.string().optional()}"
+        customClass="form-control-lg form-control-solid"
       />
     </div>
   </div>
   <div class="fv-row mb-5">
-    <CreatePasswordInput bind:this="{passwordField}" name="password" bind:value="{password}" />
+    <CreatePasswordInput
+      bind:this="{passwordField}"
+      name="password"
+      bind:value="{password}"
+      customClass="form-control-lg form-control-solid"
+    />
   </div>
   <div class="fv-row mb-5">
     <PasswordInput
@@ -124,6 +132,7 @@
       label="Confirm Password"
       bind:value="{confirmPassword}"
       schema="{confirmSchema}"
+      customClass="form-control-lg form-control-solid"
     />
   </div>
   <div class="fv-row mb-10">
@@ -146,18 +155,12 @@
   </div>
 
   <div class="text-center">
-    <button
-      type="submit"
-      on:click|preventDefault="{submit}"
-      disabled="{wait}"
-      class="btn btn-lg btn-primary w-100 mb-5"
-    >
-      <span class="indicator-label {wait ? 'wait' : ''}">Create an account</span>
-      <span class="indicator-progress {wait ? 'wait' : ''}">
-        Please wait...
-        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-      </span>
-    </button>
+    <SubmitBtn
+      text="Create an account"
+      action="{submit}"
+      wait="{wait}"
+      customClass="btn-lg btn-primary w-100 mb-5"
+    />
   </div>
 </form>
 
@@ -177,15 +180,22 @@
 
 <Modal bind:this="{errorModal}" hideAction="true" outClick="true">
   <svelte:fragment slot="title">Failed to create account</svelte:fragment>
-  <p slot="body" class="text-center modal-error-message">
+  <div slot="body" class="text-center modal-error-message">
     {#if errorModalBody}
-      {errorModalBody.message}
-      <br />
-      (<em>Code: {errorModalBody.statusCode} - {errorModalBody.error}</em>)
+      {#if typeof errorModalBody.message !== 'string' && errorModalBody.message.length}
+        {#each errorModalBody.message as message}
+          <p>{message}</p>
+        {/each}
+      {:else}
+        {errorModalBody.message}
+      {/if}
+      <p class="mt-5 text-muted mb-0">
+        <em>Code: {errorModalBody.statusCode} - {errorModalBody.error}</em>
+      </p>
     {:else}
       Account creation failed. Please try again or contact support.
     {/if}
-  </p>
+  </div>
 </Modal>
 
 <Modal bind:this="{internalErrorModal}" hideAction="true">
@@ -198,14 +208,5 @@
 <style lang="scss">
   .modal-error-message:first-letter {
     text-transform: capitalize;
-  }
-
-  .wait {
-    &.indicator-label {
-      display: none;
-    }
-    &.indicator-progress {
-      display: inline;
-    }
   }
 </style>

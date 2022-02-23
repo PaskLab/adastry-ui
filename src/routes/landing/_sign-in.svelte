@@ -3,23 +3,24 @@
   import { z } from 'zod';
   import TextInput from '$lib/components/form/text-input.svelte';
   import PasswordInput from '$lib/components/form/password-input.svelte';
+  import SubmitBtn from '$lib/components/form/submit-btn.svelte';
   import Modal from '$lib/components/global/modal.svelte';
-  import { jwt, isTokenValid, darkMode } from '$lib/stores/session.store';
-  import { login } from '$lib/auth/auth';
+  import { jwt, isTokenValid, darkMode, isSessionExpired } from '$lib/stores/session.store';
+  import { login } from '$lib/api/auth';
   import { getContext } from 'svelte';
   import SignUpForm from './_sign-up.svelte';
 
   // Component Routing
-  const selectedForm = getContext('selectedForm');
+  const mainView = getContext('mainView');
   function displaySignUpForm(): void {
-    selectedForm.set(SignUpForm);
+    mainView.set(SignUpForm);
   }
 
   // Form
   let usernameField: typeof TextInput;
   let passwordField: typeof PasswordInput;
-  let username: string;
-  let password: string;
+  let username = '';
+  let password = '';
   let wait = false;
   let errorModal: typeof Modal;
   let credentialModal: typeof Modal;
@@ -31,7 +32,7 @@
       wait = true;
       login(username.trim(), password.trim())
         .then((res) => {
-          if (res.statusCode === 201) {
+          if ([200, 201].includes(res.statusCode)) {
             jwt.set(res.token);
             isTokenValid.set(true);
             location.href = '/dashboard';
@@ -48,9 +49,9 @@
   }
 
   onMount(() => {
-    if (!$isTokenValid && $jwt.length) {
+    if ($isSessionExpired) {
       expiredModal.open();
-      jwt.set('');
+      isSessionExpired.set(false);
     }
   });
 </script>
@@ -60,6 +61,7 @@
   <div class="{$darkMode ? 'text-white' : 'text-gray-400'} fw-bold fs-4">
     New Here?
     <button
+      type="button"
       on:click|preventDefault="{displaySignUpForm}"
       class="btn btn-sm btn-color-primary fw-bolder fs-4 mb-1 mt-1 btn-active-light-primary px-2"
     >
@@ -75,6 +77,7 @@
       name="username"
       bind:value="{username}"
       schema="{z.string().nonempty()}"
+      customClass="form-control-lg form-control-solid"
     />
   </div>
   <div class="fv-row mb-10">
@@ -83,22 +86,17 @@
       name="password"
       bind:value="{password}"
       schema="{z.string().min(8)}"
+      customClass="form-control-lg form-control-solid"
     />
   </div>
 
   <div class="text-center">
-    <button
-      type="submit"
-      on:click|preventDefault="{submit}"
-      disabled="{wait}"
-      class="btn btn-lg btn-primary w-100 mb-5"
-    >
-      <span class="indicator-label {wait ? 'wait' : ''}">Continue</span>
-      <span class="indicator-progress {wait ? 'wait' : ''}">
-        Please wait...
-        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-      </span>
-    </button>
+    <SubmitBtn
+      text="Continue"
+      action="{submit}"
+      wait="{wait}"
+      customClass="btn-lg btn-primary w-100 mb-5"
+    />
   </div>
 </form>
 
@@ -118,14 +116,3 @@
   <svelte:fragment slot="title">Session Expired</svelte:fragment>
   <p slot="body" class="text-center">The session have expired, please sign-in again.</p>
 </Modal>
-
-<style lang="scss">
-  .wait {
-    &.indicator-label {
-      display: none;
-    }
-    &.indicator-progress {
-      display: inline;
-    }
-  }
-</style>

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Aside from './_aside.svelte';
-  import Footer from './_footer.svelte';
+  import Aside from './landing/_aside.svelte';
+  import Footer from './landing/_footer.svelte';
 </script>
 
 <div class="d-flex flex-column flex-root">

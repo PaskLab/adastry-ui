@@ -7,6 +7,7 @@
   export let label: string | boolean = true;
   export let value: string | undefined = undefined;
   export let placeholder = '';
+  export let customClass = '';
   export let autocomplete = false;
   export let error = false;
   export let schema: ZodString = z.string({
@@ -47,11 +48,7 @@
 
 <input
   id="{id}"
-  class="form-control form-control-lg form-control-solid {error
-    ? 'is-invalid'
-    : init && value.length
-    ? 'is-valid'
-    : ''}"
+  class="form-control {customClass} {error ? 'is-invalid' : init && value.length ? 'is-valid' : ''}"
   type="text"
   name="{name}"
   placeholder="{placeholder}"

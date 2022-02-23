@@ -80,12 +80,17 @@
   <div class="modal-backdrop fade {backdrop ? 'show' : ''}"></div>
 {/if}
 
-<style>
+<style lang="scss">
   .show {
     display: block !important;
   }
   .modal-body {
     font-size: 16px;
+    overflow-x: scroll;
+
+    :global(p:first-letter) {
+      text-transform: capitalize;
+    }
   }
   .modal-body,
   .modal-title {

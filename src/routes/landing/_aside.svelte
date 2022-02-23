@@ -1,5 +1,6 @@
 <script lang="ts">
   import { assets } from '$app/paths';
+  import Logo from '$lib/components/icons/logo.svelte';
 </script>
 
 <div
@@ -9,7 +10,9 @@
   <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
     <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
       <a href="/" class="py-9 mb-5">
-        <img alt="Logo" src="{assets}/img/svg/logo/google-icon.svg" class="h-60px" />
+        <span id="main-logo" class="svg-icon">
+          <Logo color="#fde1b4" />
+        </span>
       </a>
       <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">Welcome to Adastry</h1>
       <p class="fw-bold fs-2" style="color: #986923;">Take control over your data</p>
@@ -21,3 +24,10 @@
     ></div>
   </div>
 </div>
+
+<style>
+  #main-logo :global(svg) {
+    height: 140px;
+    width: 140px;
+  }
+</style>

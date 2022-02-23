@@ -1,14 +1,9 @@
 <script lang="ts">
-  import { darkMode, initSession } from '$lib/stores/session.store';
-  import { onMount } from 'svelte';
+  import { darkMode } from '$lib/stores/session.store';
 
   function toggleDarkMode() {
     darkMode.set(!$darkMode);
   }
-
-  onMount(() => {
-    initSession();
-  });
 </script>
 
 <div
