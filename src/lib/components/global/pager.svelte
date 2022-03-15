@@ -133,7 +133,7 @@
 </script>
 
 <ul class="pagination pagination-outline">
-  <li class="page-item previous {currentPage <= 1 ? 'disabled' : ''} m-1">
+  <li class="page-item previous {currentPage <= 1 ? 'disabled' : ''} m-1 d-none d-sm-block">
     <button
       on:click="{() => setCurrentPage(currentPage - 1)}"
       type="button"
@@ -157,7 +157,7 @@
     </li>
   {/each}
 
-  <li class="page-item next {currentPage >= pages ? 'disabled' : ''} m-1">
+  <li class="page-item next {currentPage >= pages ? 'disabled' : ''} m-1 d-none d-sm-block">
     <button
       on:click="{() => setCurrentPage(currentPage + 1)}"
       type="button"
