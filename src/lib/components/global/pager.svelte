@@ -1,48 +1,134 @@
 <script lang="ts">
   export let currentPage = 1;
-  export let totalItems = 177;
+  export let totalItems = 0;
   export let pageSize = 10;
-  export let maxSurroundingOptions = 2; // Display max N items before and after current page
+  export let surroundingLimit = 1; // Display max N items before and after current page
 
-  const boundaryOptions = 1; // Display the first and last options (Do not change)
   const pages = Math.ceil(totalItems / pageSize);
 
-  let options = generateOptions();
+  let options = generateOptions({
+    totalItems,
+    pageSize,
+    currentPage,
+    surroundingLimit
+  });
 
-  function generateOptions(): number[] {
-    const sumLimit = boundaryOptions + maxSurroundingOptions;
-    const length = 2 * sumLimit + 1;
+  type OptionsList = { type: string; value: number }[];
 
-    let options = Array.apply(null, Array(length)).map(
-      (v, i) => currentPage - (length - 1) / 2 + i
-    );
-
-    const lowerBoundary = Array.apply(null, Array(boundaryOptions)).map((v, i) => i + 1);
-    const upperBoundary = Array.apply(null, Array(boundaryOptions)).map((v, i) => pages - i);
-
-    options = [...new Set([...lowerBoundary, ...options, ...upperBoundary])];
-    options = options
-      .filter((v) => v <= pages)
-      .filter((v) => v > 0)
-      .sort(function (a, b) {
-        return a - b;
-      });
-
-    return options;
+  function generateOptions({
+    totalItems,
+    pageSize,
+    currentPage,
+    surroundingLimit = null
+  }): OptionsList {
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const limitThreshold = getLimitThreshold({ surroundingLimit });
+    const limited = surroundingLimit && totalPages > limitThreshold;
+    return limited
+      ? generateLimitedOptions({ totalPages, surroundingLimit, currentPage })
+      : generateUnlimitedOptions({ totalPages });
   }
 
-  function isLimit(value): boolean {
-    const absDiff = Math.abs(currentPage - value);
-    return (
-      absDiff > maxSurroundingOptions && value > boundaryOptions && value <= pages - boundaryOptions
-    );
+  function generateUnlimitedOptions({ totalPages }): OptionsList {
+    return new Array(totalPages).fill(null).map((value, index) => ({
+      type: 'number',
+      value: index + 1
+    }));
+  }
+
+  function generateLimitedOptions({ totalPages, surroundingLimit, currentPage }): OptionsList {
+    const boundarySize = surroundingLimit * 2 + 2;
+    const firstBoundary = 1 + boundarySize;
+    const lastBoundary = totalPages - boundarySize;
+    const totalShownPages = firstBoundary + 2;
+
+    if (currentPage <= firstBoundary - surroundingLimit) {
+      return Array(totalShownPages)
+        .fill(null)
+        .map((value, index) => {
+          if (index === totalShownPages - 1) {
+            return {
+              type: 'number',
+              value: totalPages
+            };
+          } else if (index === totalShownPages - 2) {
+            return {
+              type: 'symbol',
+              value: firstBoundary + 1
+            };
+          }
+          return {
+            type: 'number',
+            value: index + 1
+          };
+        });
+    } else if (currentPage >= lastBoundary + surroundingLimit) {
+      return Array(totalShownPages)
+        .fill(null)
+        .map((value, index) => {
+          if (index === 0) {
+            return {
+              type: 'number',
+              value: 1
+            };
+          } else if (index === 1) {
+            return {
+              type: 'symbol',
+              value: lastBoundary - 1
+            };
+          }
+          return {
+            type: 'number',
+            value: lastBoundary + index - 2
+          };
+        });
+    } else if (
+      currentPage >= firstBoundary - surroundingLimit &&
+      currentPage <= lastBoundary + surroundingLimit
+    ) {
+      return Array(totalShownPages)
+        .fill(null)
+        .map((value, index) => {
+          if (index === 0) {
+            return {
+              type: 'number',
+              value: 1
+            };
+          } else if (index === 1) {
+            return {
+              type: 'symbol',
+              value: currentPage - surroundingLimit + (index - 2)
+            };
+          } else if (index === totalShownPages - 1) {
+            return {
+              type: 'number',
+              value: totalPages
+            };
+          } else if (index === totalShownPages - 2) {
+            return {
+              type: 'symbol',
+              value: currentPage + surroundingLimit + 1
+            };
+          }
+          return {
+            type: 'number',
+            value: currentPage - surroundingLimit + (index - 2)
+          };
+        });
+    }
+  }
+
+  function getLimitThreshold({ surroundingLimit }): number {
+    const maximumUnlimitedPages = 3; // This means we cannot limit 3 pages or less
+    const numberOfBoundaryPages = 2; // The first and last pages are always shown
+    return surroundingLimit * 2 + maximumUnlimitedPages + numberOfBoundaryPages;
   }
 
   function setCurrentPage(page): void {
     if (page == currentPage || page < 1 || page > pages) return;
 
     currentPage = page;
-    options = generateOptions();
+    options = generateOptions({ totalItems, pageSize, currentPage, surroundingLimit });
   }
 </script>
 
@@ -59,14 +145,14 @@
   </li>
 
   {#each options as option}
-    <li class="page-item m-1 {option === currentPage ? 'active' : ''}">
+    <li class="page-item m-1 {option.value === currentPage ? 'active' : ''}">
       <button
-        on:click="{() => setCurrentPage(option)}"
+        on:click="{() => setCurrentPage(option.value)}"
         type="button"
         class="page-link"
-        disabled="{option === currentPage}"
+        disabled="{option.value === currentPage}"
       >
-        {isLimit(option) ? '...' : option}</button
+        {option.type === 'number' ? option.value : '...'}</button
       >
     </li>
   {/each}

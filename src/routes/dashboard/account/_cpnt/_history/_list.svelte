@@ -9,7 +9,7 @@
 
   let pHistory: Promise<AccountHistoryType>;
   let currentPage = 1;
-  let limit = 50;
+  let limit = 20;
 
   $: pHistory = getHistory($page.params.stakeAddress, { limit: limit, page: currentPage });
 </script>
