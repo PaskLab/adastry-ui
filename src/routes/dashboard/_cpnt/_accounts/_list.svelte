@@ -8,21 +8,11 @@
   import type { SvelteComponent } from 'svelte';
   import type { Writable } from 'svelte/store';
   import AddAccount from './_add.svelte';
+  import config from '$lib/config.json';
 
-  let pAccounts = getUserAccounts();
+  const pAccounts = getUserAccounts();
 
-  let colors = [
-    '#0dcaf0',
-    '#0d6efd',
-    '#6610f2',
-    '#6f42c1',
-    '#d63384',
-    '#dc3545',
-    '#fd7e14',
-    '#ffc107',
-    '#198754',
-    '#20c997'
-  ];
+  const colors = config.theme.colors;
 
   // Routing
   let mainView = getContext<Writable<typeof SvelteComponent>>('mainView');
@@ -94,37 +84,37 @@
             {#each accounts as account, i}
               <tr>
                 <th>
-                  <button
-                    type="button"
+                  <a
+                    href="/dashboard/account/{account.stakeAddress}?color={i % colors.length}"
                     tabindex="-1"
                     class="btn btn-link p-0 symbol symbol-50px me-2"
                   >
                     <span class="symbol-label">
                       <WalletIcon --color="{colors[i % colors.length]}" />
                     </span>
-                  </button>
+                  </a>
                 </th>
                 <td>
-                  <button
-                    type="button"
+                  <a
+                    href="/dashboard/account/{account.stakeAddress}?color={i % colors.length}"
                     tabindex="-1"
                     class="btn btn-link p-0 text-dark fw-bolder text-hover-primary mb-1 fs-6"
-                    >{account.name}</button
+                    >{account.name}</a
                   >
                   <span class="d-none d-sm-block text-muted fw-bold d-block fs-7"
                     >{account.stakeAddress}</span
                   >
                 </td>
                 <td class="text-end">
-                  <button
-                    type="button"
+                  <a
+                    href="/dashboard/account/{account.stakeAddress}?color={i % colors.length}"
                     tabindex="0"
                     class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
                   >
                     <span class="svg-icon svg-icon-2">
                       <RightArrowIcon />
                     </span>
-                  </button>
+                  </a>
                 </td>
               </tr>
             {/each}

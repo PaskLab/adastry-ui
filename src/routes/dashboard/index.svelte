@@ -1,12 +1,10 @@
 <script lang="ts">
   import WalletIcon from '$lib/components/icons/wallet.svelte';
-  import Header from './_components/_header.svelte';
-  import Footer from './_components/_footer.svelte';
-  import MainViewNav from './_components/_main-view-nav.svelte';
+  import MainViewNav from './_cpnt/_main-view-nav.svelte';
   import { getContext, setContext } from 'svelte';
   import { writable } from 'svelte/store';
-  import Accounts from './_components/_accounts/_accounts.svelte';
-  import Pools from './_components/_pools.svelte';
+  import Accounts from './_cpnt/_accounts/_accounts.svelte';
+  import Pools from './_cpnt/_pools.svelte';
   import type { SvelteComponent } from 'svelte';
   import type { Writable } from 'svelte/store';
 
@@ -20,45 +18,17 @@
   ];
 </script>
 
-<div class="d-flex flex-column flex-root">
-  <!--begin::Page-->
-  <div class="page d-flex flex-row flex-column-fluid">
-    <!--begin::Wrapper-->
-    <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-      <!--begin::Header-->
-      <Header />
-      <!--end::Header-->
-      <!--begin::Container-->
-      <div
-        id="kt_content_container"
-        class="d-flex flex-column-fluid align-items-start container-xxl"
-      >
-        <!--begin::Post-->
-        <div class="content flex-row-fluid" id="kt_content">
-          <!--begin::Row-->
-          <div class="row gy-0 gx-10">
-            <!--begin::Col-->
-            <MainViewNav options="{mainViewOptions}" />
+<svelte:head>
+  <title>Dashboard - Adastry</title>
+</svelte:head>
 
-            <svelte:component this="{mainView}" />
+<div class="content flex-row-fluid">
+  <div class="row gy-0 gx-10">
+    <MainViewNav options="{mainViewOptions}" />
+    <svelte:component this="{mainView}" />
 
-            <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-4">
-              <!--!!!!!!!!!!!!!!!Right Column !!!!!!!!!!!!!!!!-->
-            </div>
-            <!--end::Col-->
-          </div>
-          <!--end::Row-->
-        </div>
-        <!--end::Post-->
-      </div>
-      <!--end::Container-->
-      <!--begin::Footer-->
-      <Footer />
-      <!--end::Footer-->
+    <div class="col-xl-4">
+      <!--!!!!!!!!!!!!!!!Right Column !!!!!!!!!!!!!!!!-->
     </div>
-    <!--end::Wrapper-->
   </div>
-  <!--end::Page-->
 </div>

@@ -114,5 +114,5 @@
 
 <Modal bind:this="{expiredModal}" hideAction="true">
   <svelte:fragment slot="title">Session Expired</svelte:fragment>
-  <p slot="body" class="text-center">The session have expired, please sign-in again.</p>
+  <p slot="body" class="text-center">The session has expired, please sign-in again.</p>
 </Modal>

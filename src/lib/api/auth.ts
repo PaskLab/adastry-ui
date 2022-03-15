@@ -1,9 +1,10 @@
 import config from '../config.json';
 import { request } from '$lib/utils/api.utils';
+import type { ResponseType } from '$lib/api/types/response.type';
 
 const PROVIDER = config.provider.adastry;
 
-export async function login(username: string, password: string) {
+export async function login(username: string, password: string): Promise<ResponseType> {
   return request(
     PROVIDER.url + PROVIDER.endpoints.login,
     'POST',
@@ -16,7 +17,11 @@ export async function login(username: string, password: string) {
   );
 }
 
-export async function create(username: string, password: string, name?: string) {
+export async function create(
+  username: string,
+  password: string,
+  name?: string
+): Promise<ResponseType> {
   return request(
     PROVIDER.url + PROVIDER.endpoints.createUser,
     'POST',

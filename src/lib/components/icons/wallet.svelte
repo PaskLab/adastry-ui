@@ -14,6 +14,6 @@
 
 <style>
   path {
-    fill: var(--color, 'black');
+    fill: var(--color, darkgrey) !important;
   }
 </style>

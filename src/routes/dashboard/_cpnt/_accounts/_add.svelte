@@ -76,7 +76,7 @@
 
   <div class="card-body py-3">
     <div class="offset-md-3 col-md-6">
-      <form>
+      <form class="form" novalidate="novalidate">
         <div class="my-10">
           <TextInput
             bind:this="{nameField}"
@@ -93,7 +93,7 @@
             bind:this="{addressField}"
             bind:value="{address}"
             name="address"
-            label="Used walled address or Stake address"
+            label="Used wallet address or Stake address"
             placeholder="stake1ux97hsr... | addr1ux6tsw9r..."
             schema="{z
               .string()

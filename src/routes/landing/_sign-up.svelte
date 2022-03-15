@@ -91,7 +91,7 @@
   </button>
 </div>
 
-<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form">
+<form class="form w-100" novalidate="novalidate">
   <div class="mb-10 text-center">
     <h1 class="text-dark mb-3">Create an Account</h1>
   </div>

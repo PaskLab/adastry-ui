@@ -4,7 +4,7 @@
   import DarkModeBtn from './_dark-mode-btn.svelte';
 </script>
 
-<div id="kt_header" class="header">
+<div class="header">
   <!--begin::Container-->
   <div class="container-xxl d-flex align-items-center flex-lg-stack">
     <!--begin::Brand-->

@@ -1,18 +1,10 @@
 <script lang="ts">
   import { assets } from '$app/paths';
-  import { beforeUpdate, onDestroy } from 'svelte';
-  import { initSession } from '$lib/stores/session.store';
+  import { onDestroy } from 'svelte';
+  import { subscribe } from '$lib/stores/session.store';
   import type { Unsubscriber } from 'svelte/store';
 
-  let firstLoad = true;
-  let unsubscribers: Unsubscriber[] = [];
-
-  beforeUpdate(() => {
-    if (firstLoad) {
-      firstLoad = false;
-      unsubscribers = initSession();
-    }
-  });
+  let unsubscribers: Unsubscriber[] = subscribe();
 
   onDestroy(() => {
     for (const unsubscribe of unsubscribers) {

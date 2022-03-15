@@ -1,6 +1,8 @@
 <script lang="ts">
   import { beforeUpdate } from 'svelte';
   import { isTokenValid } from '$lib/stores/session.store';
+  import Header from './_cpnt/_header.svelte';
+  import Footer from './_cpnt/_footer.svelte';
 
   beforeUpdate(() => {
     if (!$isTokenValid) {
@@ -9,8 +11,16 @@
   });
 </script>
 
-<svelte:head>
-  <title>Dashboard - Adastry</title>
-</svelte:head>
+<div class="d-flex flex-column flex-root">
+  <div class="page d-flex flex-row flex-column-fluid">
+    <div class="wrapper d-flex flex-column flex-row-fluid">
+      <Header />
 
-<slot />
+      <div class="d-flex flex-column-fluid align-items-start container-xxl">
+        <slot />
+      </div>
+
+      <Footer />
+    </div>
+  </div>
+</div>

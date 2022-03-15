@@ -1,4 +1,4 @@
-<div class="footer pb-4 d-flex flex-lg-column" id="kt_footer">
+<div class="footer pb-4 d-flex flex-lg-column">
   <!--begin::Container-->
   <div
     class="container-xxl d-flex flex-column flex-md-row align-items-center justify-content-between"

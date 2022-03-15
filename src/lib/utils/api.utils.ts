@@ -1,5 +1,6 @@
 import { isTokenValid, jwt } from '$lib/stores/session.store';
 import { get } from 'svelte/store';
+import config from '$lib/config.json';
 
 type HTTPMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
@@ -27,7 +28,7 @@ export async function request(
     body: body ? JSON.stringify(body) : undefined
   });
 
-  if (!result) throw Error('Failed to fetch data');
+  if (!result) throw Error(config.messages.failedFetch);
 
   if (result.status === 401) {
     isTokenValid.set(false);
@@ -43,4 +44,19 @@ export async function request(
   }
 
   return json;
+}
+
+export function getURL(url: string, params: { [key: string]: string | number }): string {
+  let parsedURL = url;
+  let haveQueryParam = false;
+
+  for (const key in params) {
+    if (parsedURL.indexOf('{' + key + '}') === -1) {
+      parsedURL = `${parsedURL}${haveQueryParam ? '&' : '?'}${key}=${params[key]}`;
+      haveQueryParam = true;
+    } else {
+      parsedURL = parsedURL.replace('{' + key + '}', params[key].toString());
+    }
+  }
+  return parsedURL;
 }
