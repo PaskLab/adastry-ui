@@ -22,6 +22,7 @@
 
   let pAccount: Promise<AccountType> = Promise.reject();
   let account: AccountType;
+  let owner = false;
 
   const colors = config.theme.colors;
   const lifetimeRewards = tweened(0.0, {
@@ -93,15 +94,16 @@
                   <h2 class="text-gray-800 fs-2 fw-bolder me-3">
                     {account.name}
                   </h2>
+                  {#if owner}
+                    <div class="badge badge-light-primary mx-1 mb-2">Pool Owner</div>
+                  {/if}
                   {#if account.loyalty > 0}
-                    <div class="badge badge-info mb-2">Armada Supporter</div>
+                    <div class="badge badge-light-info mx-1 mb-2">Armada Supporter</div>
                   {/if}
                 </div>
 
                 <div class="d-flex flex-wrap fw-bold mb-4 fs-5 text-gray-400">
-                  {#await pAccount then account}
-                    <span style="overflow-wrap: anywhere;">{account.stakeAddress}</span>
-                  {/await}
+                  <span style="overflow-wrap: anywhere;">{account.stakeAddress}</span>
                 </div>
               </div>
               <div class="card-toolbar">
@@ -151,7 +153,7 @@
     {/await}
   </div>
 
-  <svelte:component this="{mainView}" />
+  <svelte:component this="{mainView}" bind:owner />
 </div>
 
 <style lang="scss">

@@ -3,15 +3,29 @@
   import { getHistory } from '$lib/api/wallets';
   import { page } from '$app/stores';
   import Skeleton from '$lib/components/global/skeleton.svelte';
-  import type { AccountHistoryType } from '$lib/api/types/account-history.type';
+  import type { AccountHistoryListType } from '$lib/api/types/account-history.type';
   import { toAda } from '$lib/utils/helper.utils';
   import Pager from '$lib/components/global/pager.svelte';
+  import { browser } from '$app/env';
 
-  let pHistory: Promise<AccountHistoryType>;
+  export let owner = false;
+
   let currentPage = 1;
   let limit = 20;
+  let pHistory: Promise<AccountHistoryListType>;
 
-  $: pHistory = getHistory($page.params.stakeAddress, { limit: limit, page: currentPage });
+  $: pHistory = getHistory($page.params.stakeAddress, {
+    limit: limit,
+    page: currentPage
+  });
+
+  $: if (browser) {
+    pHistory
+      .then((res) => {
+        owner = res.data.some((record) => record.owner);
+      })
+      .catch(console.log);
+  }
 </script>
 
 <div class="card">
@@ -35,9 +49,13 @@
               <th>Epoch</th>
               <th>Rewards (₳)</th>
               <th>Active Stake (₳)</th>
-              <th>Revised Rewards (₳)</th>
-              <th>Op Rewards (₳)</th>
-              <th>Stake Share (%)</th>
+              <th>Withdrawable</th>
+              <th>Withdrawn</th>
+              {#if owner}
+                <th>Revised Rewards (₳)</th>
+                <th>Op Rewards (₳)</th>
+                <th>Stake Share (%)</th>
+              {/if}
               <th>Pool</th>
             </tr>
           </thead>
@@ -54,14 +72,22 @@
                   {toAda(record.activeStake)}
                 </td>
                 <td>
-                  {toAda(record.revisedRewards)}
+                  {toAda(record.withdrawable)}
                 </td>
                 <td>
-                  {toAda(record.opRewards)}
+                  {toAda(record.withdrawn)}
                 </td>
-                <td>
-                  {record.stakeShare}
-                </td>
+                {#if owner}
+                  <td>
+                    {toAda(record.revisedRewards)}
+                  </td>
+                  <td>
+                    {toAda(record.opRewards)}
+                  </td>
+                  <td>
+                    {(record.stakeShare * 100).toFixed(4)}
+                  </td>
+                {/if}
                 <td>
                   {record.pool.name.replace('[', ' [')}
                 </td>

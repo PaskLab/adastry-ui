@@ -28,19 +28,19 @@ export async function request(
     body: body ? JSON.stringify(body) : undefined
   });
 
-  if (!result) throw Error(config.messages.failedFetch);
+  if (!result) return Promise.reject(config.messages.failedFetch);
 
   if (result.status === 401) {
     isTokenValid.set(false);
     if (!doNotThrowOn.includes(result.status)) {
-      throw Error('Unauthorized');
+      return Promise.reject('Unauthorized');
     }
   }
 
   const json = await result.json();
 
   if (result.status >= 400 && !doNotThrowOn.includes(result.status)) {
-    throw Error(`Error ${result.status} - ${json.message}`);
+    return Promise.reject(`Error ${result.status} - ${json.message}`);
   }
 
   return json;
