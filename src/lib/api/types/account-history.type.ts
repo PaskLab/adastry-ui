@@ -7,7 +7,7 @@ export type AccountHistoryListType = {
 
 export type AccountHistoryType = {
   account: string;
-  epoch: number;
+  epoch: EpochType;
   activeStake: number;
   balance: number;
   rewards: number;
@@ -18,4 +18,10 @@ export type AccountHistoryType = {
   pool: PoolType | null;
   owner: boolean;
   stakeShare: number;
+};
+
+export type EpochType = {
+  epoch: number;
+  startTime: number;
+  endTime: number;
 };

@@ -9,7 +9,8 @@
         "addAccount": "/account",
         "updateAccount": "/account",
         "getAccount": "/account/{stakeAddress}",
-        "getHistory": "/account/{stakeAddress}/history"
+        "getHistory": "/account/{stakeAddress}/history",
+        "getTransactions": "/account/{stakeAddress}/transactions"
       }
     }
   },

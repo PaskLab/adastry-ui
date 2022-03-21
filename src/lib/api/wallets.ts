@@ -4,6 +4,7 @@ import type { AccountType } from '$lib/api/types/account.type';
 import type { ResponseType } from '$lib/api/types/response.type';
 import type { AccountListType } from '$lib/api/types/account-list.type';
 import type { AccountHistoryListType } from '$lib/api/types/account-history.type';
+import type { TransactionListType } from '$lib/api/types/account-transaction.type';
 
 const PROVIDER = config.provider.adastry;
 
@@ -43,5 +44,15 @@ export async function getHistory(
 ): Promise<AccountHistoryListType> {
   return request(
     PROVIDER.url + getURL(PROVIDER.endpoints.getHistory, { stakeAddress: stakeAddress, ...options })
+  );
+}
+
+export async function getTransactions(
+  stakeAddress: string,
+  options?: { page?: number; limit?: number; from?: number; to?: number; order?: 'ASC' | 'DESC' }
+): Promise<TransactionListType> {
+  return request(
+    PROVIDER.url +
+      getURL(PROVIDER.endpoints.getTransactions, { stakeAddress: stakeAddress, ...options })
   );
 }

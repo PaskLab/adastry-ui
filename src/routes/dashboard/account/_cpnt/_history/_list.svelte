@@ -4,15 +4,22 @@
   import { page } from '$app/stores';
   import Skeleton from '$lib/components/global/skeleton.svelte';
   import type { AccountHistoryListType } from '$lib/api/types/account-history.type';
-  import { toAda } from '$lib/utils/helper.utils';
+  import { toAda, dateFromUnix, formatDate } from '$lib/utils/helper.utils';
   import Pager from '$lib/components/global/pager.svelte';
   import { browser } from '$app/env';
+  import { getContext } from 'svelte';
+  import type { Writable } from 'svelte/store';
+  import { get } from 'svelte/store';
+  import Tooltip from '$lib/components/global/tooltip.svelte';
 
   export let owner = false;
 
-  let currentPage = 1;
+  const pageStore = getContext<Writable<number>>('historyPage');
+  let currentPage = get(pageStore);
   let limit = 20;
   let pHistory: Promise<AccountHistoryListType>;
+
+  $: pageStore.set(currentPage);
 
   $: pHistory = getHistory($page.params.stakeAddress, {
     limit: limit,
@@ -63,9 +70,11 @@
             {#each history.data as record}
               <tr>
                 <td>
-                  {record.epoch}
+                  <Tooltip text="{formatDate(dateFromUnix(record.epoch.startTime))}">
+                    {record.epoch.epoch}
+                  </Tooltip>
                 </td>
-                <td>
+                <td class="fw-bolder">
                   {toAda(record.rewards)}
                 </td>
                 <td>
@@ -88,7 +97,7 @@
                     {(record.stakeShare * 100).toFixed(4)}
                   </td>
                 {/if}
-                <td>
+                <td class="text-info">
                   {record.pool.name.replace('[', ' [')}
                 </td>
               </tr>

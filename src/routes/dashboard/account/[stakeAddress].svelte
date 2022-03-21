@@ -18,7 +18,11 @@
   import { Writable, writable } from 'svelte/store';
   import HistoryList from './_cpnt/_history/_list.svelte';
   import TxList from './_cpnt/_transactions/_list.svelte';
+  import ExportView from './_cpnt/_export/_export.svelte';
   import MainViewNav from './_cpnt/_main-view-nav.svelte';
+
+  setContext('historyPage', writable<number>(1));
+  setContext('transactionPage', writable<number>(1));
 
   let pAccount: Promise<AccountType> = Promise.reject();
   let account: AccountType;
@@ -46,7 +50,8 @@
   );
   const mainViewOptions = [
     { id: 'history', component: HistoryList, text: 'History' },
-    { id: 'transactions', component: TxList, text: 'Transaction' }
+    { id: 'transactions', component: TxList, text: 'Transaction' },
+    { id: 'export', component: ExportView, text: 'Export Data' }
   ];
 
   onMount(() => {
