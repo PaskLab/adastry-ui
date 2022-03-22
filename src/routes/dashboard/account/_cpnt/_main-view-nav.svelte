@@ -19,7 +19,9 @@
   }
 </script>
 
-<ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder">
+<ul
+  class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-7 fs-md-5 fw-bolder"
+>
   {#each options as option}
     <li class="nav-item">
       <div

@@ -13,11 +13,9 @@
       <div class="flex-grow-1">
         <a href="/dashboard">
           <span class="svg-icon svg-icon-3x">
-            <LogoIcon color="{$darkMode ? '#FFFFFF' : undefined}" />
+            <LogoIcon color="{$darkMode ? '#FFFFFF' : '#757570'}" />
           </span>
-          <span class="ps-2 h1 position-relative" style="top: 5px; color: #FF2052">
-            Adastry.io
-          </span>
+          <span class="brand-link ps-2 h1 position-relative"> Adastry.io </span>
         </a>
       </div>
       <!--end::Wrapper-->
@@ -64,3 +62,13 @@
   </div>
   <!--end::Container-->
 </div>
+
+<style lang="scss">
+  .brand-link {
+    top: 5px;
+    color: #757570;
+  }
+  :global(.dark-mode) .brand-link {
+    color: #fff;
+  }
+</style>

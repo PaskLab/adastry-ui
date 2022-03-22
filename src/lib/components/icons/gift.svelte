@@ -12,6 +12,7 @@
 
 <style>
   path {
-    fill: var(--color, darkgrey) !important;
+    transition: fill 0.3s ease;
+    fill: var(--color, darkgrey);
   }
 </style>

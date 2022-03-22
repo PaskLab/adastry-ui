@@ -10,6 +10,7 @@
 
 <style>
   path {
+    transition: fill 0.3s ease;
     fill: var(--color, 'black');
   }
 </style>

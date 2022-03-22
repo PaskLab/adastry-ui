@@ -30,7 +30,7 @@
             on:keypress|preventDefault="{() => handleClick(option)}"
             class="{option.id === active
               ? 'active cursor-default'
-              : ''} nav-link btn btn-flex btn-color-gray-400 btn-outline btn-outline-default btn-active-danger d-flex flex-grow-1 flex-column flex-center py-5 h-1250px h-lg-175px"
+              : ''} nav-link btn btn-flex btn-color-gray-400 btn-outline btn-outline-default d-flex flex-grow-1 flex-column flex-center py-5 h-1250px h-lg-175px"
           >
             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
             <span class="svg-icon svg-icon-3x mb-5 mx-0">
@@ -44,3 +44,17 @@
     </ul>
   </div>
 </div>
+
+<style lang="scss">
+  .nav-link {
+    &:hover,
+    &.active {
+      color: #fff;
+      background: #7cb342;
+      border-color: #7cb342;
+      :global(svg path) {
+        fill: #fff !important;
+      }
+    }
+  }
+</style>
