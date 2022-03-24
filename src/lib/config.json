@@ -1,4 +1,8 @@
 {
+  "routing":{
+    "dashboard": "/dashboard",
+    "accountDetail": "/account/{stakeAddress}"
+  },
   "provider": {
     "adastry": {
       "url": "https://api.pasklab.com",
@@ -10,7 +14,9 @@
         "updateAccount": "/account",
         "getAccount": "/account/{stakeAddress}",
         "getHistory": "/account/{stakeAddress}/history",
-        "getTransactions": "/account/{stakeAddress}/transactions"
+        "getTransactions": "/account/{stakeAddress}/transactions",
+        "exportRewards": "/account/{stakeAddress}/export-rewards/{year}",
+        "exportTransactions": "/account/{stakeAddress}/export-transactions/{year}"
       }
     }
   },

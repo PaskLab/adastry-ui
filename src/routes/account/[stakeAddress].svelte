@@ -10,16 +10,17 @@
   import BankIcon from '$lib/components/icons/bank.svelte';
   import HourglassIcon from '$lib/components/icons/hourglass.svelte';
   import { toAda } from '$lib/utils/helper.utils';
+  import { getURL } from '$lib/utils/api.utils';
   import { tweened } from 'svelte/motion';
   import { expoOut } from 'svelte/easing';
   import { getContext, onDestroy, onMount, setContext, SvelteComponent } from 'svelte';
   import InfoBox from './_cpnt/_info-box.svelte';
-  import type { AccountType } from '$lib/api/types/account.type';
   import { Writable, writable } from 'svelte/store';
   import HistoryList from './_cpnt/_history/_list.svelte';
   import TxList from './_cpnt/_transactions/_list.svelte';
   import ExportView from './_cpnt/_export/_export.svelte';
   import MainViewNav from './_cpnt/_main-view-nav.svelte';
+  import type { AccountType } from '$lib/api/types/account.type';
 
   setContext('historyPage', writable<number>(1));
   setContext('transactionPage', writable<number>(1));
@@ -113,8 +114,7 @@
               </div>
               <div class="card-toolbar">
                 <a
-                  href="/dashboard"
-                  type="button"
+                  href="{getURL(config.routing.dashboard)}"
                   class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
                 >
                   Back to dashboard

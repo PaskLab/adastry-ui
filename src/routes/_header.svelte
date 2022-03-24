@@ -1,7 +1,9 @@
 <script lang="ts">
   import { darkMode } from '$lib/stores/session.store';
   import LogoIcon from '$lib/components/icons/logo.svelte';
-  import DarkModeBtn from './_dark-mode-btn.svelte';
+  import DarkModeBtn from './dashboard/_cpnt/_dark-mode-btn.svelte';
+  import config from '$lib/config.json';
+  import { getURL } from '$lib/utils/api.utils';
 </script>
 
 <div class="header">
@@ -11,7 +13,7 @@
     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-2 me-lg-5">
       <!--begin::Wrapper-->
       <div class="flex-grow-1">
-        <a href="/dashboard">
+        <a href="{getURL(config.routing.dashboard)}">
           <span class="svg-icon svg-icon-3x">
             <LogoIcon color="{$darkMode ? '#FFFFFF' : '#757570'}" />
           </span>

@@ -34,3 +34,7 @@ export function parseAssetHex(hex: string): { policy: string; name: string } {
     name: Buffer.from(hex.slice(56), 'hex').toString()
   };
 }
+
+export function range(size: number, startAt = 0): number[] {
+  return [...Array(size).keys()].map((i) => i + startAt);
+}

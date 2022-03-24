@@ -9,6 +9,7 @@
   import type { Writable } from 'svelte/store';
   import AddAccount from './_add.svelte';
   import config from '$lib/config.json';
+  import { getURL } from '$lib/utils/api.utils';
 
   const pAccounts = getUserAccounts();
 
@@ -85,7 +86,10 @@
               <tr>
                 <th>
                   <a
-                    href="/dashboard/account/{account.stakeAddress}?color={i % colors.length}"
+                    href="{getURL(config.routing.accountDetail, {
+                      stakeAddress: account.stakeAddress,
+                      color: i % colors.length
+                    })}"
                     tabindex="-1"
                     class="btn btn-link p-0 symbol symbol-50px me-2"
                   >
@@ -96,7 +100,10 @@
                 </th>
                 <td>
                   <a
-                    href="/dashboard/account/{account.stakeAddress}?color={i % colors.length}"
+                    href="{getURL(config.routing.accountDetail, {
+                      stakeAddress: account.stakeAddress,
+                      color: i % colors.length
+                    })}"
                     tabindex="-1"
                     class="btn btn-link p-0 text-dark fw-bolder text-hover-primary mb-1 fs-6"
                     >{account.name}</a
@@ -107,7 +114,10 @@
                 </td>
                 <td class="text-end">
                   <a
-                    href="/dashboard/account/{account.stakeAddress}?color={i % colors.length}"
+                    href="{getURL(config.routing.accountDetail, {
+                      stakeAddress: account.stakeAddress,
+                      color: i % colors.length
+                    })}"
                     tabindex="0"
                     class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
                   >

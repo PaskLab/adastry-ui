@@ -5,6 +5,7 @@ import type { ResponseType } from '$lib/api/types/response.type';
 import type { AccountListType } from '$lib/api/types/account-list.type';
 import type { AccountHistoryListType } from '$lib/api/types/account-history.type';
 import type { TransactionListType } from '$lib/api/types/account-transaction.type';
+import type { CSVFileType } from '$lib/api/types/csv-file.type';
 
 const PROVIDER = config.provider.adastry;
 
@@ -17,8 +18,8 @@ export async function addUserAccount(name: string, address: string): Promise<Res
     PROVIDER.url + PROVIDER.endpoints.addAccount,
     'POST',
     {
-      name: name,
-      address: address
+      name,
+      address
     },
     {},
     [400, 409]
@@ -27,15 +28,13 @@ export async function addUserAccount(name: string, address: string): Promise<Res
 
 export async function updateUserAccount(name: string, address: string): Promise<ResponseType> {
   return request(PROVIDER.url + PROVIDER.endpoints.updateAccount, 'PATCH', {
-    name: name,
-    address: address
+    name,
+    address
   });
 }
 
 export async function getAccount(stakeAddress: string): Promise<AccountType> {
-  return request(
-    PROVIDER.url + getURL(PROVIDER.endpoints.getAccount, { stakeAddress: stakeAddress })
-  );
+  return request(PROVIDER.url + getURL(PROVIDER.endpoints.getAccount, { stakeAddress }));
 }
 
 export async function getHistory(
@@ -43,7 +42,7 @@ export async function getHistory(
   options?: { page?: number; limit?: number; from?: number; order?: 'ASC' | 'DESC' }
 ): Promise<AccountHistoryListType> {
   return request(
-    PROVIDER.url + getURL(PROVIDER.endpoints.getHistory, { stakeAddress: stakeAddress, ...options })
+    PROVIDER.url + getURL(PROVIDER.endpoints.getHistory, { stakeAddress, ...options })
   );
 }
 
@@ -52,7 +51,26 @@ export async function getTransactions(
   options?: { page?: number; limit?: number; from?: number; to?: number; order?: 'ASC' | 'DESC' }
 ): Promise<TransactionListType> {
   return request(
-    PROVIDER.url +
-      getURL(PROVIDER.endpoints.getTransactions, { stakeAddress: stakeAddress, ...options })
+    PROVIDER.url + getURL(PROVIDER.endpoints.getTransactions, { stakeAddress, ...options })
+  );
+}
+
+export async function getRewardsCSV(
+  stakeAddress: string,
+  year: number,
+  format: string
+): Promise<CSVFileType> {
+  return request(
+    PROVIDER.url + getURL(PROVIDER.endpoints.exportRewards, { stakeAddress, year, format })
+  );
+}
+
+export async function getTransactionCSV(
+  stakeAddress: string,
+  year: number,
+  format: string
+): Promise<CSVFileType> {
+  return request(
+    PROVIDER.url + getURL(PROVIDER.endpoints.exportTransactions, { stakeAddress, year, format })
   );
 }

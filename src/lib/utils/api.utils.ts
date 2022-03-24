@@ -46,7 +46,7 @@ export async function request(
   return json;
 }
 
-export function getURL(url: string, params: { [key: string]: string | number }): string {
+export function getURL(url: string, params: { [key: string]: string | number } = {}): string {
   let parsedURL = url;
   let haveQueryParam = false;
 
