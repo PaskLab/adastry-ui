@@ -50,14 +50,15 @@
     </div>
     <div class="card-body py-3">
       <div class="table-responsive">
-        <table class="table table-row-bordered table-row-gray-100 align-middle gy-3">
+        <table class="table table-row-bordered table-row-gray-100 align-middle gy-3 fs-8 fs-md-6">
           <thead>
             <tr class="fw-bolder text-muted">
               <th>Epoch</th>
               <th>Rewards (₳)</th>
               <th>Active Stake (₳)</th>
-              <th>Withdrawable</th>
-              <th>Withdrawn</th>
+              <th>Spot ({history.data[0].spotPrice.code})</th>
+              <th>Withdrawable (₳)</th>
+              <th>Withdrawn (₳)</th>
               {#if owner}
                 <th>Revised Rewards (₳)</th>
                 <th>Op Rewards (₳)</th>
@@ -75,10 +76,25 @@
                   </Tooltip>
                 </td>
                 <td class="fw-bolder">
-                  {toAda(record.rewards)}
+                  <Tooltip
+                    text="{record.spotPrice.code} {(
+                      record.spotPrice.price * toAda(record.rewards)
+                    ).toFixed(2)}"
+                  >
+                    {toAda(record.rewards)}
+                  </Tooltip>
                 </td>
                 <td>
-                  {toAda(record.activeStake)}
+                  <Tooltip
+                    text="{record.spotPrice.code} {(
+                      record.spotPrice.price * toAda(record.activeStake)
+                    ).toFixed(2)}"
+                  >
+                    {toAda(record.activeStake)}
+                  </Tooltip>
+                </td>
+                <td>
+                  {record.spotPrice.price.toFixed(2)}
                 </td>
                 <td>
                   {toAda(record.withdrawable)}

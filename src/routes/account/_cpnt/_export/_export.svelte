@@ -38,9 +38,9 @@
 <div class="row">
   <div class="col col-12 col-md-6">
     <div class="card mb-5 mb-xl-10">
-      <div class="card-header border-0 cursor-pointer">
+      <div class="card-header border-0">
         <div class="card-title m-0">
-          <h3 class="fw-bolder m-0">Export Rewards</h3>
+          <h3 class="fw-bolder m-0">Export History (Rewards)</h3>
         </div>
       </div>
 
@@ -63,7 +63,7 @@
 
   <div class="col col-12 col-md-6">
     <div class="card mb-5 mb-xl-10">
-      <div class="card-header border-0 cursor-pointer">
+      <div class="card-header border-0">
         <div class="card-title m-0">
           <h3 class="fw-bolder m-0">Export Transactions</h3>
         </div>

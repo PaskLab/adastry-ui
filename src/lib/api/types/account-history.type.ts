@@ -18,10 +18,16 @@ export type AccountHistoryType = {
   pool: PoolType | null;
   owner: boolean;
   stakeShare: number;
+  spotPrice: SpotPrice;
 };
 
 export type EpochType = {
   epoch: number;
   startTime: number;
   endTime: number;
+};
+
+export type SpotPrice = {
+  code: string;
+  price: number;
 };
