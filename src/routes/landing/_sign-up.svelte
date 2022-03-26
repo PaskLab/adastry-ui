@@ -5,7 +5,7 @@
   import TextInput from '$lib/components/form/text-input.svelte';
   import CreatePasswordInput from '$lib/components/form/create-password.svelte';
   import PasswordInput from '$lib/components/form/password-input.svelte';
-  import SubmitBtn from '$lib/components/form/submit-btn.svelte';
+  import SubmitBtn from '$lib/components/global/action-button.svelte';
   import LeftIcon from '$lib/components/icons/left-arrow.svelte';
   import Checkbox from '$lib/components/form/checkbox.svelte';
   import Modal from '$lib/components/global/modal.svelte';
@@ -156,10 +156,11 @@
 
   <div class="text-center">
     <SubmitBtn
+      type="submit"
       text="Create an account"
       action="{submit}"
       wait="{wait}"
-      customClass="btn-lg btn-primary w-100 mb-5"
+      customClass="btn btn-primary btn-lg btn-primary w-100 mb-5"
     />
   </div>
 </form>

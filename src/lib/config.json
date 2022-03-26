@@ -12,6 +12,7 @@
         "accountList": "/account/list",
         "addAccount": "/account",
         "updateAccount": "/account",
+        "deleteAccount": "/account/{stakeAddress}",
         "getAccount": "/account/{stakeAddress}",
         "getHistory": "/account/{stakeAddress}/history",
         "getTransactions": "/account/{stakeAddress}/transactions",

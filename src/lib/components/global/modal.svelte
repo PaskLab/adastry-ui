@@ -1,23 +1,35 @@
 <script lang="ts">
-  import CrossIcon from '../icons/cross.svelte';
+  import CrossIcon from '$lib/components/icons/cross.svelte';
+  import ActionBtn from '$lib/components/global/action-button.svelte';
 
   export let isOpen = false;
   export let backdrop = true;
-  export let action = close;
-  export let callback = () => undefined;
+  export let action = close; // Customizable action. Modal must be close explicitly
+  export let callback = () => undefined; // Always called on modal close
   export let actionBtnText = 'Confirm';
+  export let actionBtnClass = 'btn btn-primary';
   export let closeBtnText = 'Close';
   export let hideClose = false;
   export let hideAction = false;
   export let outClick = false;
+  let wait = false;
 
   export function open(): void {
     isOpen = true;
   }
 
   export function close(): void {
+    wait = false;
     isOpen = false;
     if (callback) callback();
+  }
+
+  export function startWait(): void {
+    wait = true;
+  }
+
+  export function stopWait(): void {
+    wait = false;
   }
 
   function handleOutClick() {
@@ -69,7 +81,12 @@
           <button on:click="{close}" type="button" class="btn btn-light">{closeBtnText}</button>
         {/if}
         {#if !hideAction}
-          <button on:click="{action}" type="button" class="btn btn-primary">{actionBtnText}</button>
+          <ActionBtn
+            text="{actionBtnText}"
+            action="{action}"
+            wait="{wait}"
+            customClass="{actionBtnClass}"
+          />
         {/if}
       </div>
     </div>

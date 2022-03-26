@@ -7,7 +7,7 @@
   import TextInput from '$lib/components/form/text-input.svelte';
   import { addUserAccount } from '$lib/api/wallets';
   import Modal from '$lib/components/global/modal.svelte';
-  import SubmitBtn from '$lib/components/form/submit-btn.svelte';
+  import SubmitBtn from '$lib/components/global/action-button.svelte';
 
   // Routing
   let mainView = getContext<Writable<typeof SvelteComponent>>('mainView');
@@ -105,7 +105,7 @@
         </div>
 
         <div class="mb-10 text-center">
-          <SubmitBtn text="Add account" action="{submit}" wait="{wait}" />
+          <SubmitBtn type="submit" text="Add account" action="{submit}" wait="{wait}" />
         </div>
       </form>
     </div>

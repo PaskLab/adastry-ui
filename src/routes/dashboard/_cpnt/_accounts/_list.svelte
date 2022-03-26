@@ -3,23 +3,51 @@
   import RightArrowIcon from '$lib/components/icons/right-arrow.svelte';
   import PlusIcon from '$lib/components/icons/plus.svelte';
   import Skeleton from '$lib/components/global/skeleton.svelte';
-  import { getUserAccounts } from '$lib/api/wallets';
+  import { deleteUserAccount, getUserAccounts } from '$lib/api/wallets';
   import { getContext } from 'svelte';
   import type { SvelteComponent } from 'svelte';
   import type { Writable } from 'svelte/store';
   import AddAccount from './_add.svelte';
   import config from '$lib/config.json';
   import { getURL } from '$lib/utils/api.utils';
+  import TrashIcon from '$lib/components/icons/trash.svelte';
+  import Modal from '$lib/components/global/modal.svelte';
 
-  const pAccounts = getUserAccounts();
+  let pAccounts = getUserAccounts();
 
   const colors = config.theme.colors;
 
   // Routing
   let mainView = getContext<Writable<typeof SvelteComponent>>('mainView');
 
-  function handleAdd() {
+  // Modals
+  let errorModal: typeof Modal;
+  let deleteModal: typeof Modal;
+  let deleteAccountName = '';
+  let deleteStakeAddress = '';
+
+  // Add account
+  function handleAdd(): void {
     mainView.set(AddAccount);
+  }
+
+  // Delete account
+  function handleDelete(accountName: string, stakeAddress: string): void {
+    deleteAccountName = accountName;
+    deleteStakeAddress = stakeAddress;
+    deleteModal.open();
+  }
+
+  function deleteAction(): void {
+    deleteModal.startWait();
+    deleteUserAccount(deleteStakeAddress)
+      .then(() => {
+        pAccounts = getUserAccounts();
+      })
+      .catch(() => {
+        errorModal.open();
+      })
+      .finally(() => deleteModal.close());
   }
 </script>
 
@@ -113,6 +141,16 @@
                   >
                 </td>
                 <td class="text-end">
+                  <button
+                    on:click="{() => handleDelete(account.name, account.stakeAddress)}"
+                    type="button"
+                    tabindex="0"
+                    class="btn btn-sm btn-icon btn-bg-light btn-active-color-danger"
+                  >
+                    <span class="svg-icon svg-icon-2">
+                      <TrashIcon />
+                    </span>
+                  </button>
                   <a
                     href="{getURL(config.routing.accountDetail, {
                       stakeAddress: account.stakeAddress,
@@ -140,3 +178,30 @@
     </div>
   </div>
 </div>
+
+<Modal
+  bind:this="{deleteModal}"
+  action="{deleteAction}"
+  actionBtnText="Delete"
+  outClick="true"
+  actionBtnClass="btn btn-danger"
+>
+  <svelte:fragment slot="title">
+    <span class="text-danger">Delete Confirmation</span>
+  </svelte:fragment>
+  <div class="text-center" slot="body">
+    <p>You are about to delete the following account:</p>
+    <p class="text-danger fw-bolder">
+      {deleteAccountName}
+    </p>
+  </div>
+</Modal>
+
+<Modal bind:this="{errorModal}" hideAction="true">
+  <svelte:fragment slot="title">
+    <span class="text-danger">Server Error</span>
+  </svelte:fragment>
+  <p slot="body" class="text-center">
+    Oops, something unexpected happened. Please try again later or contact support.
+  </p>
+</Modal>

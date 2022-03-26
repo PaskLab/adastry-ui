@@ -1,16 +1,12 @@
 <script lang="ts">
-  export let text = 'Submit';
+  export let type = 'button';
+  export let text = 'Ok';
   export let wait = false;
-  export let customClass = '';
+  export let customClass = 'btn btn-primary';
   export let action = () => undefined;
 </script>
 
-<button
-  type="submit"
-  on:click|preventDefault="{action}"
-  disabled="{wait}"
-  class="btn btn-primary {customClass}"
->
+<button type="{type}" on:click|preventDefault="{action}" disabled="{wait}" class="{customClass}">
   <span class="indicator-label {wait ? 'wait' : ''}">{text}</span>
   <span class="indicator-progress {wait ? 'wait' : ''}">
     Please wait...

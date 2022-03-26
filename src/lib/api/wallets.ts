@@ -26,6 +26,13 @@ export async function addUserAccount(name: string, address: string): Promise<Res
   );
 }
 
+export async function deleteUserAccount(stakeAddress: string): Promise<ResponseType> {
+  return request(
+    PROVIDER.url + getURL(PROVIDER.endpoints.deleteAccount, { stakeAddress }),
+    'DELETE'
+  );
+}
+
 export async function updateUserAccount(name: string, address: string): Promise<ResponseType> {
   return request(PROVIDER.url + PROVIDER.endpoints.updateAccount, 'PATCH', {
     name,

@@ -9,6 +9,7 @@ export type TransactionType = {
   txIndex: number;
   blockHeight: number;
   blockTime: number;
+  txType: 'RX' | 'TX' | 'MX';
   received: BlockfrostAmount[];
   sent: BlockfrostAmount[];
   fees: number;

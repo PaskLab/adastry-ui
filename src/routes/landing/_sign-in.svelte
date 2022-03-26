@@ -3,7 +3,7 @@
   import { z } from 'zod';
   import TextInput from '$lib/components/form/text-input.svelte';
   import PasswordInput from '$lib/components/form/password-input.svelte';
-  import SubmitBtn from '$lib/components/form/submit-btn.svelte';
+  import SubmitBtn from '$lib/components/global/action-button.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import { jwt, isTokenValid, darkMode, isSessionExpired } from '$lib/stores/session.store';
   import { login } from '$lib/api/auth';
@@ -92,10 +92,11 @@
 
   <div class="text-center">
     <SubmitBtn
+      type="submit"
       text="Continue"
       action="{submit}"
       wait="{wait}"
-      customClass="btn-lg btn-primary w-100 mb-5"
+      customClass="btn btn-primary btn-lg btn-primary w-100 mb-5"
     />
   </div>
 </form>

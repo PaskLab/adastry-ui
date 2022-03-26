@@ -1,6 +1,6 @@
 <script lang="ts">
   import SearchIcon from '$lib/components/icons/search.svelte';
-  import SubmitBtn from '$lib/components/form/submit-btn.svelte';
+  import ActionBtn from '$lib/components/global/action-button.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import type { CSVFileType } from '$lib/api/types/csv-file.type';
 
@@ -41,7 +41,7 @@
         your responsibility to verify the integrity of your data before using it for tax purposes.
       </div>
     </div>
-    <SubmitBtn
+    <ActionBtn
       text="Export"
       action="{handleExport}"
       wait="{wait}"

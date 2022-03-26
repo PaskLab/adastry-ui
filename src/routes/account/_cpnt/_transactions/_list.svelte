@@ -83,7 +83,7 @@
                   {/each}
                 </td>
                 <td>
-                  {toAda(record.fees)}
+                  {record.txType === 'RX' ? '' : toAda(record.fees)}
                 </td>
                 <td>
                   {#each record.tags as tag}
@@ -146,6 +146,6 @@
     overflow-wrap: anywhere;
   }
   .review-notice {
-    max-width: 500px;
+    max-width: 460px;
   }
 </style>
