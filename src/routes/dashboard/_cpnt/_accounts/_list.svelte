@@ -104,6 +104,12 @@
                 <span class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
                   <Skeleton height="34px" />
                 </span>
+                <span class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                  <Skeleton height="34px" />
+                </span>
+                <span class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                  <Skeleton height="34px" />
+                </span>
               </td>
             </tr>
           {:then accounts}

@@ -104,10 +104,22 @@
                 </td>
                 {#if $owner}
                   <td>
-                    {toAda(record.revisedRewards)}
+                    <Tooltip
+                      text="{record.spotPrice.code} {(
+                        record.spotPrice.price * toAda(record.revisedRewards)
+                      ).toFixed(2)}"
+                    >
+                      {toAda(record.revisedRewards)}
+                    </Tooltip>
                   </td>
                   <td>
-                    {toAda(record.opRewards)}
+                    <Tooltip
+                      text="{record.spotPrice.code} {(
+                        record.spotPrice.price * toAda(record.opRewards)
+                      ).toFixed(2)}"
+                    >
+                      {toAda(record.opRewards)}
+                    </Tooltip>
                   </td>
                   <td>
                     {(record.stakeShare * 100).toFixed(4)}
