@@ -13,7 +13,7 @@
   import { getURL } from '$lib/utils/api.utils';
   import { tweened } from 'svelte/motion';
   import { expoOut } from 'svelte/easing';
-  import { getContext, onDestroy, onMount, setContext, SvelteComponent } from 'svelte';
+  import { getContext, onDestroy, onMount, setContext } from 'svelte';
   import InfoBox from './_cpnt/_info-box.svelte';
   import { Writable, writable } from 'svelte/store';
   import HistoryList from './_cpnt/_history/_list.svelte';
@@ -21,13 +21,15 @@
   import ExportView from './_cpnt/_export/_export.svelte';
   import MainViewNav from './_cpnt/_main-view-nav.svelte';
   import type { AccountType } from '$lib/api/types/account.type';
+  import type { ViewType } from '$lib/types/view.type';
 
   setContext('historyPage', writable<number>(1));
   setContext('transactionPage', writable<number>(1));
+  setContext('isOwner', writable<boolean>(false));
 
   let pAccount: Promise<AccountType> = Promise.reject();
   let account: AccountType;
-  let owner = false;
+  let owner = getContext<Writable<boolean>>('isOwner');
 
   const colors = config.theme.colors;
   const lifetimeRewards = tweened(0.0, {
@@ -44,16 +46,16 @@
   });
 
   // Main View Routing
-  let mainView: typeof SvelteComponent;
-  setContext('mainView', writable<typeof SvelteComponent>(HistoryList));
-  let unsubsriber = getContext<Writable<typeof SvelteComponent>>('mainView').subscribe(
-    (v) => (mainView = v)
-  );
-  const mainViewOptions = [
-    { id: 'history', component: HistoryList, text: 'History' },
-    { id: 'transactions', component: TxList, text: 'Transaction' },
-    { id: 'export', component: ExportView, text: 'Export Data' }
+  let mainView: ViewType;
+
+  const mainViewOptions: { id: string; view: ViewType; text: string }[] = [
+    { id: 'history', view: { component: HistoryList, props: {} }, text: 'History' },
+    { id: 'transactions', view: { component: TxList, props: {} }, text: 'Transaction' },
+    { id: 'export', view: { component: ExportView, props: {} }, text: 'Export Data' }
   ];
+
+  setContext('mainView', writable<ViewType>(mainViewOptions[0].view));
+  let unsubsriber = getContext<Writable<ViewType>>('mainView').subscribe((v) => (mainView = v));
 
   onMount(() => {
     pAccount = getAccount($page.params.stakeAddress);
@@ -100,7 +102,7 @@
                   <h2 class="text-gray-800 fs-2 fw-bolder me-3">
                     {account.name}
                   </h2>
-                  {#if owner}
+                  {#if $owner}
                     <div class="badge badge-light-primary mx-1 mb-2">Pool Owner</div>
                   {/if}
                   {#if account.loyalty > 0}
@@ -158,7 +160,7 @@
     {/await}
   </div>
 
-  <svelte:component this="{mainView}" bind:owner />
+  <svelte:component this="{mainView.component}" {...mainView.props} />
 </div>
 
 <style lang="scss">

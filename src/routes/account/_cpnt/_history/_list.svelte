@@ -12,7 +12,7 @@
   import { get } from 'svelte/store';
   import Tooltip from '$lib/components/global/tooltip.svelte';
 
-  export let owner = false;
+  export let owner = getContext<Writable<boolean>>('isOwner');
 
   const pageStore = getContext<Writable<number>>('historyPage');
   let currentPage = get(pageStore);
@@ -29,7 +29,7 @@
   $: if (browser) {
     pHistory
       .then((res) => {
-        owner = res.data.some((record) => record.owner);
+        owner.set(res.data.some((record) => record.owner));
       })
       .catch(console.log);
   }
@@ -59,7 +59,7 @@
               <th>Spot ({history.data[0].spotPrice.code})</th>
               <th>Withdrawable (₳)</th>
               <th>Withdrawn (₳)</th>
-              {#if owner}
+              {#if $owner}
                 <th>Revised Rewards (₳)</th>
                 <th>Op Rewards (₳)</th>
                 <th>Stake Share (%)</th>
@@ -102,7 +102,7 @@
                 <td>
                   {toAda(record.withdrawn)}
                 </td>
-                {#if owner}
+                {#if $owner}
                   <td>
                     {toAda(record.revisedRewards)}
                   </td>

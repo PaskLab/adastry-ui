@@ -5,10 +5,13 @@
   import { Writable } from 'svelte/store';
   import AccountList from './_list.svelte';
   import TextInput from '$lib/components/form/text-input.svelte';
-  import { addUserAccount } from '$lib/api/wallets';
+  import { updateUserAccount } from '$lib/api/wallets';
   import Modal from '$lib/components/global/modal.svelte';
   import SubmitBtn from '$lib/components/global/action-button.svelte';
   import type { ViewType } from '$lib/types/view.type';
+
+  export let stakeAddress = '';
+  export let currentName = '';
 
   // Routing
   let mainView = getContext<Writable<ViewType>>('mainView');
@@ -20,21 +23,18 @@
   // Form
   let nameField: typeof TextInput;
   let name = '';
-  let addressField: typeof TextInput;
-  let address = '';
   let wait = false;
-  let successModal: typeof Modal;
   let errorModal: typeof Modal;
   let errorModalBody: { statusCode: number; message: string; error: string };
 
   function submit(): void {
-    const fields = [nameField.validate(), addressField.validate()];
+    const fields = [nameField.validate()];
     if (fields.every((field) => field)) {
       wait = true;
-      addUserAccount(name.trim(), address.trim())
+      updateUserAccount(stakeAddress, name.trim())
         .then((res) => {
           if ([200, 201].includes(res.statusCode)) {
-            successModal.open();
+            mainView.set({ component: AccountList, props: {} });
           } else {
             wait = false;
             if (res.statusCode && res.error) {
@@ -58,7 +58,7 @@
 <div class="card card-bordered card-xl-stretch mb-xl-8">
   <div class="card-header pt-5">
     <h3 class="card-title align-items-start flex-column">
-      <span class="card-label fw-bolder fs-3 mb-1">Add an account</span>
+      <span class="card-label fw-bolder fs-3 mb-1">Update {currentName}</span>
     </h3>
     <div class="card-toolbar">
       <!--begin::Menu-->
@@ -83,51 +83,22 @@
             bind:this="{nameField}"
             bind:value="{name}"
             name="name"
-            label="Account Name"
+            label="New account Name"
             placeholder="My wallet account name"
             schema="{z.string().nonempty()}"
           />
         </div>
 
-        <div class="mb-10">
-          <TextInput
-            bind:this="{addressField}"
-            bind:value="{address}"
-            name="address"
-            label="Used wallet address or Stake address"
-            placeholder="stake1ux97hsr... | addr1ux6tsw9r..."
-            schema="{z
-              .string()
-              .regex(
-                new RegExp('^stake[a-z0-9]{54}|addr[a-z0-9]{99}$'),
-                'Must be a valid mainnet payment or stake address'
-              )}"
-          />
-        </div>
-
         <div class="mb-10 text-center">
-          <SubmitBtn type="submit" text="Add account" action="{submit}" wait="{wait}" />
+          <SubmitBtn type="submit" text="Save" action="{submit}" wait="{wait}" />
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<Modal
-  bind:this="{successModal}"
-  hideClose="true"
-  outClick="true"
-  actionBtnText="Continue"
-  callback="{() => mainView.set({ component: AccountList, props: {} })}"
->
-  <svelte:fragment slot="title">Account successfully added!</svelte:fragment>
-  <p slot="body" class="text-center">
-    Account <strong>{name}</strong> successfully added!
-  </p>
-</Modal>
-
 <Modal bind:this="{errorModal}" hideAction="true">
-  <svelte:fragment slot="title">Failed to add account</svelte:fragment>
+  <svelte:fragment slot="title">Failed to update account</svelte:fragment>
   <div slot="body" class="text-center modal-error-message">
     {#if errorModalBody}
       {#if typeof errorModalBody.message !== 'string' && errorModalBody.message.length}
@@ -141,7 +112,7 @@
         <em>Code: {errorModalBody.statusCode} - {errorModalBody.error}</em>
       </p>
     {:else}
-      Failed to add a new wallet account.
+      Failed to update account.
       <br />
       Please try again or contact support.
     {/if}

@@ -5,31 +5,28 @@
   import Skeleton from '$lib/components/global/skeleton.svelte';
   import { deleteUserAccount, getUserAccounts } from '$lib/api/wallets';
   import { getContext } from 'svelte';
-  import type { SvelteComponent } from 'svelte';
   import type { Writable } from 'svelte/store';
   import AddAccount from './_add.svelte';
+  import UpdateAccount from './_update.svelte';
   import config from '$lib/config.json';
   import { getURL } from '$lib/utils/api.utils';
+  import PencilIcon from '$lib/components/icons/pencil.svelte';
   import TrashIcon from '$lib/components/icons/trash.svelte';
   import Modal from '$lib/components/global/modal.svelte';
+  import type { ViewType } from '$lib/types/view.type';
 
   let pAccounts = getUserAccounts();
 
   const colors = config.theme.colors;
 
   // Routing
-  let mainView = getContext<Writable<typeof SvelteComponent>>('mainView');
+  let mainView = getContext<Writable<ViewType>>('mainView');
 
   // Modals
   let errorModal: typeof Modal;
   let deleteModal: typeof Modal;
   let deleteAccountName = '';
   let deleteStakeAddress = '';
-
-  // Add account
-  function handleAdd(): void {
-    mainView.set(AddAccount);
-  }
 
   // Delete account
   function handleDelete(accountName: string, stakeAddress: string): void {
@@ -64,7 +61,7 @@
     <div class="card-toolbar">
       <!--begin::Menu-->
       <button
-        on:click="{handleAdd}"
+        on:click="{() => mainView.set({ component: AddAccount, props: {} })}"
         type="button"
         class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
       >
@@ -141,6 +138,20 @@
                   >
                 </td>
                 <td class="text-end">
+                  <button
+                    on:click="{() =>
+                      mainView.set({
+                        component: UpdateAccount,
+                        props: { stakeAddress: account.stakeAddress, currentName: account.name }
+                      })}"
+                    type="button"
+                    tabindex="0"
+                    class="btn btn-sm btn-icon btn-bg-light btn-active-color-warning"
+                  >
+                    <span class="svg-icon svg-icon-2">
+                      <PencilIcon />
+                    </span>
+                  </button>
                   <button
                     on:click="{() => handleDelete(account.name, account.stakeAddress)}"
                     type="button"

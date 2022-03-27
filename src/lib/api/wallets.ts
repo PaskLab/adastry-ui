@@ -33,11 +33,17 @@ export async function deleteUserAccount(stakeAddress: string): Promise<ResponseT
   );
 }
 
-export async function updateUserAccount(name: string, address: string): Promise<ResponseType> {
-  return request(PROVIDER.url + PROVIDER.endpoints.updateAccount, 'PATCH', {
-    name,
-    address
-  });
+export async function updateUserAccount(stakeAddress: string, name: string): Promise<ResponseType> {
+  return request(
+    PROVIDER.url + PROVIDER.endpoints.updateAccount,
+    'PATCH',
+    {
+      stakeAddress,
+      name
+    },
+    {},
+    [400, 404]
+  );
 }
 
 export async function getAccount(stakeAddress: string): Promise<AccountType> {

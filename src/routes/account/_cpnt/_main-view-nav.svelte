@@ -1,21 +1,21 @@
 <script lang="ts">
-  import type { SvelteComponent } from 'svelte';
   import { getContext } from 'svelte';
+  import type { ViewType } from '$lib/types/view.type';
+  import type { Writable } from 'svelte/store';
 
   type NavOptions = {
     id: string;
-    component: typeof SvelteComponent;
-    icon: typeof SvelteComponent;
+    view: ViewType;
     text: string;
   };
 
   export let options: NavOptions[];
   export let active = options[0].id;
-  let mainView = getContext('mainView');
+  let mainView = getContext<Writable<ViewType>>('mainView');
 
   function handleClick(option: NavOptions) {
     if (active != option.id) active = option.id;
-    mainView.set(option.component);
+    mainView.set(option.view);
   }
 </script>
 
