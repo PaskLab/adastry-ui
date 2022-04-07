@@ -121,9 +121,14 @@
   callback="{() => mainView.set({ component: AccountList, props: {} })}"
 >
   <svelte:fragment slot="title">Account successfully added!</svelte:fragment>
-  <p slot="body" class="text-center">
-    Account <strong>{name}</strong> successfully added!
-  </p>
+  <svelte:fragment slot="body">
+    <p class="text-center">
+      Account <strong>{name}</strong> successfully added!
+    </p>
+    <p class="text-center text-primary fw-bolder">
+      The synchronization process will take a few minutes...
+    </p>
+  </svelte:fragment>
 </Modal>
 
 <Modal bind:this="{errorModal}" hideAction="true">
