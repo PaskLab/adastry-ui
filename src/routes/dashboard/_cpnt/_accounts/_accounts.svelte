@@ -11,6 +11,4 @@
   getContext<Writable<ViewType>>('mainView').subscribe((v) => (mainView = v));
 </script>
 
-<div class="col-xl-8">
-  <svelte:component this="{mainView.component}" {...mainView.props} />
-</div>
+<svelte:component this="{mainView.component}" {...mainView.props} />

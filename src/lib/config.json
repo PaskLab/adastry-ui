@@ -14,6 +14,8 @@
         "updateAccount": "/account",
         "deleteAccount": "/account/{stakeAddress}",
         "getAccount": "/account/{stakeAddress}",
+        "monthlyRewardsStats": "/stats/monthly-rewards",
+        "monthlyStakeStats": "/stats/monthly-stake",
         "getHistory": "/account/{stakeAddress}/history",
         "getTransactions": "/account/{stakeAddress}/transactions",
         "exportRewards": "/account/{stakeAddress}/export-rewards/{year}",
@@ -36,6 +38,34 @@
       "#ffc107",
       "#198754",
       "#20c997"
+    ],
+    "shortMonths": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "longMonths": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
     ]
   }
 }

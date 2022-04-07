@@ -38,3 +38,7 @@ export function parseAssetHex(hex: string): { policy: string; name: string } {
 export function range(size: number, startAt = 0): number[] {
   return [...Array(size).keys()].map((i) => i + startAt);
 }
+
+export function formatThousand(value: number, separator = ','): string {
+  return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, separator);
+}

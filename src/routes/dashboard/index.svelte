@@ -7,6 +7,7 @@
   import Pools from './_cpnt/_pools.svelte';
   import type { SvelteComponent } from 'svelte';
   import type { Writable } from 'svelte/store';
+  import Stats from './_cpnt/_stats/_stats.svelte';
 
   // Main View Routing
   let mainView: typeof SvelteComponent;
@@ -24,11 +25,12 @@
 
 <div class="content flex-row-fluid">
   <div class="row gy-0 gx-10">
-    <MainViewNav options="{mainViewOptions}" />
-    <svelte:component this="{mainView}" />
-
+    <div class="col-xl-8 pb-10 pb-xl-0">
+      <MainViewNav options="{mainViewOptions}" />
+      <svelte:component this="{mainView}" />
+    </div>
     <div class="col-xl-4">
-      <!--!!!!!!!!!!!!!!!Right Column !!!!!!!!!!!!!!!!-->
+      <Stats />
     </div>
   </div>
 </div>
