@@ -10,17 +10,28 @@
     </div>
 
     <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
-      <!--      <li class="menu-item">-->
-      <!--        <a href="/" target="_blank" class="menu-link px-2">About</a>-->
-      <!--      </li>-->
       <li class="menu-item">
         <a href="/" target="_blank" class="menu-link px-2">Pricing</a>
       </li>
       <li class="menu-item">
         <a
+          href="https://github.com/PaskLab/adastry-ui/discussions/categories/ideas"
+          target="_blank"
+          class="menu-link px-2">Feature Request</a
+        >
+      </li>
+      <li class="menu-item">
+        <a
+          href="https://github.com/PaskLab/adastry-ui/discussions/categories/q-a"
+          target="_blank"
+          class="menu-link px-2">Q&A</a
+        >
+      </li>
+      <li class="menu-item">
+        <a
           href="https://github.com/PaskLab/adastry-ui/issues"
           target="_blank"
-          class="menu-link px-2">Support</a
+          class="menu-link px-2">Report Issue</a
         >
       </li>
     </ul>
