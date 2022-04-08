@@ -16,7 +16,7 @@
 <div class="d-flex flex-column flex-root">
   <div class="d-flex flex-column flex-lg-row flex-column-fluid">
     <Aside />
-    <div class="d-flex flex-column flex-lg-row-fluid py-10">
+    <div class="d-flex flex-column flex-lg-row-fluid py-10 landing-bg">
       <div class="d-flex flex-center flex-column flex-column-fluid">
         <div class="w-lg-500px p-10 p-lg-15 mx-auto">
           <svelte:component this="{mainView}" />
@@ -26,3 +26,9 @@
     </div>
   </div>
 </div>
+
+<style lang="scss">
+  :global(.dark-mode) .landing-bg {
+    background-color: #0b0d17;
+  }
+</style>
