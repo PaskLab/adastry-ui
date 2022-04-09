@@ -101,19 +101,19 @@
   </div>
 </form>
 
-<Modal bind:this="{errorModal}" hideAction="true">
+<Modal bind:this="{errorModal}" hideAction="{true}">
   <svelte:fragment slot="title">Server Error</svelte:fragment>
   <p slot="body" class="text-center">
     Oops, something unexpected happened. Please try again later or contact support.
   </p>
 </Modal>
 
-<Modal bind:this="{credentialModal}" hideAction="true" outClick="true">
+<Modal bind:this="{credentialModal}" hideAction="{true}" outClick="{true}">
   <svelte:fragment slot="title">Invalid username or password</svelte:fragment>
   <p slot="body" class="text-center">Please verify your authentication credentials.</p>
 </Modal>
 
-<Modal bind:this="{expiredModal}" hideAction="true">
+<Modal bind:this="{expiredModal}" hideAction="{true}">
   <svelte:fragment slot="title">Session Expired</svelte:fragment>
   <p slot="body" class="text-center">The session has expired, please sign-in again.</p>
 </Modal>

@@ -7,9 +7,11 @@
   export let label: string | boolean = true;
   export let value: string | undefined = undefined;
   export let placeholder = '';
+  export let clear = false;
   export let customClass = '';
   export let autocomplete = false;
   export let error = false;
+  export let validation = true;
   export let schema: ZodString = z.string({
     required_error: 'Required',
     invalid_type_error: 'Must be a string'
@@ -35,7 +37,7 @@
     return result.success;
   }
 
-  $: if (init) {
+  $: if (init && validation) {
     value = value;
     validate();
   }
@@ -45,22 +47,41 @@
   <label class="form-label fs-6 fw-bolder text-dark" for="{id}">{label.length ? label : name}</label
   >
 {/if}
-
-<input
-  id="{id}"
-  class="form-control {customClass} {error ? 'is-invalid' : init && value.length ? 'is-valid' : ''}"
-  type="text"
-  name="{name}"
-  placeholder="{placeholder}"
-  autocomplete="{autocomplete ? 'on' : 'off'}"
-  on:focusout|once="{initValidation}"
-  bind:value
-/>
-
+<div class="position-relative">
+  <input
+    id="{id}"
+    class="form-control {customClass} {error
+      ? 'is-invalid'
+      : init && value.length && validation
+      ? 'is-valid'
+      : ''} {clear ? 'clear-enabled' : ''}"
+    type="text"
+    name="{name}"
+    placeholder="{placeholder}"
+    autocomplete="{autocomplete ? 'on' : 'off'}"
+    on:focusout|once="{initValidation}"
+    bind:value
+  />
+  {#if clear}
+    <span
+      on:mousedown|preventDefault="{() => (value = '')}"
+      class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+    >
+      <i class="bi bi-x-circle fs-2"></i>
+    </span>
+  {/if}
+</div>
 <InputError error="{error}" errorMessages="{errorMessages}" />
 
-<style>
+<style lang="scss">
   label:first-letter {
     text-transform: capitalize;
+  }
+
+  .clear-enabled {
+    &.is-invalid,
+    &.is-valid {
+      background-position: right calc(2.375em + 0.375rem) center !important;
+    }
   }
 </style>

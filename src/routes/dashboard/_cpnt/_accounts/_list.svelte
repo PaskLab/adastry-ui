@@ -200,8 +200,9 @@
   bind:this="{deleteModal}"
   action="{deleteAction}"
   actionBtnText="Delete"
-  outClick="true"
+  outClick="{true}"
   actionBtnClass="btn btn-danger"
+  callback="{() => location.reload()}"
 >
   <svelte:fragment slot="title">
     <span class="text-danger">Delete Confirmation</span>
@@ -214,7 +215,7 @@
   </div>
 </Modal>
 
-<Modal bind:this="{errorModal}" hideAction="true">
+<Modal bind:this="{errorModal}" hideAction="{true}">
   <svelte:fragment slot="title">
     <span class="text-danger">Server Error</span>
   </svelte:fragment>

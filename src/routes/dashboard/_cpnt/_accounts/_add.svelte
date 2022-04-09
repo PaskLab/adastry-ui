@@ -1,6 +1,6 @@
 <script lang="ts">
   import { z } from 'zod';
-  import RightArrow from '$lib/components/icons/right-arrow.svelte';
+  import BackArrow from '$lib/components/icons/back-arrow.svelte';
   import { getContext } from 'svelte';
   import { Writable } from 'svelte/store';
   import AccountList from './_list.svelte';
@@ -67,10 +67,10 @@
         type="button"
         class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
       >
-        Back
-        <span class="svg-icon svg-icon-2">
-          <RightArrow />
+        <span class="svg-icon svg-icon-2 position-relative" style="top: -1px;">
+          <BackArrow />
         </span>
+        Back
       </button>
     </div>
   </div>
@@ -115,10 +115,10 @@
 
 <Modal
   bind:this="{successModal}"
-  hideClose="true"
-  outClick="true"
+  hideClose="{true}"
+  outClick="{true}"
   actionBtnText="Continue"
-  callback="{() => mainView.set({ component: AccountList, props: {} })}"
+  callback="{() => location.reload()}"
 >
   <svelte:fragment slot="title">Account successfully added!</svelte:fragment>
   <svelte:fragment slot="body">
@@ -131,7 +131,7 @@
   </svelte:fragment>
 </Modal>
 
-<Modal bind:this="{errorModal}" hideAction="true">
+<Modal bind:this="{errorModal}" hideAction="{true}">
   <svelte:fragment slot="title">Failed to add account</svelte:fragment>
   <div slot="body" class="text-center modal-error-message">
     {#if errorModalBody}

@@ -167,7 +167,7 @@
 
 <Modal
   bind:this="{successModal}"
-  hideClose="true"
+  hideClose="{true}"
   actionBtnText="Continue"
   callback="{() => (location.href = '/')}"
 >
@@ -179,7 +179,7 @@
   </p>
 </Modal>
 
-<Modal bind:this="{errorModal}" hideAction="true" outClick="true">
+<Modal bind:this="{errorModal}" hideAction="{true}" outClick="{true}">
   <svelte:fragment slot="title">Failed to create account</svelte:fragment>
   <div slot="body" class="text-center modal-error-message">
     {#if errorModalBody}
@@ -199,7 +199,7 @@
   </div>
 </Modal>
 
-<Modal bind:this="{internalErrorModal}" hideAction="true">
+<Modal bind:this="{internalErrorModal}" hideAction="{true}">
   <svelte:fragment slot="title">Server Error</svelte:fragment>
   <p slot="body" class="text-center">
     Oops, something unexpected happened. Please try again later or contact support.

@@ -50,7 +50,7 @@
   </div>
 </div>
 
-<Modal bind:this="{errorModal}" hideAction="true">
+<Modal bind:this="{errorModal}" hideAction="{true}">
   <svelte:fragment slot="title">Server Error</svelte:fragment>
   <p slot="body" class="text-center">
     Oops, something unexpected happened. Please try again later or contact support.

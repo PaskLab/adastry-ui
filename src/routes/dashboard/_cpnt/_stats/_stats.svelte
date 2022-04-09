@@ -37,7 +37,7 @@
       <span class="text-muted fw-bold fs-7">Last 12 months</span>
     </h3>
     <!--begin::Toolbar-->
-    <div class="card-toolbar" data-kt-buttons="true">
+    <div class="card-toolbar">
       {#each mainViewOptions as option}
         <button
           on:click="{() => changeView(option)}"

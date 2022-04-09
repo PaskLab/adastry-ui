@@ -4,7 +4,7 @@
   import { getAccount } from '$lib/api/wallets.ts';
   import Skeleton from '$lib/components/global/skeleton.svelte';
   import WalletIcon from '$lib/components/icons/wallet.svelte';
-  import RightArrow from '$lib/components/icons/right-arrow.svelte';
+  import BackArrow from '$lib/components/icons/back-arrow.svelte';
   import GiftIcon from '$lib/components/icons/gift.svelte';
   import TrophyIcon from '$lib/components/icons/trophy.svelte';
   import BankIcon from '$lib/components/icons/bank.svelte';
@@ -119,10 +119,10 @@
                   href="{getURL(config.routing.dashboard)}"
                   class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
                 >
-                  Back to dashboard
-                  <span class="svg-icon svg-icon-2">
-                    <RightArrow />
+                  <span class="svg-icon svg-icon-2 position-relative" style="top: -1px;">
+                    <BackArrow />
                   </span>
+                  Back to dashboard
                 </a>
               </div>
             </div>
