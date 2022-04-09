@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer/';
+import { Buffer } from 'buffer';
 
 export function toAda(amount: number): number {
   return amount / 1000000;
