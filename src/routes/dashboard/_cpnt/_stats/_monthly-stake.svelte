@@ -1,12 +1,14 @@
 <script lang="ts">
   import config from '$lib/config.json';
-  import { getContext, onMount } from 'svelte';
+  import { getContext, onDestroy, onMount } from 'svelte';
   import { getMonthlyStakeStats } from '$lib/api/stats';
   import { formatThousand, toAda } from '$lib/utils/helper.utils';
   import type { Writable } from 'svelte/store';
+  import type { Unsubscriber } from 'svelte/store';
+
+  const unsubscribers: Unsubscriber[] = [];
 
   let element;
-
   const fromDate = new Date();
   fromDate.setUTCMonth(fromDate.getUTCMonth() - 12);
 
@@ -166,7 +168,13 @@
         .catch(console.log);
     }
 
-    addAccountEvent.subscribe(() => updateChart());
+    unsubscribers.push(addAccountEvent.subscribe(() => updateChart()));
+  });
+
+  onDestroy(() => {
+    for (const unsubscribe of unsubscribers) {
+      unsubscribe();
+    }
   });
 </script>
 
