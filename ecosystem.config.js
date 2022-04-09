@@ -9,14 +9,14 @@ module.exports = {
       watch: false,
       max_memory_restart: '200M',
       env: {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
       },
       env_dev: {
-        NODE_ENV: 'development'
+        NODE_ENV: 'development',
       },
       out_file: './output.log',
       error_file: './error.log',
-      time: true //prefix logs with standard formated timestamp
-    }
-  ]
+      time: true, //prefix logs with standard formated timestamp
+    },
+  ],
 };
