@@ -15,13 +15,14 @@
   import { expoOut } from 'svelte/easing';
   import { getContext, onDestroy, onMount, setContext } from 'svelte';
   import InfoBox from './_cpnt/_info-box.svelte';
-  import { Writable, writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
   import HistoryList from './_cpnt/_history/_list.svelte';
   import TxList from './_cpnt/_transactions/_list.svelte';
   import ExportView from './_cpnt/_export/_export.svelte';
   import MainViewNav from './_cpnt/_main-view-nav.svelte';
   import type { AccountType } from '$lib/api/types/account.type';
   import type { ViewType } from '$lib/types/view.type';
+  import type { Writable } from 'svelte/store';
 
   setContext('historyPage', writable<number>(1));
   setContext('transactionPage', writable<number>(1));

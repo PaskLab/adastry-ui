@@ -2,7 +2,7 @@
   import { z } from 'zod';
   import BackArrow from '$lib/components/icons/back-arrow.svelte';
   import { getContext } from 'svelte';
-  import { Writable } from 'svelte/store';
+  import type { Writable } from 'svelte/store';
   import AccountList from './_list.svelte';
   import TextInput from '$lib/components/form/text-input.svelte';
   import { updateUserAccount } from '$lib/api/wallets';

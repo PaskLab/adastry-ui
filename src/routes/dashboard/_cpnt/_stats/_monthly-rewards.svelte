@@ -2,7 +2,7 @@
   import config from '$lib/config.json';
   import { onMount } from 'svelte';
   import { getMonthlyRewardsStats } from '$lib/api/stats';
-  import { MonthlyStatsListType } from '$lib/api/types/monthly-stats.type';
+  import type { MonthlyStatsListType } from '$lib/api/types/monthly-stats.type';
   import Skeleton from '$lib/components/global/skeleton.svelte';
   import { formatThousand, toAda } from '$lib/utils/helper.utils';
 

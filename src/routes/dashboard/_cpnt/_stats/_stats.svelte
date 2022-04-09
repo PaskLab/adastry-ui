@@ -1,10 +1,11 @@
 <script lang="ts">
   import MonthlyRewards from './_monthly-rewards.svelte';
   import MonthlyStake from './_monthly-stake.svelte';
-  import { ViewType } from '$lib/types/view.type';
+  import type { ViewType } from '$lib/types/view.type';
 
   // Main View Routing
-  const mainViewOptions: { id: string; view: ViewType; text: string; title: string }[] = [
+  type ViewOptionType = { id: string; view: ViewType; text: string; title: string };
+  const mainViewOptions: ViewOptionType[] = [
     {
       id: 'rewards',
       view: { component: MonthlyRewards, props: {} },
@@ -23,7 +24,7 @@
   let active = mainViewOptions[0].id;
   let mainView: ViewType = mainViewOptions[0].view;
 
-  function changeView(option): void {
+  function changeView(option: ViewOptionType): void {
     mainView = option.view;
     active = option.id;
     title = option.title;

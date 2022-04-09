@@ -2,13 +2,13 @@
   import { z } from 'zod';
   import BackArrow from '$lib/components/icons/back-arrow.svelte';
   import { getContext } from 'svelte';
-  import { Writable } from 'svelte/store';
   import AccountList from './_list.svelte';
   import TextInput from '$lib/components/form/text-input.svelte';
   import { addUserAccount } from '$lib/api/wallets';
   import Modal from '$lib/components/global/modal.svelte';
   import SubmitBtn from '$lib/components/global/action-button.svelte';
   import type { ViewType } from '$lib/types/view.type';
+  import type { Writable } from 'svelte/store';
 
   // Routing
   let mainView = getContext<Writable<ViewType>>('mainView');

@@ -3,8 +3,9 @@
   import Footer from './landing/_footer.svelte';
   import SignInForm from './landing/_sign-in.svelte';
   import { setContext, getContext } from 'svelte';
-  import { writable, Writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
   import type { SvelteComponent } from 'svelte';
+  import type { Writable } from 'svelte/store';
 
   // Component Routing
   let mainView: typeof SvelteComponent;
