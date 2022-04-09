@@ -5,7 +5,7 @@
   },
   "provider": {
     "adastry": {
-      "url": "https://api.pasklab.com",
+      "url": "https://api.adastry.io",
       "endpoints": {
         "login": "/auth/login",
         "createUser": "/user",
