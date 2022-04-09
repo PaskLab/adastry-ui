@@ -9,6 +9,9 @@
   import type { Writable } from 'svelte/store';
   import Stats from './_cpnt/_stats/_stats.svelte';
 
+  // Events
+  setContext('add-account', writable<Date>(new Date()));
+
   // Main View Routing
   let mainView: typeof SvelteComponent;
   setContext('mainView', writable<typeof SvelteComponent>(Accounts));

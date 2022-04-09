@@ -1,20 +1,18 @@
 <script lang="ts">
   import config from '$lib/config.json';
-  import { onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import { getMonthlyRewardsStats } from '$lib/api/stats';
-  import type { MonthlyStatsListType } from '$lib/api/types/monthly-stats.type';
-  import Skeleton from '$lib/components/global/skeleton.svelte';
   import { formatThousand, toAda } from '$lib/utils/helper.utils';
+  import type { Writable } from 'svelte/store';
 
   let element;
   const fromDate = new Date();
   fromDate.setUTCMonth(fromDate.getUTCMonth() - 12);
 
-  let pMonthlyRewards: Promise<MonthlyStatsListType> = Promise.reject();
+  // Events
+  const addAccountEvent = getContext<Writable<Date>>('add-account');
 
   onMount(async () => {
-    pMonthlyRewards = getMonthlyRewardsStats(fromDate.getUTCFullYear(), fromDate.getUTCMonth() + 1);
-
     const ApexModule = await import('apexcharts');
     const ApexCharts = ApexModule.default;
 
@@ -25,6 +23,12 @@
     let lightColor = '#c5e1a5';
 
     let options = {
+      noData: {
+        text: 'No Data',
+        style: {
+          color: labelColor
+        }
+      },
       series: [],
       chart: {
         fontFamily: 'inherit',
@@ -134,31 +138,34 @@
       }
     };
 
-    pMonthlyRewards
-      .then(async (res) => {
-        const data = res.data.map((v) => toAda(v.value));
-        const categories = res.data.map(
-          (v) => config.theme.shortMonths[parseInt(v.month.slice(-2)) - 1]
-        );
-        const newSeries = data.map((v, i) => ({ x: categories[i], y: v }));
-        options.series = [
-          {
-            name: 'Rewards',
-            data: newSeries
-          }
-        ];
+    let chart = new ApexCharts(element, options);
+    chart.render();
 
-        let chart = new ApexCharts(element, options);
-        chart.render();
-      })
-      .catch(console.log);
+    function updateChart() {
+      const pMonthlyRewards = getMonthlyRewardsStats(
+        fromDate.getUTCFullYear(),
+        fromDate.getUTCMonth() + 1
+      );
+      pMonthlyRewards
+        .then(async (res) => {
+          const data = res.data.map((v) => toAda(v.value));
+          const categories = res.data.map(
+            (v) => config.theme.shortMonths[parseInt(v.month.slice(-2)) - 1]
+          );
+          const newSeries = data.map((v, i) => ({ x: categories[i], y: v }));
+
+          chart.updateSeries([
+            {
+              name: 'Rewards',
+              data: newSeries
+            }
+          ]);
+        })
+        .catch(console.log);
+    }
+
+    addAccountEvent.subscribe(() => updateChart());
   });
 </script>
 
-{#await pMonthlyRewards}
-  <Skeleton height="350px" />
-{:then data}
-  <div bind:this="{element}" style="height: 350px;"></div>
-{:catch error}
-  <div class="text-center text-danger p-20">{config.messages.failedFetch}</div>
-{/await}
+<div bind:this="{element}" style="height: 350px;"></div>

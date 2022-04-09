@@ -19,6 +19,9 @@
 
   const colors = config.theme.colors;
 
+  // Events
+  const addAccountEvent = getContext<Writable<Date>>('add-account');
+
   // Routing
   let mainView = getContext<Writable<ViewType>>('mainView');
 
@@ -202,7 +205,7 @@
   actionBtnText="Delete"
   outClick="{true}"
   actionBtnClass="btn btn-danger"
-  callback="{() => location.reload()}"
+  callback="{() => addAccountEvent.set(new Date())}"
 >
   <svelte:fragment slot="title">
     <span class="text-danger">Delete Confirmation</span>

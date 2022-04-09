@@ -10,6 +10,9 @@
   import type { ViewType } from '$lib/types/view.type';
   import type { Writable } from 'svelte/store';
 
+  // Events
+  const addAccountEvent = getContext<Writable<Date>>('add-account');
+
   // Routing
   let mainView = getContext<Writable<ViewType>>('mainView');
 
@@ -118,7 +121,10 @@
   hideClose="{true}"
   outClick="{true}"
   actionBtnText="Continue"
-  callback="{() => location.reload()}"
+  callback="{() => {
+    addAccountEvent.set(new Date());
+    mainView.set({ component: AccountList, props: {} });
+  }}"
 >
   <svelte:fragment slot="title">Account successfully added!</svelte:fragment>
   <svelte:fragment slot="body">
