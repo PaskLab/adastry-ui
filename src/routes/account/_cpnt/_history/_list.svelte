@@ -23,7 +23,7 @@
 
   $: pHistory = getHistory($page.params.stakeAddress, {
     limit: limit,
-    page: currentPage
+    page: currentPage,
   });
 
   $: if (browser) {
@@ -56,7 +56,7 @@
               <th>Epoch</th>
               <th>Rewards (₳)</th>
               <th>Active Stake (₳)</th>
-              <th>Spot ({history.data[0].spotPrice.code})</th>
+              <th>Spot {history.data.length ? `(${history.data[0].spotPrice.code})` : ''}</th>
               <th>Withdrawable (₳)</th>
               <th>Withdrawn (₳)</th>
               {#if $owner}
