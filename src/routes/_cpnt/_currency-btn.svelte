@@ -70,7 +70,7 @@
   on:outclick="{() => (show = false)}"
   class:show
   class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
-  style="z-index: 105; position: fixed; inset: 0px 0px auto auto; margin: 0px; transform: translate(-55px, 66px);"
+  style="z-index: 105; position: fixed; inset: 0 0 auto auto; margin: 0; transform: translate(-100px, 66px);"
   data-popper-placement="bottom-end"
 >
   <div class="menu-item px-3">
