@@ -19,7 +19,7 @@
     if (search.length) {
       const regEx = new RegExp(search.replace(' ', ''), 'i');
       currencies = config.currencies.filter(
-        (v) => regEx.test(v.code.replace(' ', '')) || regEx.test(v.name.replace(' ', ''))
+        (v) => regEx.test(v.code.replace(' ', '')) || regEx.test(v.name.replace(' ', '')),
       );
     } else {
       currencies = config.currencies;
@@ -70,7 +70,7 @@
   on:outclick="{() => (show = false)}"
   class:show
   class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
-  style="z-index: 105; position: fixed; inset: 0px 0px auto auto; margin: 0px; transform: translate(-110px, 66px);"
+  style="z-index: 105; position: fixed; inset: 0px 0px auto auto; margin: 0px; transform: translate(-55px, 66px);"
   data-popper-placement="bottom-end"
 >
   <div class="menu-item px-3">
