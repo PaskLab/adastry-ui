@@ -12,7 +12,7 @@ export function formatDate(date: Date): string {
   const dateStr = date.toLocaleDateString('en-us', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   });
 
   const timeStr = date.toLocaleTimeString();
@@ -24,14 +24,14 @@ export function createTimestamp(date: Date): string {
   const zeroLead = (str: number) => ('0' + str).slice(-2);
 
   return `${date.getFullYear()}-${zeroLead(date.getMonth() + 1)}-${zeroLead(
-    date.getDate()
+    date.getDate(),
   )} ${zeroLead(date.getHours())}:${zeroLead(date.getMinutes())}:${zeroLead(date.getSeconds())}`;
 }
 
 export function parseAssetHex(hex: string): { policy: string; name: string } {
   return {
     policy: hex.slice(0, 56),
-    name: Buffer.from(hex.slice(56), 'hex').toString()
+    name: Buffer.from(hex.slice(56), 'hex').toString(),
   };
 }
 
@@ -40,5 +40,7 @@ export function range(size: number, startAt = 0): number[] {
 }
 
 export function formatThousand(value: number, separator = ','): string {
-  return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, separator);
+  const split = value.toString().split('.');
+  split[0] = split[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+  return split.join('.');
 }
