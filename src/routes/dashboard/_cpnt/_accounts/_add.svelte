@@ -44,7 +44,7 @@
               errorModalBody = {
                 statusCode: res.statusCode,
                 message: res.message,
-                error: res.error
+                error: res.error,
               };
             }
             errorModal.open();
@@ -99,12 +99,15 @@
             name="address"
             label="Used wallet address or Stake address"
             placeholder="stake1ux97hsr... | addr1ux6tsw9r..."
-            schema="{z
-              .string()
-              .regex(
-                new RegExp('^stake[a-z0-9]{54}|addr[a-z0-9]{99}$'),
-                'Must be a valid mainnet payment or stake address'
-              )}"
+            schema="{z.preprocess(
+              (val) => val.trim(),
+              z
+                .string()
+                .regex(
+                  new RegExp('^stake[a-z0-9]{54}|addr[a-z0-9]{99}$'),
+                  'Must be a valid mainnet payment or stake address',
+                ),
+            )}"
           />
         </div>
 
