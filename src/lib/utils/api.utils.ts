@@ -59,7 +59,7 @@ export function getURL(
         parsedURL = `${parsedURL}${haveQueryParam ? '&' : '?'}${key}=${params[key]}`;
         haveQueryParam = true;
       } else {
-        parsedURL = parsedURL.replace('{' + key + '}', params[key].toString());
+        parsedURL = parsedURL.replace('{' + key + '}', params[key]!.toString());
       }
     }
   }
