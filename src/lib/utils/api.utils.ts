@@ -9,7 +9,7 @@ export async function request(
   method: HTTPMethod = 'GET',
   body?: object,
   headers?: object,
-  doNotThrowOn: number[] = []
+  doNotThrowOn: number[] = [],
 ): Promise<any> {
   const credentials: { Authorization?: string } = get(jwt).length
     ? { Authorization: 'Bearer ' + get(jwt) }
@@ -21,11 +21,11 @@ export async function request(
       {
         'Content-Type': 'application/json',
         accept: 'application/json',
-        ...credentials
+        ...credentials,
       },
-      headers ? headers : {}
+      headers ? headers : {},
     ),
-    body: body ? JSON.stringify(body) : undefined
+    body: body ? JSON.stringify(body) : undefined,
   });
 
   if (!result) return Promise.reject(config.messages.failedFetch);
@@ -46,16 +46,21 @@ export async function request(
   return json;
 }
 
-export function getURL(url: string, params: { [key: string]: string | number } = {}): string {
+export function getURL(
+  url: string,
+  params: { [key: string]: string | number | undefined } = {},
+): string {
   let parsedURL = url;
   let haveQueryParam = false;
 
   for (const key in params) {
-    if (parsedURL.indexOf('{' + key + '}') === -1) {
-      parsedURL = `${parsedURL}${haveQueryParam ? '&' : '?'}${key}=${params[key]}`;
-      haveQueryParam = true;
-    } else {
-      parsedURL = parsedURL.replace('{' + key + '}', params[key].toString());
+    if (params[key] !== undefined) {
+      if (parsedURL.indexOf('{' + key + '}') === -1) {
+        parsedURL = `${parsedURL}${haveQueryParam ? '&' : '?'}${key}=${params[key]}`;
+        haveQueryParam = true;
+      } else {
+        parsedURL = parsedURL.replace('{' + key + '}', params[key].toString());
+      }
     }
   }
   return parsedURL;

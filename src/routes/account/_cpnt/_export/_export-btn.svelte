@@ -8,16 +8,22 @@
     stakeAddress: string;
     year: number;
     format: string;
+    quarter?: number;
   };
 
-  export let action: (stakeAddress: string, year: number, format: string) => Promise<CSVFileType>;
+  export let action: (
+    stakeAddress: string,
+    year: number,
+    format: string,
+    quarter?: number,
+  ) => Promise<CSVFileType>;
   export let params: ExportParamsType;
   let wait = false;
   let errorModal: typeof Modal;
 
   function handleExport() {
     wait = true;
-    action(params.stakeAddress, params.year, params.format)
+    action(params.stakeAddress, params.year, params.format, params.quarter)
       .then((res) => {
         location.href = res.url;
         wait = false;
