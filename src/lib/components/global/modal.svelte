@@ -13,11 +13,9 @@
   export let hideAction = false;
   export let outClick = false;
   let wait = false;
-  let footer;
 
   export function open(): void {
     isOpen = true;
-    footer.focus();
   }
 
   export function close(): void {
@@ -78,7 +76,7 @@
         <slot name="body" />
       </div>
 
-      <div class="modal-footer" bind:this="{footer}">
+      <div class="modal-footer">
         {#if !hideClose}
           <button on:click="{close}" type="button" class="btn btn-light">{closeBtnText}</button>
         {/if}
