@@ -63,6 +63,9 @@
           show: true,
         },
         labels: {
+          show: true,
+          rotate: -60,
+          rotateAlways: true,
           style: {
             colors: labelColor,
             fontSize: '12px',
@@ -86,6 +89,12 @@
         },
       },
       yaxis: {
+        title: {
+          text: 'Total Rewards (₳)',
+          style: {
+            color: labelColor,
+          },
+        },
         labels: {
           style: {
             colors: labelColor,
