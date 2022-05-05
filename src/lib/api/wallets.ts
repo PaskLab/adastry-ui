@@ -77,6 +77,10 @@ export async function getRewardsCSV(
   return request(
     PROVIDER.url +
       getURL(PROVIDER.endpoints.exportRewards, { stakeAddress, year, format, quarter }),
+    'GET',
+    {},
+    {},
+    [404],
   );
 }
 
@@ -89,5 +93,9 @@ export async function getTransactionCSV(
   return request(
     PROVIDER.url +
       getURL(PROVIDER.endpoints.exportTransactions, { stakeAddress, year, format, quarter }),
+    'GET',
+    {},
+    {},
+    [404],
   );
 }

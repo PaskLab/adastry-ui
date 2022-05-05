@@ -20,16 +20,27 @@
   export let params: ExportParamsType;
   let wait = false;
   let errorModal: typeof Modal;
+  let errorModalBody: { statusCode: number; message: string; error: string };
+  let internalErrorModal: typeof Modal;
 
   function handleExport() {
     wait = true;
     action(params.stakeAddress, params.year, params.format, params.quarter)
       .then((res) => {
-        location.href = res.url;
         wait = false;
+        if (res.statusCode && res.statusCode === 404) {
+          errorModalBody = {
+            statusCode: res.statusCode,
+            message: res.message,
+            error: res.error,
+          };
+          errorModal.open();
+        } else {
+          location.href = res.url;
+        }
       })
       .catch(() => {
-        errorModal.open();
+        internalErrorModal.open();
         wait = false;
       });
   }
@@ -56,7 +67,27 @@
   </div>
 </div>
 
-<Modal bind:this="{errorModal}" hideAction="{true}">
+<Modal bind:this="{errorModal}" hideAction="{true}" outClick="{true}">
+  <svelte:fragment slot="title">Export failed</svelte:fragment>
+  <div slot="body" class="text-center modal-error-message">
+    {#if errorModalBody}
+      {#if typeof errorModalBody.message !== 'string' && errorModalBody.message.length}
+        {#each errorModalBody.message as message}
+          <p>{message}</p>
+        {/each}
+      {:else}
+        {errorModalBody.message}
+      {/if}
+      <p class="mt-5 text-muted mb-0">
+        <em>Code: {errorModalBody.statusCode} - {errorModalBody.error}</em>
+      </p>
+    {:else}
+      Export failed. Please try again or contact support.
+    {/if}
+  </div>
+</Modal>
+
+<Modal bind:this="{internalErrorModal}" hideAction="{true}">
   <svelte:fragment slot="title">Server Error</svelte:fragment>
   <p slot="body" class="text-center">
     Oops, something unexpected happened. Please try again later or contact support.

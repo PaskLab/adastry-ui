@@ -25,7 +25,7 @@ export async function request(
       },
       headers ? headers : {},
     ),
-    body: body ? JSON.stringify(body) : undefined,
+    body: body && Object.keys(body).length ? JSON.stringify(body) : undefined,
   });
 
   if (!result) return Promise.reject(config.messages.failedFetch);
