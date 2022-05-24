@@ -18,6 +18,7 @@
   let currentPage = get(pageStore);
   let limit = 20;
   let pHistory: Promise<AccountHistoryListType>;
+  let scrollTo: Element;
 
   $: pageStore.set(currentPage);
 
@@ -35,7 +36,7 @@
   }
 </script>
 
-<div class="card">
+<div class="card" bind:this="{scrollTo}">
   {#await pHistory}
     <Skeleton height="1000px" />
   {:then history}
@@ -46,7 +47,12 @@
           >{history.count} registered epoch{history.count > 1 ? 's' : ''}</span
         >
       </h3>
-      <Pager pageSize="{limit}" totalItems="{history.count}" bind:currentPage />
+      <Pager
+        pageSize="{limit}"
+        totalItems="{history.count}"
+        bind:currentPage
+        scrollTo="{scrollTo}"
+      />
     </div>
     <div class="card-body py-3">
       <div class="table-responsive">
@@ -134,7 +140,12 @@
         </table>
       </div>
 
-      <Pager pageSize="{limit}" totalItems="{history.count}" bind:currentPage />
+      <Pager
+        pageSize="{limit}"
+        totalItems="{history.count}"
+        bind:currentPage
+        scrollTo="{scrollTo}"
+      />
     </div>
   {:catch error}
     <div class="text-center text-danger p-20">{config.messages.failedFetch}</div>

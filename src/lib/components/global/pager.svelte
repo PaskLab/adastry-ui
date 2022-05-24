@@ -3,6 +3,7 @@
   export let totalItems = 0;
   export let pageSize = 10;
   export let surroundingLimit = 1; // Display max N items before and after current page
+  export let scrollTo: Element;
 
   const pages = Math.ceil(totalItems / pageSize);
 
@@ -10,7 +11,7 @@
     totalItems,
     pageSize,
     currentPage,
-    surroundingLimit
+    surroundingLimit,
   });
 
   type OptionsList = { type: string; value: number }[];
@@ -19,7 +20,7 @@
     totalItems,
     pageSize,
     currentPage,
-    surroundingLimit = null
+    surroundingLimit = null,
   }): OptionsList {
     const totalPages = Math.ceil(totalItems / pageSize);
     const limitThreshold = getLimitThreshold({ surroundingLimit });
@@ -32,7 +33,7 @@
   function generateUnlimitedOptions({ totalPages }): OptionsList {
     return new Array(totalPages).fill(null).map((value, index) => ({
       type: 'number',
-      value: index + 1
+      value: index + 1,
     }));
   }
 
@@ -49,17 +50,17 @@
           if (index === totalShownPages - 1) {
             return {
               type: 'number',
-              value: totalPages
+              value: totalPages,
             };
           } else if (index === totalShownPages - 2) {
             return {
               type: 'symbol',
-              value: firstBoundary + 1
+              value: firstBoundary + 1,
             };
           }
           return {
             type: 'number',
-            value: index + 1
+            value: index + 1,
           };
         });
     } else if (currentPage >= lastBoundary + surroundingLimit) {
@@ -69,17 +70,17 @@
           if (index === 0) {
             return {
               type: 'number',
-              value: 1
+              value: 1,
             };
           } else if (index === 1) {
             return {
               type: 'symbol',
-              value: lastBoundary - 1
+              value: lastBoundary - 1,
             };
           }
           return {
             type: 'number',
-            value: lastBoundary + index - 2
+            value: lastBoundary + index - 2,
           };
         });
     } else if (
@@ -92,27 +93,27 @@
           if (index === 0) {
             return {
               type: 'number',
-              value: 1
+              value: 1,
             };
           } else if (index === 1) {
             return {
               type: 'symbol',
-              value: currentPage - surroundingLimit + (index - 2)
+              value: currentPage - surroundingLimit + (index - 2),
             };
           } else if (index === totalShownPages - 1) {
             return {
               type: 'number',
-              value: totalPages
+              value: totalPages,
             };
           } else if (index === totalShownPages - 2) {
             return {
               type: 'symbol',
-              value: currentPage + surroundingLimit + 1
+              value: currentPage + surroundingLimit + 1,
             };
           }
           return {
             type: 'number',
-            value: currentPage - surroundingLimit + (index - 2)
+            value: currentPage - surroundingLimit + (index - 2),
           };
         });
     }
@@ -125,6 +126,8 @@
   }
 
   function setCurrentPage(page): void {
+    scrollTo.scrollIntoView();
+
     if (page == currentPage || page < 1 || page > pages) return;
 
     currentPage = page;

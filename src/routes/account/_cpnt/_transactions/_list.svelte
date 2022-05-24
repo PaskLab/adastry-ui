@@ -8,7 +8,7 @@
     dateFromUnix,
     formatDate,
     parseAssetHex,
-    createTimestamp
+    createTimestamp,
   } from '$lib/utils/helper.utils';
   import Pager from '$lib/components/global/pager.svelte';
   import { getContext } from 'svelte';
@@ -22,16 +22,17 @@
   let currentPage = get(pageStore);
   let limit = 20;
   let pTransactions: Promise<TransactionListType>;
+  let scrollTo: Element;
 
   $: pageStore.set(currentPage);
 
   $: pTransactions = getTransactions($page.params.stakeAddress, {
     limit: limit,
-    page: currentPage
+    page: currentPage,
   });
 </script>
 
-<div class="card">
+<div class="card" bind:this="{scrollTo}">
   {#await pTransactions}
     <Skeleton height="1000px" />
   {:then transactions}
@@ -42,7 +43,12 @@
           {transactions.count} transaction{transactions.count > 1 ? 's' : ''}
         </span>
       </h3>
-      <Pager pageSize="{limit}" totalItems="{transactions.count}" bind:currentPage />
+      <Pager
+        pageSize="{limit}"
+        totalItems="{transactions.count}"
+        bind:currentPage
+        scrollTo="{scrollTo}"
+      />
     </div>
     <div class="card-body py-3">
       <div class="table-responsive">
@@ -134,7 +140,12 @@
         </table>
       </div>
 
-      <Pager pageSize="{limit}" totalItems="{transactions.count}" bind:currentPage />
+      <Pager
+        pageSize="{limit}"
+        totalItems="{transactions.count}"
+        bind:currentPage
+        scrollTo="{scrollTo}"
+      />
     </div>
   {:catch error}
     <div class="text-center text-danger p-20">{config.messages.failedFetch}</div>
