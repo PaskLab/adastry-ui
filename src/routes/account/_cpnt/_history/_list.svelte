@@ -47,12 +47,7 @@
           >{history.count} registered epoch{history.count > 1 ? 's' : ''}</span
         >
       </h3>
-      <Pager
-        pageSize="{limit}"
-        totalItems="{history.count}"
-        bind:currentPage
-        scrollTo="{scrollTo}"
-      />
+      <Pager pageSize="{limit}" totalItems="{history.count}" bind:currentPage />
     </div>
     <div class="card-body py-3">
       <div class="table-responsive">

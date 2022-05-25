@@ -3,7 +3,7 @@
   export let totalItems = 0;
   export let pageSize = 10;
   export let surroundingLimit = 1; // Display max N items before and after current page
-  export let scrollTo: Element;
+  export let scrollTo: Element | undefined = undefined;
 
   const pages = Math.ceil(totalItems / pageSize);
 
@@ -126,7 +126,7 @@
   }
 
   function setCurrentPage(page): void {
-    scrollTo.scrollIntoView();
+    if (scrollTo) scrollTo.scrollIntoView();
 
     if (page == currentPage || page < 1 || page > pages) return;
 
