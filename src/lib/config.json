@@ -8,7 +8,10 @@
       "url": "https://api.adastry.io",
       "endpoints": {
         "login": "/auth/login",
+        "loginSignature": "/auth/login-signature",
+        "getAuthPayload": "/auth/payload/{address}",
         "createUser": "/user",
+        "createUserSignature": "/user/signature",
         "getUserProfile": "/user/profile",
         "updateUserCurrency": "/user/currency",
         "accountList": "/account/list",

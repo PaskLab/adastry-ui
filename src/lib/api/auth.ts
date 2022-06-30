@@ -1,6 +1,7 @@
 import config from '../config.json';
-import { request } from '$lib/utils/api.utils';
+import { getURL, request } from '$lib/utils/api.utils';
 import type { ResponseType } from '$lib/api/types/response.type';
+import type { MessagePayloadType } from '$lib/api/types/message-payload.type';
 
 const PROVIDER = config.provider.adastry;
 
@@ -9,29 +10,27 @@ export async function login(username: string, password: string): Promise<Respons
     PROVIDER.url + PROVIDER.endpoints.login,
     'POST',
     {
-      username: username,
-      password: password
+      username,
+      password,
     },
     {},
-    [401, 404]
+    [401, 404],
   );
 }
 
-export async function create(
-  username: string,
-  password: string,
-  name?: string
-): Promise<ResponseType> {
+export async function loginSignature(key: string, signature: string): Promise<ResponseType> {
   return request(
-    PROVIDER.url + PROVIDER.endpoints.createUser,
+    PROVIDER.url + PROVIDER.endpoints.loginSignature,
     'POST',
     {
-      username: username,
-      name: name ? name : '',
-      password: password,
-      currency: 'USD'
+      key,
+      signature,
     },
     {},
-    [400, 409]
+    [401, 404],
   );
+}
+
+export async function getAuthPayload(address: string): Promise<MessagePayloadType> {
+  return request(getURL(PROVIDER.url + PROVIDER.endpoints.getAuthPayload, { address }));
 }

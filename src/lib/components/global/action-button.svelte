@@ -1,12 +1,19 @@
 <script lang="ts">
+  import type Component from 'svelte/types/compiler/compile/Component';
   export let type = 'button';
   export let text = 'Ok';
+  export let icon: Component = undefined;
   export let wait = false;
   export let customClass = 'btn btn-primary';
   export let action = () => undefined;
 </script>
 
 <button type="{type}" on:click|preventDefault="{action}" disabled="{wait}" class="{customClass}">
+  {#if icon}
+    <span class="svg-icon svg-icon-2x position-relative" style="top: -1px">
+      <svelte:component this="{icon}" />
+    </span>
+  {/if}
   <span class="indicator-label {wait ? 'wait' : ''}">{text}</span>
   <span class="indicator-progress {wait ? 'wait' : ''}">
     Please wait...
