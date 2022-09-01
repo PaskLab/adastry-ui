@@ -41,6 +41,24 @@ export async function getUserProfile(): Promise<UserType> {
   return request(PROVIDER.url + getURL(PROVIDER.endpoints.getUserProfile));
 }
 
+export async function deleteUser(): Promise<ResponseType> {
+  return request(PROVIDER.url + getURL(PROVIDER.endpoints.deleteUser), 'DELETE');
+}
+
+export async function updateUserProfile(profile: {
+  username?: string;
+  name?: string;
+  currency?: string;
+}): Promise<string> {
+  return request(
+    PROVIDER.url + getURL(PROVIDER.endpoints.updateUserProfile),
+    'PATCH',
+    profile,
+    {},
+    [400, 409],
+  );
+}
+
 export async function updateUserCurrency(code: string): Promise<string> {
   return request(PROVIDER.url + getURL(PROVIDER.endpoints.updateUserCurrency), 'PATCH', { code });
 }

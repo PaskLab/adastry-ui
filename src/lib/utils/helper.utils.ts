@@ -1,4 +1,11 @@
 import { Buffer } from 'buffer';
+import { jwt, isTokenValid } from '$lib/stores/session.store';
+
+export function logout(): void {
+  jwt.set('');
+  isTokenValid.set(false);
+  location.href = '/';
+}
 
 export function toAda(amount: number): number {
   return amount / 1000000;

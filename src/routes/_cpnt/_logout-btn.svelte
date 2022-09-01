@@ -1,12 +1,6 @@
 <script lang="ts">
   import ArrowOutIcon from '$lib/components/icons/arrow-out.svelte';
-  import { jwt, isTokenValid } from '$lib/stores/session.store';
-
-  function logout(): void {
-    jwt.set('');
-    isTokenValid.set(false);
-    location.href = '/';
-  }
+  import { logout } from '$lib/utils/helper.utils';
 </script>
 
 <div
