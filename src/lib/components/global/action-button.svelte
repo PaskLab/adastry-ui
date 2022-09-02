@@ -8,7 +8,13 @@
   export let action = () => undefined;
 </script>
 
-<button type="{type}" on:click|preventDefault="{action}" disabled="{wait}" class="{customClass}">
+<button
+  type="{type}"
+  on:submit|preventDefault
+  on:click|preventDefault="{action}"
+  disabled="{wait}"
+  class="{customClass}"
+>
   {#if icon}
     <span class="svg-icon svg-icon-2x position-relative" style="top: -1px">
       <svelte:component this="{icon}" />

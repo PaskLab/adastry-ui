@@ -11,7 +11,7 @@
   export let error = false;
   export let schema: ZodString = z.string({
     required_error: 'Required',
-    invalid_type_error: 'Must be a string'
+    invalid_type_error: 'Must be a string',
   });
 
   let init = false;

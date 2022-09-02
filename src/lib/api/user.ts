@@ -1,7 +1,8 @@
-import config from '../config.json';
+import config from '$lib/config.json';
 import { getURL, request } from '$lib/utils/api.utils';
 import type { UserType } from '$lib/api/types/user.type';
 import type { ResponseType } from '$lib/api/types/response.type';
+import type { UpdateUserType } from '$lib/api/types/update-user.type';
 
 const PROVIDER = config.provider.adastry;
 
@@ -45,11 +46,7 @@ export async function deleteUser(): Promise<ResponseType> {
   return request(PROVIDER.url + getURL(PROVIDER.endpoints.deleteUser), 'DELETE');
 }
 
-export async function updateUserProfile(profile: {
-  username?: string;
-  name?: string;
-  currency?: string;
-}): Promise<string> {
+export async function updateUserProfile(profile: UpdateUserType): Promise<string> {
   return request(
     PROVIDER.url + getURL(PROVIDER.endpoints.updateUserProfile),
     'PATCH',

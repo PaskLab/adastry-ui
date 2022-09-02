@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { z } from 'zod';
+  import { z, ZodLiteral } from 'zod';
   import TextInput from '$lib/components/form/text-input.svelte';
   import ActionButton from '$lib/components/global/action-button.svelte';
   import CreatePasswordInput from '$lib/components/form/create-password.svelte';
@@ -9,23 +9,25 @@
   import { onMount } from 'svelte';
   import { getUserProfile, updateUserProfile } from '$lib/api/user';
   import type { UserType } from '$lib/api/types/user.type';
+  import type { UpdateUserType } from '$lib/api/types/update-user.type';
 
   // Fetch
   let pProfile: Promise<UserType> = Promise.reject();
 
-  // Form
-  let usernameField: typeof TextInput;
-  let username = '';
-  let wait = false;
+  // Modals
   let successModal: typeof Modal;
   let errorModal: typeof Modal;
   let errorModalBody: { statusCode: number; message: string; error: string };
 
-  function saveCredentials(): void {
-    const fields = [usernameField.validate()];
-    if (fields.every((field) => field)) {
-      wait = true;
-      updateUserProfile({ username: username.trim() })
+  // Save profile handler
+  function saveProfile(
+    updateObj: UpdateUserType,
+    validatedFields: boolean[],
+    waitHandler: (enable: boolean) => void,
+  ): void {
+    if (validatedFields.every((field) => field)) {
+      waitHandler(true);
+      updateUserProfile(updateObj)
         .then((res) => {
           if ([200, 201].includes(res.statusCode)) {
             successModal.open();
@@ -43,8 +45,47 @@
         .catch(() => {
           errorModal.open();
         })
-        .finally(() => (wait = false));
+        .finally(() => waitHandler(false));
     }
+  }
+
+  // Form credentials
+  let usernameField: typeof TextInput;
+  let username = '';
+  let waitCredential = false;
+
+  function saveCredentials(): void {
+    saveProfile(
+      { username: username.trim() },
+      [usernameField.validate()],
+      (enable: boolean) => (waitCredential = enable),
+    );
+  }
+
+  // Form password
+  let oldPassword = '';
+  let oldPasswordField: typeof TextInput;
+  let newPassword = '';
+  let newPasswordField: typeof TextInput;
+  let confirmPassword: string;
+  let confirmField: typeof TextInput;
+  let confirmSchema: ZodLiteral<string>;
+  let waitPassword = false;
+
+  $: confirmSchema = z.literal(newPassword, {
+    invalid_type_error: "Passwords don't match",
+    required_error: 'Required',
+  });
+
+  // Clear confirmPassword on password change
+  $: confirmPassword = newPassword ? '' : '';
+
+  function savePassword(): void {
+    saveProfile(
+      { oldPassword: oldPassword.trim(), newPassword: newPassword.trim() },
+      [oldPasswordField.validate(), newPasswordField.validate(), confirmField.validate()],
+      (enable: boolean) => (waitPassword = enable),
+    );
   }
 
   onMount(() => {
@@ -74,24 +115,29 @@
           bind:this="{usernameField}"
           bind:value="{username}"
           placeholder="Sign-In username"
-          schema="{z.string().nonempty()}"
+          schema="{z.string().nonempty('Required')}"
         />
         <div class="form-text">
-          <strong>Caution: This will change your login credentials.</strong>
+          <strong>Caution:</strong> This will change your login credentials.
         </div>
       </div>
     </div>
   </div>
 
   <div class="card-footer d-flex justify-content-end py-6 px-9">
-    <ActionButton type="button" text="Save Changes" action="{saveCredentials}" wait="{wait}" />
+    <ActionButton
+      type="button"
+      text="Save Changes"
+      action="{saveCredentials}"
+      wait="{waitCredential}"
+    />
   </div>
 </div>
 
 <div class="card mb-5 mb-xl-10">
   <div class="card-header border-0">
     <div class="card-title">
-      <h3 class="m-0">Password</h3>
+      <h3 class="m-0">Change Password</h3>
     </div>
   </div>
 
@@ -101,18 +147,41 @@
         >Password</label
       >
       <div class="col-lg-8 fv-row fv-plugins-icon-container">
-        <CreatePasswordInput name="password" label="New Password" />
-        <PasswordInput name="confirm-password" label="Confirm Password" />
-        <div class="form-text">
-          <strong>Tip:</strong> Username are case sensitive.
-          <strong>Caution: This will change your login credentials.</strong>
+        <div class="form-text mb-5">
+          <strong>Caution:</strong> This will change your login credentials.
         </div>
+        <p>
+          <PasswordInput
+            bind:this="{oldPasswordField}"
+            bind:value="{oldPassword}"
+            name="oldPassword"
+            label="Old Password"
+            schema="{z.string().nonempty('Required')}"
+          />
+        </p>
+        <p>
+          <CreatePasswordInput
+            bind:this="{newPasswordField}"
+            bind:value="{newPassword}"
+            name="newPassword"
+            label="New Password"
+          />
+        </p>
+        <p>
+          <PasswordInput
+            bind:this="{confirmField}"
+            bind:value="{confirmPassword}"
+            name="confirm-password"
+            label="Confirm new Password"
+            schema="{confirmSchema}"
+          />
+        </p>
       </div>
     </div>
   </div>
 
   <div class="card-footer d-flex justify-content-end py-6 px-9">
-    <ActionButton type="button" text="Save Changes" />
+    <ActionButton type="button" text="Save Changes" action="{savePassword}" wait="{waitPassword}" />
   </div>
 </div>
 
