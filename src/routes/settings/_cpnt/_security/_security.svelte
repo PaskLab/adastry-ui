@@ -143,7 +143,7 @@
 
   <div class="card-body border-top p-9">
     <div class="row mb-6">
-      <label class="col-lg-4 col-form-label required fw-bold fs-6" for="form-username"
+      <label class="col-lg-4 col-form-label required fw-bold fs-6" for="form-oldPassword"
         >Password</label
       >
       <div class="col-lg-8 fv-row fv-plugins-icon-container">
