@@ -36,6 +36,9 @@
     required_error: 'Required',
   });
 
+  // Clear confirmPassword on password change
+  $: confirmPassword = password ? '' : '';
+
   // Modals
   let wait = false;
   let successModal: typeof Modal;
