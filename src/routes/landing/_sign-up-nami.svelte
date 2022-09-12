@@ -31,6 +31,7 @@
   let errorModalBody: ErrorModalBodyType;
   let internalErrorModal: typeof Modal;
   let connectorErrorModal: typeof Modal;
+  let networkErrorModal: typeof Modal;
 
   async function submit(): Promise<void> {
     const fields = [acceptTermsField.validate()];
@@ -80,6 +81,11 @@
         return null;
       }
 
+      if ((await wallet.getNetworkId()) !== 1) {
+        networkErrorModal.open();
+        return null;
+      }
+
       // Attempt to fetch message payload
       let message: MessagePayloadType;
       try {
@@ -106,6 +112,7 @@
           Buffer.from(JSON.stringify(message)).toString('hex'),
         );
       } catch (e) {
+        connectorErrorModal.open();
         return null;
       }
 
@@ -183,7 +190,9 @@
 </Modal>
 
 <Modal bind:this="{errorModal}" hideAction="{true}" outClick="{true}">
-  <svelte:fragment slot="title">Failed to create account</svelte:fragment>
+  <svelte:fragment slot="title"
+    ><span class="text-danger">Failed to create account</span></svelte:fragment
+  >
   <div slot="body" class="text-center modal-error-message" style="overflow-wrap: break-word">
     {#if errorModalBody}
       {#if typeof errorModalBody.message !== 'string' && errorModalBody.message.length}
@@ -205,14 +214,14 @@
 </Modal>
 
 <Modal bind:this="{internalErrorModal}" hideAction="{true}">
-  <svelte:fragment slot="title">Server Error</svelte:fragment>
+  <svelte:fragment slot="title"><span class="text-danger">Server Error</span></svelte:fragment>
   <p slot="body" class="text-center">
     Oops, something unexpected happened. Please try again later or contact support.
   </p>
 </Modal>
 
 <Modal bind:this="{connectorErrorModal}" hideAction="{true}" callback="{() => (wait = false)}">
-  <svelte:fragment slot="title">Wallet API Error</svelte:fragment>
+  <svelte:fragment slot="title"><span class="text-danger">Wallet API Error</span></svelte:fragment>
   <svelte:fragment slot="body">
     <p slot="body" class="text-center">Oops, something unexpected happened.</p>
     <div class="text-center">
@@ -221,6 +230,15 @@
         <li>Make sure this website is whitelisted in Nami.</li>
       </ul>
     </div>
+  </svelte:fragment>
+</Modal>
+
+<Modal bind:this="{networkErrorModal}" hideAction="{true}" callback="{() => (wait = false)}">
+  <svelte:fragment slot="title"><span class="text-danger">Wrong Network</span></svelte:fragment>
+  <svelte:fragment slot="body">
+    <p slot="body" class="text-center">
+      Only <strong>Mainnet</strong> is supported, make sure to set your wallet to the right network.
+    </p>
   </svelte:fragment>
 </Modal>
 

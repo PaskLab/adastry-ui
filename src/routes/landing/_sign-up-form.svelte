@@ -27,7 +27,7 @@
   let passwordField: typeof CreatePasswordInput;
   let password = '';
   let confirmPasswordField: typeof PasswordInput;
-  let confirmPassword = '';
+  let confirmPassword: string;
   let acceptTermsField: typeof Checkbox;
   let confirmSchema: ZodLiteral<string>;
 
@@ -185,7 +185,9 @@
 </Modal>
 
 <Modal bind:this="{errorModal}" hideAction="{true}" outClick="{true}">
-  <svelte:fragment slot="title">Failed to create account</svelte:fragment>
+  <svelte:fragment slot="title"
+    ><span class="text-danger">Failed to create account</span></svelte:fragment
+  >
   <div slot="body" class="text-center modal-error-message" style="overflow-wrap: break-word">
     {#if errorModalBody}
       {#if typeof errorModalBody.message !== 'string' && errorModalBody.message.length}
@@ -207,7 +209,7 @@
 </Modal>
 
 <Modal bind:this="{internalErrorModal}" hideAction="{true}">
-  <svelte:fragment slot="title">Server Error</svelte:fragment>
+  <svelte:fragment slot="title"><span class="text-danger">Server Error</span></svelte:fragment>
   <p slot="body" class="text-center">
     Oops, something unexpected happened. Please try again later or contact support.
   </p>

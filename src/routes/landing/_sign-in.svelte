@@ -34,6 +34,7 @@
   let credentialModal: typeof Modal;
   let expiredModal: typeof Modal;
   let connectorErrorModal: typeof Modal;
+  let networkErrorModal: typeof Modal;
 
   function submit(): void {
     const fields = [usernameField.validate(), passwordField.validate()];
@@ -96,6 +97,11 @@
         return null;
       }
 
+      if ((await wallet.getNetworkId()) !== 1) {
+        networkErrorModal.open();
+        return null;
+      }
+
       // Attempt to fetch message payload
       let message: MessagePayloadType;
       try {
@@ -122,6 +128,7 @@
           Buffer.from(JSON.stringify(message)).toString('hex'),
         );
       } catch (e) {
+        connectorErrorModal.open();
         return null;
       }
 
@@ -198,24 +205,26 @@
 </form>
 
 <Modal bind:this="{errorModal}" hideAction="{true}">
-  <svelte:fragment slot="title">Server Error</svelte:fragment>
+  <svelte:fragment slot="title"><span class="text-danger">Server Error</span></svelte:fragment>
   <p slot="body" class="text-center">
     Oops, something unexpected happened. Please try again later or contact support.
   </p>
 </Modal>
 
 <Modal bind:this="{credentialModal}" hideAction="{true}" outClick="{true}">
-  <svelte:fragment slot="title">Invalid username or password</svelte:fragment>
+  <svelte:fragment slot="title"
+    ><span class="text-danger">Invalid username or password</span></svelte:fragment
+  >
   <p slot="body" class="text-center">Please verify your authentication credentials.</p>
 </Modal>
 
 <Modal bind:this="{expiredModal}" hideAction="{true}">
-  <svelte:fragment slot="title">Session Expired</svelte:fragment>
+  <svelte:fragment slot="title"><span class="text-danger">Session Expired</span></svelte:fragment>
   <p slot="body" class="text-center">The session has expired, please sign-in again.</p>
 </Modal>
 
 <Modal bind:this="{connectorErrorModal}" hideAction="{true}" callback="{() => (wait = false)}">
-  <svelte:fragment slot="title">Wallet API Error</svelte:fragment>
+  <svelte:fragment slot="title"><span class="text-danger">Wallet API Error</span></svelte:fragment>
   <svelte:fragment slot="body">
     <p slot="body" class="text-center">Oops, something unexpected happened.</p>
     <div class="text-center">
@@ -224,5 +233,14 @@
         <li>Make sure this website is whitelisted in Nami.</li>
       </ul>
     </div>
+  </svelte:fragment>
+</Modal>
+
+<Modal bind:this="{networkErrorModal}" hideAction="{true}" callback="{() => (wait = false)}">
+  <svelte:fragment slot="title"><span class="text-danger">Wrong Network</span></svelte:fragment>
+  <svelte:fragment slot="body">
+    <p slot="body" class="text-center">
+      Only <strong>Mainnet</strong> is supported, make sure to set your wallet to the right network.
+    </p>
   </svelte:fragment>
 </Modal>
