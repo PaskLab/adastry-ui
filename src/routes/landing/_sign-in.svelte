@@ -128,7 +128,22 @@
           Buffer.from(JSON.stringify(message)).toString('hex'),
         );
       } catch (e) {
-        connectorErrorModal.open();
+        if (e.code && e.info) {
+          switch (e.code) {
+            case 3:
+              return null;
+            default:
+              errorModalBody = {
+                statusCode: e.code,
+                message: [e.info],
+                error: 'Verification Failed',
+              };
+          }
+
+          errorModal.open();
+        } else {
+          connectorErrorModal.open();
+        }
         return null;
       }
 
@@ -204,10 +219,28 @@
   </div>
 </form>
 
-<Modal bind:this="{errorModal}" hideAction="{true}">
-  <svelte:fragment slot="title"><span class="text-danger">Server Error</span></svelte:fragment>
+<Modal bind:this="{errorModal}" hideAction="{true}" callback="{() => (errorModalBody = undefined)}">
+  <svelte:fragment slot="title"
+    ><span class="text-danger">{errorModalBody ? errorModalBody.error : 'Server Error'}</span
+    ></svelte:fragment
+  >
   <p slot="body" class="text-center">
-    Oops, something unexpected happened. Please try again later or contact support.
+    {#if errorModalBody}
+      {#if typeof errorModalBody.message !== 'string' && errorModalBody.message.length}
+        {#each errorModalBody.message as message}
+          <p>{message}</p>
+        {/each}
+      {:else}
+        {errorModalBody.message}
+      {/if}
+      {#if errorModalBody.statusCode && errorModalBody.error}
+        <p class="mt-5 text-muted mb-0">
+          <em>Code: {errorModalBody.statusCode} - {errorModalBody.error}</em>
+        </p>
+      {/if}
+    {:else}
+      Oops, something unexpected happened. Please try again later or contact support.
+    {/if}
   </p>
 </Modal>
 

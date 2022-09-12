@@ -112,7 +112,23 @@
           Buffer.from(JSON.stringify(message)).toString('hex'),
         );
       } catch (e) {
-        connectorErrorModal.open();
+        if (e.code && e.info) {
+          switch (e.code) {
+            case 3:
+              return null;
+            default:
+              errorModalBody = {
+                statusCode: e.code,
+                message: [e.info],
+                error: 'Verification Failed',
+              };
+          }
+
+          errorModal.open();
+        } else {
+          connectorErrorModal.open();
+        }
+
         return null;
       }
 
@@ -189,7 +205,12 @@
   </p>
 </Modal>
 
-<Modal bind:this="{errorModal}" hideAction="{true}" outClick="{true}">
+<Modal
+  bind:this="{errorModal}"
+  hideAction="{true}"
+  outClick="{true}"
+  callback="{() => (errorModalBody = undefined)}"
+>
   <svelte:fragment slot="title"
     ><span class="text-danger">Failed to create account</span></svelte:fragment
   >

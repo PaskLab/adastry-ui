@@ -184,7 +184,12 @@
   </p>
 </Modal>
 
-<Modal bind:this="{errorModal}" hideAction="{true}" outClick="{true}">
+<Modal
+  bind:this="{errorModal}"
+  hideAction="{true}"
+  outClick="{true}"
+  callback="{() => (errorModalBody = undefined)}"
+>
   <svelte:fragment slot="title"
     ><span class="text-danger">Failed to create account</span></svelte:fragment
   >
