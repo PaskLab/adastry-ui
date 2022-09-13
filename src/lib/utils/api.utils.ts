@@ -15,18 +15,24 @@ export async function request(
     ? { Authorization: 'Bearer ' + get(jwt) }
     : {};
 
-  const result = await fetch(endpoint, {
-    method: method,
-    headers: Object.assign(
-      {
-        'Content-Type': 'application/json',
-        accept: 'application/json',
-        ...credentials,
-      },
-      headers ? headers : {},
-    ),
-    body: body && Object.keys(body).length ? JSON.stringify(body) : undefined,
-  });
+  let result: any;
+
+  try {
+    result = await fetch(endpoint, {
+      method: method,
+      headers: Object.assign(
+        {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+          ...credentials,
+        },
+        headers ? headers : {},
+      ),
+      body: body && Object.keys(body).length ? JSON.stringify(body) : undefined,
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
 
   if (!result) return Promise.reject(config.messages.failedFetch);
 

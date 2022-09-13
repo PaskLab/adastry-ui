@@ -1,31 +1,24 @@
 <script lang="ts">
-  import { z } from 'zod';
+  import BackArrow from '$lib/components/icons/back-arrow.svelte';
   import { getContext } from 'svelte';
-  import SignInForm from './_sign-in.svelte';
-  import SubmitBtn from '$lib/components/global/action-button.svelte';
-  import LeftIcon from '$lib/components/icons/left-arrow.svelte';
-  import Checkbox from '$lib/components/form/checkbox.svelte';
+  import AccountList from './_list.svelte';
+  import ActionBtn from '$lib/components/global/action-button.svelte';
+  import NamiIcon from '$lib/components/icons/nami.svelte';
   import Modal from '$lib/components/global/modal.svelte';
-  import { createSignature } from '$lib/api/user';
-  import { darkMode } from '$lib/stores/session.store';
-  import type { Cip0030Type, DataSignature } from '$lib/types/cip-0030.type';
+  import { getAuthPayload } from '$lib/api/auth';
+  import { verifyAddress } from '$lib/api/user';
   import { Buffer } from 'buffer';
+  import type { ErrorModalBodyType } from '$lib/types/error-modal-body.type';
+  import type { Writable } from 'svelte/store';
+  import type { ViewType } from '$lib/types/view.type';
+  import type { Cip0030Type, DataSignature, Web3Wallet } from '$lib/types/cip-0030.type';
   import type { MessagePayloadType } from '$lib/api/types/message-payload.type';
-  import { getAuthPayload } from '../../lib/api/auth';
-  import type { ErrorModalBodyType } from '../../lib/types/error-modal-body.type';
 
-  // Component Routing
-  const mainView = getContext('mainView');
-  function displaySignInForm(): void {
-    mainView.set(SignInForm);
-  }
+  // Routing
+  let verifiedView = getContext<Writable<ViewType>>('verifiedView');
 
-  // Form
-  let acceptTermsField: typeof Checkbox;
-
-  // Modals
+  // Verify address
   let wait = false;
-  let successMessage = 'Account successfully created.';
   let successModal: typeof Modal;
   let errorModal: typeof Modal;
   let errorModalBody: ErrorModalBodyType;
@@ -33,49 +26,45 @@
   let connectorErrorModal: typeof Modal;
   let networkErrorModal: typeof Modal;
 
-  async function submit(): Promise<void> {
-    const fields = [acceptTermsField.validate()];
-    if (fields.every((field) => field)) {
-      // Sign message
-      wait = true;
-      const signedMessage = await signMessage();
+  async function verify(walletId: Web3Wallet): Promise<void> {
+    wait = true;
+    const signedMessage = await signMessage(walletId);
 
-      if (!signedMessage) {
-        wait = false;
-        return;
-      }
-
-      // Create user from signature
-      createSignature(signedMessage.key, signedMessage.signature)
-        .then((res) => {
-          if ([200, 201].includes(res.statusCode)) {
-            successMessage = res.message;
-            successModal.open();
-          } else {
-            wait = false;
-            if (res.statusCode && res.error) {
-              errorModalBody = {
-                statusCode: res.statusCode,
-                message: res.message,
-                error: res.error,
-              };
-            }
-            errorModal.open();
-          }
-        })
-        .catch(() => {
-          wait = false;
-          internalErrorModal.open();
-        });
+    if (!signedMessage) {
+      wait = false;
+      return;
     }
+
+    // Verify User Address
+    verifyAddress({ key: signedMessage.key, signature: signedMessage.signature })
+      .then((res) => {
+        if ([200, 201].includes(res.statusCode)) {
+          successModal.open();
+        } else {
+          wait = false;
+          if (res.statusCode && res.error) {
+            errorModalBody = {
+              statusCode: res.statusCode,
+              message: res.message,
+              error: res.error,
+            };
+          }
+          errorModal.open();
+        }
+      })
+      .catch(() => {
+        wait = false;
+        internalErrorModal.open();
+      });
   }
 
-  async function signMessage(): Promise<DataSignature | null> {
-    if (cardano?.nami) {
+  async function signMessage(walletId: Web3Wallet): Promise<DataSignature | null> {
+    if (cardano && cardano[walletId]) {
+      const connector = cardano[walletId];
       // Attempt to fetch connector API
       let wallet: Cip0030Type;
       try {
-        wallet = await cardano.nami.enable();
+        wallet = await connector.enable();
       } catch (e) {
         connectorErrorModal.open();
         return null;
@@ -141,67 +130,47 @@
   }
 </script>
 
-<div class="mb-8">
-  <button
-    type="button"
-    on:click="{displaySignInForm}"
-    class="btn btn-sm btn-active-light-primary fw-bolder fs-6 {$darkMode
-      ? 'btn-color-white'
-      : 'btn-color-gray-700'} position-relative"
-    style="right: 20px;"
-  >
-    <span class="svg-icon svg-icon-muted svg-icon-2hx">
-      <LeftIcon />
-    </span>
-    Back to sign-in
-  </button>
-</div>
-
-<form class="form w-100" novalidate="novalidate">
-  <div class="mb-10 text-center">
-    <h1 class="text-dark mb-3">Create an Account</h1>
-  </div>
-  <div class="fv-row mb-10">
-    <Checkbox
-      bind:this="{acceptTermsField}"
-      schema="{z.literal(true, {
-        invalid_type_error: 'You need to accept the Terms & Conditions',
-        required_error: 'Required',
-      })}"
-    >
-      <span
-        class="form-check-label fw-bold {$darkMode ? 'btn-color-white' : 'btn-color-gray-700'} fs-6"
+<div class="card mb-5 mb-xl-10">
+  <div class="card-header border-0">
+    <div class="card-title">
+      <h3 class="m-0">Verify an Account</h3>
+    </div>
+    <div class="card-toolbar">
+      <!--begin::Menu-->
+      <button
+        on:click="{() => verifiedView.set({ component: AccountList, props: {} })}"
+        type="button"
+        class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
       >
-        I Agree to the
-        <a href="/terms-and-conditions" target="_blank" class="ms-1 link-primary"
-          >Terms and conditions</a
-        >.
-      </span>
-    </Checkbox>
+        <span class="svg-icon svg-icon-2 position-relative" style="top: -1px;">
+          <BackArrow />
+        </span>
+        Back
+      </button>
+    </div>
   </div>
 
-  <div class="text-center">
-    <SubmitBtn
+  <div class="card-body border-top p-9 text-center">
+    <ActionBtn
       type="submit"
-      text="Create an account with Nami"
-      action="{submit}"
+      text="Verify an account with Nami"
+      action="{() => verify('nami')}"
       wait="{wait}"
-      customClass="btn btn-primary btn-lg btn-primary w-100 mb-5"
+      icon="{NamiIcon}"
+      customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
     />
   </div>
-</form>
+</div>
 
 <Modal
   bind:this="{successModal}"
   hideClose="{true}"
   actionBtnText="Continue"
-  callback="{() => (location.href = '/')}"
+  callback="{() => verifiedView.set({ component: AccountList, props: {} })}"
 >
-  <svelte:fragment slot="title">Account successfully created!</svelte:fragment>
+  <svelte:fragment slot="title">Account verification successful!</svelte:fragment>
   <p slot="body" class="text-center">
-    {successMessage}
-    <br />
-    You will be redirected to the login screen.
+    The account has been added to your list of verified accounts.
   </p>
 </Modal>
 
@@ -212,9 +181,7 @@
   callback="{() => (errorModalBody = undefined)}"
 >
   <svelte:fragment slot="title"
-    ><span class="text-danger"
-      >{errorModalBody ? errorModalBody.error : 'Failed to create account'}</span
-    ></svelte:fragment
+    ><span class="text-danger">Failed to verify account</span></svelte:fragment
   >
   <div slot="body" class="text-center modal-error-message" style="overflow-wrap: break-word">
     {#if errorModalBody}
@@ -231,7 +198,7 @@
         </p>
       {/if}
     {:else}
-      Account creation failed. Please try again or contact support.
+      Account verification failed. Please try again or contact support.
     {/if}
   </div>
 </Modal>

@@ -2,23 +2,19 @@
   import { z } from 'zod';
   import BackArrow from '$lib/components/icons/back-arrow.svelte';
   import { getContext } from 'svelte';
-  import type { Writable } from 'svelte/store';
   import AccountList from './_list.svelte';
-  import TextInput from '$lib/components/form/text-input.svelte';
-  import { updateUserAccount } from '$lib/api/wallets';
+  import ActionBtn from '$lib/components/global/action-button.svelte';
   import Modal from '$lib/components/global/modal.svelte';
-  import SubmitBtn from '$lib/components/global/action-button.svelte';
+  import TextInput from '$lib/components/form/text-input.svelte';
+  import { updateVerifiedAddress } from '$lib/api/user';
+  import type { Writable } from 'svelte/store';
   import type { ViewType } from '$lib/types/view.type';
 
   export let stakeAddress = '';
   export let currentName = '';
 
   // Routing
-  let mainView = getContext<Writable<ViewType>>('mainView');
-
-  function handleReturn() {
-    mainView.set({ component: AccountList, props: {} });
-  }
+  let verifiedView = getContext<Writable<ViewType>>('verifiedView');
 
   // Form
   let nameField: typeof TextInput;
@@ -31,10 +27,10 @@
     const fields = [nameField.validate()];
     if (fields.every((field) => field)) {
       wait = true;
-      updateUserAccount(stakeAddress, name.trim())
+      updateVerifiedAddress(stakeAddress, name.trim())
         .then((res) => {
           if ([200, 201].includes(res.statusCode)) {
-            mainView.set({ component: AccountList, props: {} });
+            verifiedView.set({ component: AccountList, props: {} });
           } else {
             wait = false;
             if (res.statusCode && res.error) {
@@ -55,15 +51,15 @@
   }
 </script>
 
-<div class="card card-bordered mb-xl-8">
-  <div class="card-header pt-5">
-    <h3 class="card-title align-items-start flex-column">
-      <span class="card-label fw-bolder fs-3 mb-1">Update {currentName}</span>
-    </h3>
+<div class="card mb-5 mb-xl-10">
+  <div class="card-header border-0">
+    <div class="card-title">
+      <h3 class="m-0">Rename {currentName}</h3>
+    </div>
     <div class="card-toolbar">
       <!--begin::Menu-->
       <button
-        on:click="{handleReturn}"
+        on:click="{() => verifiedView.set({ component: AccountList, props: {} })}"
         type="button"
         class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
       >
@@ -75,7 +71,7 @@
     </div>
   </div>
 
-  <div class="card-body py-3">
+  <div class="card-body border-top p-9">
     <div class="offset-md-3 col-md-6">
       <form class="form" novalidate="novalidate">
         <div class="my-10">
@@ -84,22 +80,29 @@
             bind:value="{name}"
             name="name"
             label="New account Name"
-            placeholder="My wallet account name"
+            placeholder="My verified account name"
             schema="{z.string().nonempty()}"
           />
         </div>
 
         <div class="mb-10 text-center">
-          <SubmitBtn type="submit" text="Save" action="{submit}" wait="{wait}" />
+          <ActionBtn type="submit" text="Save" action="{submit}" wait="{wait}" />
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<Modal bind:this="{errorModal}" hideAction="{true}">
-  <svelte:fragment slot="title">Failed to update account</svelte:fragment>
-  <div slot="body" class="text-center modal-error-message">
+<Modal
+  bind:this="{errorModal}"
+  hideAction="{true}"
+  outClick="{true}"
+  callback="{() => (errorModalBody = undefined)}"
+>
+  <svelte:fragment slot="title"
+    ><span class="text-danger">Failed to update account</span></svelte:fragment
+  >
+  <div slot="body" class="text-center modal-error-message" style="overflow-wrap: break-word">
     {#if errorModalBody}
       {#if typeof errorModalBody.message !== 'string' && errorModalBody.message.length}
         {#each errorModalBody.message as message}
@@ -108,13 +111,19 @@
       {:else}
         {errorModalBody.message}
       {/if}
-      <p class="mt-5 text-muted mb-0">
-        <em>Code: {errorModalBody.statusCode} - {errorModalBody.error}</em>
-      </p>
+      {#if errorModalBody.statusCode && errorModalBody.error}
+        <p class="mt-5 text-muted mb-0">
+          <em>Code: {errorModalBody.statusCode} - {errorModalBody.error}</em>
+        </p>
+      {/if}
     {:else}
-      Failed to update account.
-      <br />
-      Please try again or contact support.
+      Account update failed. Please try again or contact support.
     {/if}
   </div>
 </Modal>
+
+<style lang="scss">
+  .modal-error-message:first-letter {
+    text-transform: capitalize;
+  }
+</style>

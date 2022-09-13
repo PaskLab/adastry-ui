@@ -246,9 +246,12 @@
 
 <Modal bind:this="{credentialModal}" hideAction="{true}" outClick="{true}">
   <svelte:fragment slot="title"
-    ><span class="text-danger">Invalid username or password</span></svelte:fragment
+    ><span class="text-danger">Invalid credentials</span></svelte:fragment
   >
-  <p slot="body" class="text-center">Please verify your authentication credentials.</p>
+  <div slot="body" class="text-center">
+    <p>Please check your authentication credentials.</p>
+    <p>If using wallet authentication, make sure the right account is selected.</p>
+  </div>
 </Modal>
 
 <Modal bind:this="{expiredModal}" hideAction="{true}">
