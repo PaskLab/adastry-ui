@@ -56,7 +56,7 @@
 </script>
 
 <div class="card card-bordered mb-xl-8">
-  <div class="card-header pt-5">
+  <div class="card-header">
     <h3 class="card-title align-items-start flex-column">
       <span class="card-label fw-bolder fs-3 mb-1">Update {currentName}</span>
     </h3>
