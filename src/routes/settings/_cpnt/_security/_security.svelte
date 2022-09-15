@@ -1,16 +1,15 @@
 <script lang="ts">
-  import { z, ZodLiteral } from 'zod';
+  import { z } from 'zod';
   import config from '$lib/config.json';
   import Skeleton from '$lib/components/global/skeleton.svelte';
   import TextInput from '$lib/components/form/text-input.svelte';
   import ActionButton from '$lib/components/global/action-button.svelte';
-  import CreatePasswordInput from '$lib/components/form/create-password.svelte';
-  import PasswordInput from '$lib/components/form/password-input.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import { getContext, onMount, setContext } from 'svelte';
   import { getUserProfile, updateUserProfile } from '$lib/api/user';
   import { writable } from 'svelte/store';
   import VerifiedList from './_verified/_list.svelte';
+  import PasswordForm from './_password/_form.svelte';
   import type { Writable } from 'svelte/store';
   import type { ViewType } from '$lib/types/view.type';
   import type { UserType } from '$lib/api/types/user.type';
@@ -20,14 +19,20 @@
   let verifiedView: ViewType;
   setContext('verifiedView', writable<ViewType>({ component: VerifiedList, props: {} }));
   getContext<Writable<ViewType>>('verifiedView').subscribe((v) => (verifiedView = v));
-
-  // Fetch
-  let pProfile: Promise<UserType> = Promise.reject();
+  let passwordView: ViewType;
+  setContext(
+    'passwordView',
+    writable<ViewType>({ component: PasswordForm, props: { saveProfile: saveProfile } }),
+  );
+  getContext<Writable<ViewType>>('passwordView').subscribe((v) => (passwordView = v));
 
   // Modals
   let successModal: typeof Modal;
   let errorModal: typeof Modal;
   let errorModalBody: { statusCode: number; message: string; error: string };
+
+  // Fetch
+  let pProfile: Promise<UserType> = Promise.reject();
 
   // Save profile handler
   function saveProfile(
@@ -69,32 +74,6 @@
       { username: username.trim() },
       [usernameField.validate()],
       (enable: boolean) => (waitCredential = enable),
-    );
-  }
-
-  // Form password
-  let oldPassword = '';
-  let oldPasswordField: typeof TextInput;
-  let newPassword = '';
-  let newPasswordField: typeof TextInput;
-  let confirmPassword: string;
-  let confirmField: typeof TextInput;
-  let confirmSchema: ZodLiteral<string>;
-  let waitPassword = false;
-
-  $: confirmSchema = z.literal(newPassword, {
-    invalid_type_error: "Passwords don't match",
-    required_error: 'Required',
-  });
-
-  // Clear confirmPassword on password change
-  $: confirmPassword = newPassword ? '' : '';
-
-  function savePassword(): void {
-    saveProfile(
-      { oldPassword: oldPassword.trim(), newPassword: newPassword.trim() },
-      [oldPasswordField.validate(), newPasswordField.validate(), confirmField.validate()],
-      (enable: boolean) => (waitPassword = enable),
     );
   }
 
@@ -154,56 +133,7 @@
   </div>
 </div>
 
-<div class="card mb-5 mb-xl-10">
-  <div class="card-header border-0">
-    <div class="card-title">
-      <h3 class="m-0">Change Password</h3>
-    </div>
-  </div>
-
-  <div class="card-body border-top p-9">
-    <div class="row mb-6">
-      <label class="col-lg-4 col-form-label required fw-bold fs-6" for="form-oldPassword"
-        >Password</label
-      >
-      <div class="col-lg-8 fv-row fv-plugins-icon-container">
-        <div class="form-text mb-5">
-          <strong>Caution:</strong> This will change your login credentials.
-        </div>
-        <p>
-          <PasswordInput
-            bind:this="{oldPasswordField}"
-            bind:value="{oldPassword}"
-            name="oldPassword"
-            label="Old Password"
-            schema="{z.string().nonempty('Required')}"
-          />
-        </p>
-        <p>
-          <CreatePasswordInput
-            bind:this="{newPasswordField}"
-            bind:value="{newPassword}"
-            name="newPassword"
-            label="New Password"
-          />
-        </p>
-        <p>
-          <PasswordInput
-            bind:this="{confirmField}"
-            bind:value="{confirmPassword}"
-            name="confirm-password"
-            label="Confirm new Password"
-            schema="{confirmSchema}"
-          />
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="card-footer d-flex justify-content-end py-6 px-9">
-    <ActionButton type="button" text="Save Changes" action="{savePassword}" wait="{waitPassword}" />
-  </div>
-</div>
+<svelte:component this="{passwordView.component}" {...passwordView.props} />
 
 <Modal bind:this="{successModal}" hideClose="{true}" outClick="{true}" actionBtnText="Continue">
   <svelte:fragment slot="title">Changes saved!</svelte:fragment>

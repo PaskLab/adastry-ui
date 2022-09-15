@@ -98,3 +98,16 @@ export async function removeVerifiedAddress(stakeAddress: string): Promise<Respo
     'DELETE',
   );
 }
+
+export async function resetPasswordSignature(body: {
+  key: string;
+  signature: string;
+}): Promise<ResponseType> {
+  return request(
+    PROVIDER.url + getURL(PROVIDER.endpoints.resetPasswordSignature),
+    'POST',
+    body,
+    {},
+    [400, 404],
+  );
+}

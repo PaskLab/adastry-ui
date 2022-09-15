@@ -15,6 +15,7 @@
         "createUserSignature": "/user/signature",
         "getUserProfile": "/user/profile",
         "updateUserProfile": "/user",
+        "resetPasswordSignature": "/user/signature/reset-password",
         "updateUserCurrency": "/user/currency",
         "userVerifyAddress": "/user/verify-address",
         "userVerifiedAddresses": "/user/verified-addresses",

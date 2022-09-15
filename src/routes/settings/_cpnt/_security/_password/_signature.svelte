@@ -1,24 +1,24 @@
 <script lang="ts">
+  import { Buffer } from 'buffer';
   import BackArrow from '$lib/components/icons/back-arrow.svelte';
-  import { getContext } from 'svelte';
-  import AccountList from './_list.svelte';
   import ActionBtn from '$lib/components/global/action-button.svelte';
   import NamiIcon from '$lib/components/icons/nami.svelte';
+  import PasswordForm from './_form.svelte';
+  import { getContext } from 'svelte';
   import Modal from '$lib/components/global/modal.svelte';
+  import { resetPasswordSignature } from '$lib/api/user';
   import { getAuthPayload } from '$lib/api/auth';
-  import { verifyAddress } from '$lib/api/user';
-  import { Buffer } from 'buffer';
-  import type { ErrorModalBodyType } from '$lib/types/error-modal-body.type';
+  import type { UpdateUserType } from '$lib/api/types/update-user.type';
   import type { Writable } from 'svelte/store';
   import type { ViewType } from '$lib/types/view.type';
+  import type { ErrorModalBodyType } from '$lib/types/error-modal-body.type';
   import type { Cip0030Type, DataSignature, Web3Wallet } from '$lib/types/cip-0030.type';
   import type { MessagePayloadType } from '$lib/api/types/message-payload.type';
 
   // Routing
-  let verifiedView = getContext<Writable<ViewType>>('verifiedView');
+  let passwordView = getContext<Writable<ViewType>>('passwordView');
 
-  // Verify address
-  let wait = false;
+  // Modals
   let successModal: typeof Modal;
   let errorModal: typeof Modal;
   let errorModalBody: ErrorModalBodyType;
@@ -26,7 +26,18 @@
   let connectorErrorModal: typeof Modal;
   let networkErrorModal: typeof Modal;
 
-  async function verify(walletId: Web3Wallet): Promise<void> {
+  // Save profile handler ** Forwarding Ref Only **
+  export let saveProfile: (
+    updateObj: UpdateUserType,
+    validatedFields: boolean[],
+    waitHandler: (enable: boolean) => void,
+  ) => void;
+
+  // Wallet Buttons
+  let wait = false;
+  let newPassword = '';
+
+  async function resetPassword(walletId: Web3Wallet): Promise<void> {
     wait = true;
     const signedMessage = await signMessage(walletId);
 
@@ -35,10 +46,11 @@
       return;
     }
 
-    // Verify User Address
-    verifyAddress({ key: signedMessage.key, signature: signedMessage.signature })
+    // Reset user password
+    resetPasswordSignature({ key: signedMessage.key, signature: signedMessage.signature })
       .then((res) => {
         if ([200, 201].includes(res.statusCode)) {
+          newPassword = res.message;
           successModal.open();
         } else {
           wait = false;
@@ -133,12 +145,13 @@
 <div class="card mb-5 mb-xl-10">
   <div class="card-header border-0">
     <div class="card-title">
-      <h3 class="m-0">Verify an Account</h3>
+      <h3 class="m-0">Reset Password</h3>
     </div>
     <div class="card-toolbar">
       <!--begin::Menu-->
       <button
-        on:click="{() => verifiedView.set({ component: AccountList, props: {} })}"
+        on:click="{() =>
+          passwordView.set({ component: PasswordForm, props: { saveProfile: saveProfile } })}"
         type="button"
         class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
       >
@@ -150,11 +163,11 @@
     </div>
   </div>
 
-  <div class="card-body border-top p-9 text-center">
+  <div class="card-body border-top px-10 py-20 text-center">
     <ActionBtn
       type="button"
-      text="Verify an account with Nami"
-      action="{() => verify('nami')}"
+      text="Reset password with Nami"
+      action="{() => resetPassword('nami')}"
       wait="{wait}"
       icon="{NamiIcon}"
       customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
@@ -166,12 +179,17 @@
   bind:this="{successModal}"
   hideClose="{true}"
   actionBtnText="Continue"
-  callback="{() => verifiedView.set({ component: AccountList, props: {} })}"
+  callback="{() =>
+    passwordView.set({ component: PasswordForm, props: { saveProfile: saveProfile } })}"
 >
   <svelte:fragment slot="title">Account verification successful!</svelte:fragment>
-  <p slot="body" class="text-center">
-    The account has been added to your list of verified accounts.
-  </p>
+  <svelte:fragment slot="body">
+    <p class="text-center">The account password has been set to:</p>
+    <p class="text-center p-15">
+      <strong class="text-warning">{newPassword}</strong>
+    </p>
+    <p class="text-center">Make sure to write it down, or change it right away.</p>
+  </svelte:fragment>
 </Modal>
 
 <Modal
@@ -181,7 +199,7 @@
   callback="{() => (errorModalBody = undefined)}"
 >
   <svelte:fragment slot="title"
-    ><span class="text-danger">Failed to verify account</span></svelte:fragment
+    ><span class="text-danger">Failed to reset password</span></svelte:fragment
   >
   <div slot="body" class="text-center modal-error-message" style="overflow-wrap: break-word">
     {#if errorModalBody}
@@ -198,7 +216,7 @@
         </p>
       {/if}
     {:else}
-      Account verification failed. Please try again or contact support.
+      Reset password failed. Please try again or contact support.
     {/if}
   </div>
 </Modal>
