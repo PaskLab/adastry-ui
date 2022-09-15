@@ -58,26 +58,24 @@
         </div>
       </div>
 
-      <div class="collapse show">
-        <div class="card-body border-top p-9">
-          <div class="d-flex flex-wrap align-items-end">
-            <YearPicker from="{2020}" to="{currentYear}" bind:selectedYear="{rwSelectedYear}" />
-          </div>
-
-          <div class="separator separator-dashed my-6"></div>
-
-          <div class="d-flex flex-wrap align-items-end">
-            <QuarterPicker bind:selected="{rwSelectedPeriod}" />
-          </div>
-
-          <div class="separator separator-dashed my-6"></div>
-
-          <div class="d-flex flex-wrap align-items-end mb-10">
-            <FormatPicker formats="{rwFormats}" bind:selectedFormat="{rwSelectedFormat}" />
-          </div>
-
-          <ExportBtn action="{getRewardsCSV}" bind:params="{rewardParams}" />
+      <div class="card-body border-top p-9">
+        <div class="d-flex flex-wrap align-items-end">
+          <YearPicker from="{2020}" to="{currentYear}" bind:selectedYear="{rwSelectedYear}" />
         </div>
+
+        <div class="separator separator-dashed my-6"></div>
+
+        <div class="d-flex flex-wrap align-items-end">
+          <QuarterPicker bind:selected="{rwSelectedPeriod}" />
+        </div>
+
+        <div class="separator separator-dashed my-6"></div>
+
+        <div class="d-flex flex-wrap align-items-end mb-10">
+          <FormatPicker formats="{rwFormats}" bind:selectedFormat="{rwSelectedFormat}" />
+        </div>
+
+        <ExportBtn action="{getRewardsCSV}" bind:params="{rewardParams}" />
       </div>
     </div>
   </div>
@@ -90,26 +88,24 @@
         </div>
       </div>
 
-      <div class="collapse show">
-        <div class="card-body border-top p-9">
-          <div class="d-flex flex-wrap align-items-end">
-            <YearPicker from="{2017}" to="{currentYear}" bind:selectedYear="{txSelectedYear}" />
-          </div>
-
-          <div class="separator separator-dashed my-6"></div>
-
-          <div class="d-flex flex-wrap align-items-end">
-            <QuarterPicker bind:selected="{txSelectedPeriod}" />
-          </div>
-
-          <div class="separator separator-dashed my-6"></div>
-
-          <div class="d-flex flex-wrap align-items-end mb-10">
-            <FormatPicker formats="{txFormats}" bind:selectedFormat="{txSelectedFormat}" />
-          </div>
-
-          <ExportBtn action="{getTransactionCSV}" bind:params="{txParams}" />
+      <div class="card-body border-top p-9">
+        <div class="d-flex flex-wrap align-items-end">
+          <YearPicker from="{2017}" to="{currentYear}" bind:selectedYear="{txSelectedYear}" />
         </div>
+
+        <div class="separator separator-dashed my-6"></div>
+
+        <div class="d-flex flex-wrap align-items-end">
+          <QuarterPicker bind:selected="{txSelectedPeriod}" />
+        </div>
+
+        <div class="separator separator-dashed my-6"></div>
+
+        <div class="d-flex flex-wrap align-items-end mb-10">
+          <FormatPicker formats="{txFormats}" bind:selectedFormat="{txSelectedFormat}" />
+        </div>
+
+        <ExportBtn action="{getTransactionCSV}" bind:params="{txParams}" />
       </div>
     </div>
   </div>

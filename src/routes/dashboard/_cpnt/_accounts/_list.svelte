@@ -2,12 +2,14 @@
   import WalletIcon from '$lib/components/icons/wallet.svelte';
   import RightArrowIcon from '$lib/components/icons/right-arrow.svelte';
   import PlusIcon from '$lib/components/icons/plus.svelte';
+  import ExportIcon from '$lib/components/icons/cloud-down.svelte';
   import Skeleton from '$lib/components/global/skeleton.svelte';
   import { deleteUserAccount, getUserAccounts } from '$lib/api/wallets';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import AddAccount from './_add.svelte';
   import UpdateAccount from './_update.svelte';
+  import ExportMenu from './_export-menu.svelte';
   import config from '$lib/config.json';
   import { getURL } from '$lib/utils/api.utils';
   import PencilIcon from '$lib/components/icons/pencil.svelte';
@@ -63,6 +65,20 @@
     </h3>
     <div class="card-toolbar">
       <!--begin::Menu-->
+      {#await pAccounts then accounts}
+        {#if accounts.length > 1}
+          <button
+            on:click="{() => mainView.set({ component: ExportMenu, props: {} })}"
+            type="button"
+            class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
+          >
+            <span class="svg-icon svg-icon-2">
+              <ExportIcon />
+            </span>
+            Bulk Export
+          </button>
+        {/if}
+      {/await}
       <button
         on:click="{() => mainView.set({ component: AddAccount, props: {} })}"
         type="button"
@@ -122,7 +138,7 @@
                   <a
                     href="{getURL(config.routing.accountDetail, {
                       stakeAddress: account.stakeAddress,
-                      color: i % colors.length
+                      color: i % colors.length,
                     })}"
                     tabindex="-1"
                     class="btn btn-link p-0 symbol symbol-50px me-2"
@@ -136,7 +152,7 @@
                   <a
                     href="{getURL(config.routing.accountDetail, {
                       stakeAddress: account.stakeAddress,
-                      color: i % colors.length
+                      color: i % colors.length,
                     })}"
                     tabindex="-1"
                     class="btn btn-link p-0 text-dark fw-bolder text-hover-primary mb-1 fs-6"
@@ -151,7 +167,7 @@
                     on:click="{() =>
                       mainView.set({
                         component: UpdateAccount,
-                        props: { stakeAddress: account.stakeAddress, currentName: account.name }
+                        props: { stakeAddress: account.stakeAddress, currentName: account.name },
                       })}"
                     type="button"
                     tabindex="0"
@@ -174,7 +190,7 @@
                   <a
                     href="{getURL(config.routing.accountDetail, {
                       stakeAddress: account.stakeAddress,
-                      color: i % colors.length
+                      color: i % colors.length,
                     })}"
                     tabindex="0"
                     class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
