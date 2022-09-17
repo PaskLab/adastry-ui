@@ -11,6 +11,7 @@ export type AccountHistoryType = {
   activeStake: number;
   balance: number;
   rewards: number;
+  mir: number;
   revisedRewards: number;
   opRewards: number;
   withdrawable: number;

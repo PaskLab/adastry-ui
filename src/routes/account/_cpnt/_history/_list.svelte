@@ -56,12 +56,15 @@
             <tr class="fw-bolder text-muted">
               <th>Epoch</th>
               <th>Rewards (₳)</th>
+              <th>
+                <Tooltip text="Move Instantaneous Rewards. ie: Vote Rewards">MIR (₳)</Tooltip>
+              </th>
               <th>Active Stake (₳)</th>
               <th>Spot {history.data.length ? `(${history.data[0].spotPrice.code})` : ''}</th>
               <th>Withdrawable (₳)</th>
               <th>Withdrawn (₳)</th>
               {#if $owner}
-                <th>Revised Rewards (₳)</th>
+                <th>Stake Rewards (₳)</th>
                 <th>Op Rewards (₳)</th>
                 <th>Stake Share (%)</th>
               {/if}
@@ -83,6 +86,15 @@
                     ).toFixed(2)}"
                   >
                     {toAda(record.rewards)}
+                  </Tooltip>
+                </td>
+                <td class="fw-bolder">
+                  <Tooltip
+                    text="{record.spotPrice.code} {(
+                      record.spotPrice.price * toAda(record.mir)
+                    ).toFixed(2)}"
+                  >
+                    {toAda(record.mir)}
                   </Tooltip>
                 </td>
                 <td>
@@ -146,3 +158,9 @@
     <div class="text-center text-danger p-20">{config.messages.failedFetch}</div>
   {/await}
 </div>
+
+<style>
+  thead {
+    vertical-align: middle !important;
+  }
+</style>
