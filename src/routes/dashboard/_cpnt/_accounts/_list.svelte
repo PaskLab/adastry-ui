@@ -105,13 +105,13 @@
         <tbody>
           {#await pAccounts}
             <tr>
-              <th>
+              <td>
                 <div class="symbol symbol-50px me-2">
                   <span class="symbol-label">
                     <Skeleton height="54px" />
                   </span>
                 </div>
-              </th>
+              </td>
               <td>
                 <Skeleton width="50%" height="20px" />
                 <span class="text-muted fw-bold d-block fs-7">
@@ -134,7 +134,7 @@
           {:then accounts}
             {#each accounts as account, i}
               <tr>
-                <th>
+                <td>
                   <a
                     href="{getURL(config.routing.accountDetail, {
                       stakeAddress: account.stakeAddress,
@@ -147,7 +147,7 @@
                       <WalletIcon --color="{colors[i % colors.length]}" />
                     </span>
                   </a>
-                </th>
+                </td>
                 <td>
                   <a
                     href="{getURL(config.routing.accountDetail, {
