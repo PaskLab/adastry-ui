@@ -25,6 +25,7 @@ export type TransactionType = {
   validContract: boolean;
   tags: string[];
   needReview: boolean;
+  metadata: string;
 };
 
 export type BlockfrostAmount = {

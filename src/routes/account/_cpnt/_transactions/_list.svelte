@@ -17,12 +17,24 @@
   import type { TransactionListType } from '$lib/api/types/account-transaction.type';
   import Tooltip from '$lib/components/global/tooltip.svelte';
   import NoticeIcon from '$lib/components/icons/notice.svelte';
+  import ChevronDown from '$lib/components/icons/chevron-down.svelte';
+  import ChevronUp from '$lib/components/icons/chevron-up.svelte';
+  import UpDownArrow from '$lib/components/icons/up-down-arrow.svelte';
+  import Metadata from './_metadata.svelte';
 
   const pageStore = getContext<Writable<number>>('transactionPage');
   let currentPage = get(pageStore);
   let limit = 20;
   let pTransactions: Promise<TransactionListType>;
   let scrollTo: Element;
+
+  const display = {
+    txTitle: {
+      RX: 'Received',
+      TX: 'Sent',
+      MX: 'Multi-Signatures',
+    },
+  };
 
   $: pageStore.set(currentPage);
 
@@ -46,94 +58,118 @@
       <Pager pageSize="{limit}" totalItems="{transactions.count}" bind:currentPage />
     </div>
     <div class="card-body py-3">
-      <div class="table-responsive">
-        <table class="table table-row-bordered table-row-gray-100 align-middle gy-3 fs-8 fs-md-6">
-          <thead>
-            <tr class="fw-bolder text-muted">
-              <th>Date & Time</th>
-              <th>Received (₳)</th>
-              <th>Sent (₳)</th>
-              <th>Fees</th>
-              <th>Tags</th>
-            </tr>
-          </thead>
-          <tbody class="font-monospace">
-            {#each transactions.data as record}
-              <tr class="border-bottom-0">
-                <td>
-                  <Tooltip text="{formatDate(dateFromUnix(record.blockTime))}">
-                    {createTimestamp(dateFromUnix(record.blockTime))}
-                  </Tooltip>
-                </td>
-                <td>
-                  {#each record.received as amount}
-                    <div>
-                      {amount.unit === 'lovelace' ? 'ADA' : parseAssetHex(amount.unit).name} :
-                      {amount.unit === 'lovelace' ? toAda(amount.quantity) : amount.quantity}
-                    </div>
-                  {/each}
-                </td>
-                <td>
-                  {#each record.sent as amount}
-                    <div>
-                      {amount.unit === 'lovelace' ? 'ADA' : parseAssetHex(amount.unit).name} :
-                      {amount.unit === 'lovelace'
-                        ? toAda(amount.quantity - (record.needReview ? 0 : record.fees))
-                        : amount.quantity}
-                    </div>
-                  {/each}
-                </td>
-                <td>
-                  {record.txType === 'RX' ? '' : toAda(record.fees)}
-                </td>
-                <td>
+      {#each transactions.data as record}
+        <div class="rounded bg-lighten flex-column-fluid mb-5 p-5">
+          <div class="d-flex flex-md-row flex-column">
+            <div class="flex-column-fluid">
+              <h2>
+                <span class="svg-icon svg-icon-2hx">
+                  {#if record.txType === 'RX'}
+                    <ChevronDown --color="#00ff00" />
+                  {:else if record.txType === 'TX'}
+                    <ChevronUp --color="#ff0000" />
+                  {:else}
+                    <UpDownArrow --color="#ffff00" />
+                  {/if}
+                </span>
+                {display.txTitle[record.txType]}
+              </h2>
+              <h6 class="fw-bolder">Transaction Hash</h6>
+              <p class="font-monospace">
+                <a
+                  class="force-wrap"
+                  href="https://cardanoscan.io/transaction/{record.txHash}"
+                  target="_blank">{record.txHash}</a
+                >
+              </p>
+            </div>
+            <div class="flex-column">
+              <div class="text-right font-monospace mb-2">
+                <Tooltip text="{formatDate(dateFromUnix(record.blockTime))}">
+                  {createTimestamp(dateFromUnix(record.blockTime))}
+                </Tooltip>
+              </div>
+              {#if record.txType !== 'RX'}
+                <p class="text-right">
+                  <strong>Fees:</strong>
+                  <span class="text-danger">{toAda(record.fees)}</span> <strong>₳</strong>
+                </p>
+              {/if}
+              {#if record.tags.length}
+                <div class="text-right">
                   {#each record.tags as tag}
-                    <div class="badge badge-light-info me-1 mb-1">
+                    <div class="badge badge-light-primary ms-1 mb-1">
                       {tag}
                     </div>
                   {/each}
-                </td>
-              </tr>
-              <tr class="d-none d-sm-table-row">
-                <td colspan="3">
-                  <p class="fw-bolder">Transaction Hash</p>
-                  <p>
-                    <a
-                      class="force-wrap"
-                      href="https://cardanoscan.io/transaction/{record.txHash}"
-                      target="_blank">{record.txHash}</a
+                </div>
+              {/if}
+            </div>
+          </div>
+
+          <div class="d-flex flex-md-row flex-column">
+            <div
+              class="d-flex flex-row-fluid flex-wrap w-md-50 rounded border-dashed border-success border-2 p-2 m-5 received-box min-h-60px"
+            >
+              {#each record.received as amount}
+                <div>
+                  <div class="m-2 p-2 rounded bg-light-success">
+                    {amount.unit === 'lovelace' ? '' : parseAssetHex(amount.unit).name + ' :'}
+                    <strong
+                      >{amount.unit === 'lovelace'
+                        ? toAda(amount.quantity) + ' ₳'
+                        : amount.quantity}</strong
                     >
-                  </p>
-                </td>
-                <td colspan="2">
-                  {#if record.needReview}
-                    <div
-                      class="notice d-flex bg-light-warning rounded border-primary border border-dashed p-2 review-notice mx-auto"
+                  </div>
+                </div>
+              {/each}
+            </div>
+            <div
+              class="d-flex flex-row-fluid flex-wrap w-md-50 rounded border-dashed border-danger border-2 p-2 m-5 sent-box min-h-60px"
+            >
+              {#each record.sent as amount}
+                <div>
+                  <div class="m-2 p-2 rounded bg-light-danger">
+                    {amount.unit === 'lovelace' ? '' : parseAssetHex(amount.unit).name + ' :'}
+                    <strong
+                      >{amount.unit === 'lovelace'
+                        ? toAda(amount.quantity) + ' ₳'
+                        : amount.quantity}</strong
                     >
-                      <span class="svg-icon svg-icon-3qx svg-icon-primary me-4">
-                        <NoticeIcon />
-                      </span>
-                      <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
-                        <div class="mb-3 mb-md-0 fw-bold">
-                          <div class="text-gray-900 fw-bolder mb-1">
-                            This transaction needs to be reviewed
-                          </div>
-                          <div class="fs-8 text-gray-700 pe-7">
-                            Transactions on Cardano can be much more complex than traditional
-                            transactions limited to 2 parties. The outcome of a transaction using
-                            multisig or a smart contract may tell a different story than what
-                            actually happened. User intervention is therefore required.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  {/if}
-                </td>
-              </tr>
-            {/each}
-          </tbody>
-        </table>
-      </div>
+                  </div>
+                </div>
+              {/each}
+            </div>
+          </div>
+
+          {#if record.metadata.length > 2}
+            <svelte:component this="{Metadata}" metadata="{record.metadata}" />
+          {/if}
+
+          {#if record.needReview}
+            <div
+              class="d-flex notice bg-light-warning rounded border-primary border border-dashed p-2  mx-auto"
+            >
+              <span class="svg-icon svg-icon-3qx svg-icon-primary me-4">
+                <NoticeIcon />
+              </span>
+              <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+                <div class="mb-3 mb-md-0 fw-bold">
+                  <div class="text-gray-900 fw-bolder mb-1">
+                    This transaction needs to be reviewed
+                  </div>
+                  <div class="fs-8 text-gray-700 pe-7">
+                    Transactions on Cardano can be much more complex than traditional transactions
+                    limited to 2 parties. The outcome of a transaction using multisig or a smart
+                    contract may tell a different story than what actually happened. User
+                    intervention is therefore required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          {/if}
+        </div>
+      {/each}
 
       <Pager
         pageSize="{limit}"
@@ -153,5 +189,20 @@
   }
   .review-notice {
     max-width: 460px;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .received-box {
+    background-image: url(/img/svg/icon/chevron-down.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  .sent-box {
+    background-image: url(/img/svg/icon/chevron-up.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
   }
 </style>
