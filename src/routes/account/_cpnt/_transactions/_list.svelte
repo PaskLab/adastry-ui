@@ -1,5 +1,6 @@
 <script lang="ts">
   import config from '$lib/config.json';
+  import { darkMode } from '$lib/stores/session.store';
   import { getTransactions } from '$lib/api/wallets';
   import { page } from '$app/stores';
   import Skeleton from '$lib/components/global/skeleton.svelte';
@@ -59,7 +60,9 @@
     </div>
     <div class="card-body py-3">
       {#each transactions.data as record}
-        <div class="rounded bg-lighten flex-column-fluid mb-5 p-5">
+        <div
+          class="rounded {$darkMode ? 'bg-lighten' : 'bg-light-mode'} flex-column-fluid mb-5 p-5"
+        >
           <div class="d-flex flex-md-row flex-column">
             <div class="flex-column-fluid">
               <h2>
@@ -69,7 +72,7 @@
                   {:else if record.txType === 'TX'}
                     <ChevronUp --color="#ff0000" />
                   {:else}
-                    <UpDownArrow --color="#ffff00" />
+                    <UpDownArrow --color="#8850fb" />
                   {/if}
                 </span>
                 {display.txTitle[record.txType]}
@@ -109,11 +112,11 @@
 
           <div class="d-flex flex-md-row flex-column">
             <div
-              class="d-flex flex-row-fluid flex-wrap w-md-50 rounded border-dashed border-success border-2 p-2 m-5 received-box min-h-60px"
+              class="d-flex flex-row-fluid flex-wrap w-md-50 rounded border-dashed border-success border-2 p-2 m-5 received-box min-h-55px"
             >
               {#each record.received as amount}
                 <div>
-                  <div class="m-2 p-2 rounded bg-light-success">
+                  <div class="m-2 px-2 py-1 rounded bg-success">
                     {amount.unit === 'lovelace' ? '' : parseAssetHex(amount.unit).name + ' :'}
                     <strong
                       >{amount.unit === 'lovelace'
@@ -125,19 +128,21 @@
               {/each}
             </div>
             <div
-              class="d-flex flex-row-fluid flex-wrap w-md-50 rounded border-dashed border-danger border-2 p-2 m-5 sent-box min-h-60px"
+              class="d-flex flex-row-fluid flex-wrap w-md-50 rounded border-dashed border-danger border-2 p-2 m-5 sent-box min-h-55px"
             >
               {#each record.sent as amount}
-                <div>
-                  <div class="m-2 p-2 rounded bg-light-danger">
-                    {amount.unit === 'lovelace' ? '' : parseAssetHex(amount.unit).name + ' :'}
-                    <strong
-                      >{amount.unit === 'lovelace'
-                        ? toAda(amount.quantity) + ' ₳'
-                        : amount.quantity}</strong
-                    >
+                {#if amount.unit !== 'lovelace' || toAda(amount.quantity - (record.needReview ? 0 : record.fees))}
+                  <div>
+                    <div class="m-2 px-2 py-1 rounded bg-danger">
+                      {amount.unit === 'lovelace' ? '' : parseAssetHex(amount.unit).name + ' :'}
+                      <strong>
+                        {amount.unit === 'lovelace'
+                          ? toAda(amount.quantity - (record.needReview ? 0 : record.fees)) + ' ₳'
+                          : amount.quantity}
+                      </strong>
+                    </div>
                   </div>
-                </div>
+                {/if}
               {/each}
             </div>
           </div>
@@ -187,11 +192,17 @@
   .force-wrap {
     overflow-wrap: anywhere;
   }
-  .review-notice {
-    max-width: 460px;
-  }
   .text-right {
     text-align: right;
+  }
+  .bg-light-mode {
+    background-color: #f8f8f8;
+    .received-box {
+      background-color: #ffffff;
+    }
+    .sent-box {
+      background-color: #ffffff;
+    }
   }
   .received-box {
     background-image: url(/img/svg/icon/chevron-down.svg);
