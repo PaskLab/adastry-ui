@@ -20,6 +20,7 @@
   import TxList from './_cpnt/_transactions/_list.svelte';
   import ExportView from './_cpnt/_export/_export.svelte';
   import MainViewNav from './_cpnt/_main-view-nav.svelte';
+  import SyncBadge from '$lib/components/global/sync-badge.svelte';
   import type { AccountType } from '$lib/api/types/account.type';
   import type { ViewType } from '$lib/types/view.type';
   import type { Writable } from 'svelte/store';
@@ -35,15 +36,15 @@
   const colors = config.theme.colors;
   const lifetimeRewards = tweened(0.0, {
     duration: 1600,
-    easing: expoOut
+    easing: expoOut,
   });
   const loyalty = tweened(0, {
     duration: 1600,
-    easing: expoOut
+    easing: expoOut,
   });
   const syncEpoch = tweened(0, {
     duration: 1600,
-    easing: expoOut
+    easing: expoOut,
   });
 
   // Main View Routing
@@ -52,7 +53,7 @@
   const mainViewOptions: { id: string; view: ViewType; text: string }[] = [
     { id: 'history', view: { component: HistoryList, props: {} }, text: 'History' },
     { id: 'transactions', view: { component: TxList, props: {} }, text: 'Transaction' },
-    { id: 'export', view: { component: ExportView, props: {} }, text: 'Export Data' }
+    { id: 'export', view: { component: ExportView, props: {} }, text: 'Export Data' },
   ];
 
   setContext('mainView', writable<ViewType>(mainViewOptions[0].view));
@@ -103,6 +104,9 @@
                   <h2 class="text-gray-800 fs-2 fw-bolder me-3">
                     {account.name}
                   </h2>
+                  {#if account.syncing}
+                    <SyncBadge customClass="mx-1 mb-2" />
+                  {/if}
                   {#if $owner}
                     <div class="badge badge-light-primary mx-1 mb-2">Pool Owner</div>
                   {/if}

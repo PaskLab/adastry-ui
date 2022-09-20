@@ -7,4 +7,5 @@ export type AccountType = {
   loyalty: number;
   epoch: number | null;
   pool: PoolType | null;
+  syncing: boolean;
 };

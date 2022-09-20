@@ -6,7 +6,6 @@
   import Skeleton from '$lib/components/global/skeleton.svelte';
   import { deleteUserAccount, getUserAccounts } from '$lib/api/wallets';
   import { getContext } from 'svelte';
-  import type { Writable } from 'svelte/store';
   import AddAccount from './_add.svelte';
   import UpdateAccount from './_update.svelte';
   import ExportMenu from './_export-menu.svelte';
@@ -15,7 +14,9 @@
   import PencilIcon from '$lib/components/icons/pencil.svelte';
   import TrashIcon from '$lib/components/icons/trash.svelte';
   import Modal from '$lib/components/global/modal.svelte';
+  import SyncBadge from '$lib/components/global/sync-badge.svelte';
   import type { ViewType } from '$lib/types/view.type';
+  import type { Writable } from 'svelte/store';
 
   let pAccounts = getUserAccounts();
 
@@ -158,6 +159,9 @@
                     class="btn btn-link p-0 text-dark fw-bolder text-hover-primary mb-1 fs-6"
                     >{account.name}</a
                   >
+                  {#if account.syncing}
+                    <SyncBadge customClass="m-2 syncing-badge" />
+                  {/if}
                   <span class="d-none d-sm-block text-muted fw-bold d-block fs-7"
                     >{account.stakeAddress}</span
                   >
