@@ -17,6 +17,7 @@
         </span>
       </a>
       <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #fff;">
+        <span class="beta">Beta</span>
         Welcome to Adastry
         <p>
           <span
@@ -68,5 +69,14 @@
   .opacity-hover:hover {
     opacity: 0.5;
     transition: opacity 0.4s ease;
+  }
+
+  .beta {
+    display: block;
+    position: relative;
+    left: 122px;
+    top: 10px;
+    color: #7cb342;
+    font-size: calc(0.8rem + 1.2vw) !important;
   }
 </style>
