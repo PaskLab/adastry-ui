@@ -5,6 +5,7 @@
   import ActionBtn from '$lib/components/global/action-button.svelte';
   import NamiIcon from '$lib/components/icons/nami.svelte';
   import YoroiIcon from '$lib/components/icons/yoroi.svelte';
+  import EternlIcon from '$lib/components/icons/eternl.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import { getAuthPayload } from '$lib/api/auth';
   import { verifyAddress } from '$lib/api/user';
@@ -159,6 +160,16 @@
         action="{() => verify('nami')}"
         wait="{wait}"
         icon="{NamiIcon}"
+        customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
+      />
+    </p>
+    <p>
+      <ActionBtn
+        type="button"
+        text="Verify an account with Eternl"
+        action="{() => verify('eternl')}"
+        wait="{wait}"
+        icon="{EternlIcon}"
         customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
       />
     </p>

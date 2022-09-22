@@ -10,6 +10,7 @@
   import { getContext } from 'svelte';
   import SignUpForm from './_sign-up.svelte';
   import NamiIcon from '$lib/components/icons/nami.svelte';
+  import EternlIcon from '$lib/components/icons/eternl.svelte';
   import YoroiIcon from '$lib/components/icons/yoroi.svelte';
   import { Buffer } from 'buffer';
   import type { Cip0030Type, DataSignature } from '$lib/types/cip-0030.type';
@@ -210,7 +211,7 @@
     />
   </div>
   <div class="text-center text-muted text-uppercase fw-bolder mb-5">or</div>
-  <div class="text-center d-flex gap-2">
+  <div class="text-center d-flex gap-2 flex-wrap">
     <SubmitBtn
       type="button"
       text="With Nami"
@@ -219,6 +220,16 @@
       wait="{wait}"
       customClass="btn btn-info mb-5 fw-bolder flex-row-fluid"
     />
+    <SubmitBtn
+      type="button"
+      text="With Eternl"
+      icon="{EternlIcon}"
+      action="{() => loginWallet('eternl')}"
+      wait="{wait}"
+      customClass="btn btn-info mb-5 fw-bolder flex-row-fluid"
+    />
+  </div>
+  <div class="text-center d-flex gap-2">
     <SubmitBtn
       type="button"
       text="With Yoroi"

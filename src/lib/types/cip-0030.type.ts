@@ -1,7 +1,7 @@
 type Address = string;
 type Paginate = { page: number; limit: number };
 export type DataSignature = { signature: string; key: string };
-export type Web3Wallet = 'nami' | 'yoroi';
+export type Web3Wallet = 'nami' | 'yoroi' | 'eternl' | 'flint';
 
 export type Cip0030Type = {
   isEnabled: () => Promise<boolean>;

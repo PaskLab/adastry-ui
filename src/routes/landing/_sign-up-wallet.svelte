@@ -8,6 +8,7 @@
   import Modal from '$lib/components/global/modal.svelte';
   import NamiIcon from '$lib/components/icons/nami.svelte';
   import YoroiIcon from '$lib/components/icons/yoroi.svelte';
+  import EternlIcon from '$lib/components/icons/eternl.svelte';
   import { createSignature } from '$lib/api/user';
   import { darkMode } from '$lib/stores/session.store';
   import type { Cip0030Type, DataSignature } from '$lib/types/cip-0030.type';
@@ -184,7 +185,7 @@
     </Checkbox>
   </div>
 
-  <div class="text-center d-flex gap-2">
+  <div class="text-center d-flex gap-2 flex-wrap">
     <ActionBtn
       type="button"
       icon="{NamiIcon}"
@@ -193,6 +194,16 @@
       wait="{wait}"
       customClass="btn btn-primary btn-primary mb-5 flex-row-fluid"
     />
+    <ActionBtn
+      type="button"
+      icon="{EternlIcon}"
+      text="With Eternl"
+      action="{() => create('eternl')}"
+      wait="{wait}"
+      customClass="btn btn-primary btn-primary mb-5 flex-row-fluid"
+    />
+  </div>
+  <div class="text-center d-flex gap-2 flex-wrap">
     <ActionBtn
       type="button"
       icon="{YoroiIcon}"

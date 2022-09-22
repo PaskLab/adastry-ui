@@ -4,6 +4,7 @@
   import ActionBtn from '$lib/components/global/action-button.svelte';
   import NamiIcon from '$lib/components/icons/nami.svelte';
   import YoroiIcon from '$lib/components/icons/yoroi.svelte';
+  import EternlIcon from '$lib/components/icons/eternl.svelte';
   import PasswordForm from './_form.svelte';
   import { getContext } from 'svelte';
   import Modal from '$lib/components/global/modal.svelte';
@@ -172,6 +173,16 @@
         action="{() => resetPassword('nami')}"
         wait="{wait}"
         icon="{NamiIcon}"
+        customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
+      />
+    </p>
+    <p>
+      <ActionBtn
+        type="button"
+        text="Reset password with Eternl"
+        action="{() => resetPassword('eternl')}"
+        wait="{wait}"
+        icon="{EternlIcon}"
         customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
       />
     </p>
