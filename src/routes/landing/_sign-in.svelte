@@ -203,7 +203,7 @@
   <div class="text-center">
     <SubmitBtn
       type="submit"
-      text="Continue"
+      text="Sign In"
       action="{submit}"
       wait="{wait}"
       customClass="btn btn-primary btn-lg w-100 mb-5"
@@ -213,19 +213,19 @@
   <div class="text-center d-flex gap-2">
     <SubmitBtn
       type="button"
-      text="Sign with Nami"
+      text="With Nami"
       icon="{NamiIcon}"
       action="{() => loginWallet('nami')}"
       wait="{wait}"
-      customClass="btn btn-info mb-5 fw-bolder fs-5 flex-row-fluid"
+      customClass="btn btn-info mb-5 fw-bolder flex-row-fluid"
     />
     <SubmitBtn
       type="button"
-      text="Sign with Yoroi"
+      text="With Yoroi"
       icon="{YoroiIcon}"
       action="{() => loginWallet('yoroi')}"
       wait="{wait}"
-      customClass="btn btn-info mb-5 fw-bolder fs-5 flex-row-fluid"
+      customClass="btn btn-info mb-5 fw-bolder flex-row-fluid"
     />
   </div>
 </form>
