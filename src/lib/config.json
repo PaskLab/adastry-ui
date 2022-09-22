@@ -28,12 +28,14 @@
         "getAccount": "/account/{stakeAddress}",
         "monthlyRewardsStats": "/stats/monthly-rewards",
         "monthlyStakeStats": "/stats/monthly-stake",
+        "poolsROSStats": "/stats/pools-ros",
         "getHistory": "/account/{stakeAddress}/history",
         "getTransactions": "/account/{stakeAddress}/transactions",
         "exportRewards": "/account/{stakeAddress}/export-rewards/{year}",
         "exportBulkRewards": "/account/export-rewards/{year}",
         "exportTransactions": "/account/{stakeAddress}/export-transactions/{year}",
-        "exportBulkTransactions": "/account/export-transactions/{year}"
+        "exportBulkTransactions": "/account/export-transactions/{year}",
+        "lastEpoch": "/epoch/last"
       }
     }
   },
