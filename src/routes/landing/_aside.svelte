@@ -17,7 +17,8 @@
         </span>
       </a>
       <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #fff;">
-        <span class="beta">Beta</span>
+        <div><span class="beta">Beta</span></div>
+
         Welcome to Adastry
         <p>
           <span
@@ -72,7 +73,6 @@
   }
 
   .beta {
-    display: block;
     position: relative;
     left: 122px;
     top: 10px;
