@@ -4,6 +4,7 @@
   import AccountList from './_list.svelte';
   import ActionBtn from '$lib/components/global/action-button.svelte';
   import NamiIcon from '$lib/components/icons/nami.svelte';
+  import YoroiIcon from '$lib/components/icons/yoroi.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import { getAuthPayload } from '$lib/api/auth';
   import { verifyAddress } from '$lib/api/user';
@@ -151,14 +152,26 @@
   </div>
 
   <div class="card-body border-top p-9 text-center">
-    <ActionBtn
-      type="button"
-      text="Verify an account with Nami"
-      action="{() => verify('nami')}"
-      wait="{wait}"
-      icon="{NamiIcon}"
-      customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
-    />
+    <p>
+      <ActionBtn
+        type="button"
+        text="Verify an account with Nami"
+        action="{() => verify('nami')}"
+        wait="{wait}"
+        icon="{NamiIcon}"
+        customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
+      />
+    </p>
+    <p>
+      <ActionBtn
+        type="button"
+        text="Verify an account with Yoroi"
+        action="{() => verify('yoroi')}"
+        wait="{wait}"
+        icon="{YoroiIcon}"
+        customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
+      />
+    </p>
   </div>
 </div>
 

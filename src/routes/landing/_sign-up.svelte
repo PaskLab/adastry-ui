@@ -2,10 +2,10 @@
   import { getContext } from 'svelte';
   import SignInForm from './_sign-in.svelte';
   import FormSignup from './_sign-up-form.svelte';
-  import NamiSignup from './_sign-up-nami.svelte';
+  import NamiSignup from './_sign-up-wallet.svelte';
   import LeftIcon from '$lib/components/icons/left-arrow.svelte';
   import { darkMode } from '$lib/stores/session.store';
-  import NamiIcon from '$lib/components/icons/nami.svelte';
+  import WalletIcon from '$lib/components/icons/wallet.svelte';
   import PencilFormIcon from '$lib/components/icons/pencil-form.svelte';
 
   // Component Routing
@@ -62,9 +62,9 @@
       on:click="{displayNamiSignup}"
       class="btn btn-flex flex-center btn-info w-100"
     >
-      <span class="svg-icon svg-icon-2x"><NamiIcon /></span>
+      <span class="svg-icon svg-icon-2x"><WalletIcon /></span>
       <span class="d-flex flex-column align-items-start ms-2 min-w-125px">
-        <span class="fs-3 fw-bolder">Nami Wallet</span>
+        <span class="fs-3 fw-bolder">Wallet Auth</span>
         <span class="fs-7">Ownership proof</span>
       </span>
     </button>

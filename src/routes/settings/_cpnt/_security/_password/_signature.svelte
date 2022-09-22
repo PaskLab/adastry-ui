@@ -3,6 +3,7 @@
   import BackArrow from '$lib/components/icons/back-arrow.svelte';
   import ActionBtn from '$lib/components/global/action-button.svelte';
   import NamiIcon from '$lib/components/icons/nami.svelte';
+  import YoroiIcon from '$lib/components/icons/yoroi.svelte';
   import PasswordForm from './_form.svelte';
   import { getContext } from 'svelte';
   import Modal from '$lib/components/global/modal.svelte';
@@ -164,14 +165,26 @@
   </div>
 
   <div class="card-body border-top px-10 py-20 text-center">
-    <ActionBtn
-      type="button"
-      text="Reset password with Nami"
-      action="{() => resetPassword('nami')}"
-      wait="{wait}"
-      icon="{NamiIcon}"
-      customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
-    />
+    <p>
+      <ActionBtn
+        type="button"
+        text="Reset password with Nami"
+        action="{() => resetPassword('nami')}"
+        wait="{wait}"
+        icon="{NamiIcon}"
+        customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
+      />
+    </p>
+    <p>
+      <ActionBtn
+        type="button"
+        text="Reset password with Yoroi"
+        action="{() => resetPassword('yoroi')}"
+        wait="{wait}"
+        icon="{YoroiIcon}"
+        customClass="btn btn-info btn-lg mb-5 fw-bolder fs-5"
+      />
+    </p>
   </div>
 </div>
 

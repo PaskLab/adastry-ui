@@ -2,10 +2,12 @@
   import { z } from 'zod';
   import { getContext } from 'svelte';
   import SignInForm from './_sign-in.svelte';
-  import SubmitBtn from '$lib/components/global/action-button.svelte';
+  import ActionBtn from '$lib/components/global/action-button.svelte';
   import LeftIcon from '$lib/components/icons/left-arrow.svelte';
   import Checkbox from '$lib/components/form/checkbox.svelte';
   import Modal from '$lib/components/global/modal.svelte';
+  import NamiIcon from '$lib/components/icons/nami.svelte';
+  import YoroiIcon from '$lib/components/icons/yoroi.svelte';
   import { createSignature } from '$lib/api/user';
   import { darkMode } from '$lib/stores/session.store';
   import type { Cip0030Type, DataSignature } from '$lib/types/cip-0030.type';
@@ -13,6 +15,7 @@
   import type { MessagePayloadType } from '$lib/api/types/message-payload.type';
   import { getAuthPayload } from '../../lib/api/auth';
   import type { ErrorModalBodyType } from '../../lib/types/error-modal-body.type';
+  import type { Web3Wallet } from '$lib/types/cip-0030.type';
 
   // Component Routing
   const mainView = getContext('mainView');
@@ -33,12 +36,12 @@
   let connectorErrorModal: typeof Modal;
   let networkErrorModal: typeof Modal;
 
-  async function submit(): Promise<void> {
+  async function create(walletId: Web3Wallet): Promise<void> {
     const fields = [acceptTermsField.validate()];
     if (fields.every((field) => field)) {
       // Sign message
       wait = true;
-      const signedMessage = await signMessage();
+      const signedMessage = await signMessage(walletId);
 
       if (!signedMessage) {
         wait = false;
@@ -70,12 +73,13 @@
     }
   }
 
-  async function signMessage(): Promise<DataSignature | null> {
-    if (cardano?.nami) {
+  async function signMessage(walletId: Web3Wallet): Promise<DataSignature | null> {
+    if (cardano && cardano[walletId]) {
+      const connector = cardano[walletId];
       // Attempt to fetch connector API
       let wallet: Cip0030Type;
       try {
-        wallet = await cardano.nami.enable();
+        wallet = await connector.enable();
       } catch (e) {
         connectorErrorModal.open();
         return null;
@@ -180,13 +184,22 @@
     </Checkbox>
   </div>
 
-  <div class="text-center">
-    <SubmitBtn
-      type="submit"
-      text="Create an account with Nami"
-      action="{submit}"
+  <div class="text-center d-flex gap-2">
+    <ActionBtn
+      type="button"
+      icon="{NamiIcon}"
+      text="With Nami"
+      action="{() => create('nami')}"
       wait="{wait}"
-      customClass="btn btn-primary btn-lg btn-primary w-100 mb-5"
+      customClass="btn btn-primary btn-primary mb-5 flex-row-fluid"
+    />
+    <ActionBtn
+      type="button"
+      icon="{YoroiIcon}"
+      text="With Yoroi"
+      action="{() => create('yoroi')}"
+      wait="{wait}"
+      customClass="btn btn-primary btn-primary mb-5 flex-row-fluid"
     />
   </div>
 </form>

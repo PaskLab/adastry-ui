@@ -10,10 +10,12 @@
   import { getContext } from 'svelte';
   import SignUpForm from './_sign-up.svelte';
   import NamiIcon from '$lib/components/icons/nami.svelte';
+  import YoroiIcon from '$lib/components/icons/yoroi.svelte';
   import { Buffer } from 'buffer';
   import type { Cip0030Type, DataSignature } from '$lib/types/cip-0030.type';
   import type { MessagePayloadType } from '$lib/api/types/message-payload.type';
   import type { ErrorModalBodyType } from '$lib/types/error-modal-body.type';
+  import type { Web3Wallet } from '$lib/types/cip-0030.type';
 
   // Component Routing
   const mainView = getContext('mainView');
@@ -58,10 +60,10 @@
     }
   }
 
-  async function loginNami(): Promise<void> {
+  async function loginWallet(walletId: Web3Wallet): Promise<void> {
     // Sign message
     wait = true;
-    const signedMessage = await signMessage();
+    const signedMessage = await signMessage(walletId);
 
     if (!signedMessage) {
       wait = false;
@@ -86,12 +88,13 @@
       });
   }
 
-  async function signMessage(): Promise<DataSignature | null> {
-    if (cardano?.nami) {
+  async function signMessage(walletId: Web3Wallet): Promise<DataSignature | null> {
+    if (cardano && cardano[walletId]) {
+      const connector = cardano[walletId];
       // Attempt to fetch connector API
       let wallet: Cip0030Type;
       try {
-        wallet = await cardano.nami.enable();
+        wallet = await connector.enable();
       } catch (e) {
         connectorErrorModal.open();
         return null;
@@ -207,14 +210,22 @@
     />
   </div>
   <div class="text-center text-muted text-uppercase fw-bolder mb-5">or</div>
-  <div class="text-center">
+  <div class="text-center d-flex gap-2">
     <SubmitBtn
       type="button"
-      text="Sign In with Nami"
+      text="Sign with Nami"
       icon="{NamiIcon}"
-      action="{loginNami}"
+      action="{() => loginWallet('nami')}"
       wait="{wait}"
-      customClass="btn btn-info btn-lg w-100 mb-5 fw-bolder fs-5"
+      customClass="btn btn-info mb-5 fw-bolder fs-5 flex-row-fluid"
+    />
+    <SubmitBtn
+      type="button"
+      text="Sign with Yoroi"
+      icon="{YoroiIcon}"
+      action="{() => loginWallet('yoroi')}"
+      wait="{wait}"
+      customClass="btn btn-info mb-5 fw-bolder fs-5 flex-row-fluid"
     />
   </div>
 </form>
