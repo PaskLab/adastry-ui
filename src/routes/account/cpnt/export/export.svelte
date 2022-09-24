@@ -51,7 +51,9 @@
 </script>
 
 <div class="row">
-	<RestrictionNotice />
+	<div class="col col-12">
+		<RestrictionNotice />
+	</div>
 </div>
 
 <div class="row">
