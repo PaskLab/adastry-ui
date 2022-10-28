@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	let result = '';
+	let result;
+
+	// todo: Change the API KEY
+	const API_KEY = 'CHANGE THIS FOR YOUR API KEY';
 
 	/**
 	 * Because of server rendering, you have to make sure that the call is made
@@ -25,7 +28,7 @@
 
 	// Using the "onMount". "onMount" is only called in the browser once the DOM is completely generated.
 	onMount(async () => {
-		const response = await fetch('/api/ada-seal?apiKey=adalovelace', {
+		const response = await fetch(`/api/ada-seal?apiKey=${API_KEY}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -34,8 +37,14 @@
 		});
 
 		result = await response.json();
-		console.log(result.apiKey);
+		console.log(result.data);
 	});
 </script>
 
-Hello World API Key = {result ? result.apiKey : ''}
+<h1>Hello World</h1>
+
+<p>API Key = {result ? result.apiKey : ' ... wait, the API is sometime slow ...'}</p>
+
+<pre>
+  {result ? JSON.stringify(result.data, null, 2) : ''}
+</pre>
