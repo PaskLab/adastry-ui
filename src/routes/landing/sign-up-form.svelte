@@ -31,10 +31,14 @@
 	let acceptTermsField: typeof Checkbox;
 	let confirmSchema: ZodLiteral<string>;
 
-	$: confirmSchema = z.literal(password, {
-		invalid_type_error: "Passwords don't match",
-		required_error: 'Required'
-	});
+	const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
+		if (typeof ctx.data === 'undefined') {
+			return { message: 'Required' };
+		}
+		return { message: "Passwords don't match" };
+	};
+
+	$: confirmSchema = z.literal(password, { errorMap: customErrorMap });
 
 	// Clear confirmPassword on password change
 	$: confirmPassword = password ? '' : '';
