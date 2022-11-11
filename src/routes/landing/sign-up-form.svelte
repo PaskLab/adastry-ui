@@ -31,14 +31,21 @@
 	let acceptTermsField: typeof Checkbox;
 	let confirmSchema: ZodLiteral<string>;
 
-	const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
+	const cpErrorMap: z.ZodErrorMap = (issue, ctx) => {
 		if (typeof ctx.data === 'undefined') {
 			return { message: 'Required' };
 		}
 		return { message: "Passwords don't match" };
 	};
 
-	$: confirmSchema = z.literal(password, { errorMap: customErrorMap });
+	const atErrorMap: z.ZodErrorMap = (issue, ctx) => {
+		if (typeof ctx.data === 'undefined') {
+			return { message: 'Required' };
+		}
+		return { message: 'You need to accept the Terms & Conditions' };
+	};
+
+	$: confirmSchema = z.literal(password, { errorMap: cpErrorMap });
 
 	// Clear confirmPassword on password change
 	$: confirmPassword = password ? '' : '';
@@ -145,13 +152,7 @@
 		/>
 	</div>
 	<div class="fv-row mb-10">
-		<Checkbox
-			bind:this={acceptTermsField}
-			schema={z.literal(true, {
-				invalid_type_error: 'You need to accept the Terms & Conditions',
-				required_error: 'Required'
-			})}
-		>
+		<Checkbox bind:this={acceptTermsField} schema={z.literal(true, { errorMap: atErrorMap })}>
 			<span
 				class="form-check-label fw-bold {$darkMode ? 'btn-color-white' : 'btn-color-gray-700'} fs-6"
 			>
