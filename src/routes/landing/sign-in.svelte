@@ -61,9 +61,39 @@
 		}
 	}
 
+	/**
+	 * The following code allow to sign-in a user on Adastry using the stake credentials.
+	 *
+	 * Note: by keeping in mind that addresses can be forged, you have to choose what key you wish
+	 *       to authenticate.
+	 *
+	 *       Adastry use a separated backend API & client UI, all of this could be built on the same
+	 *       project, or even run only on client side if you do not need to trust the verification. ie: testing purpose
+	 *
+	 * Description of Adastry signIn workflow using message signing:
+	 * 1 - Build a message to sign. In the case of Adastry auth, the message contain an encrypted expiring token
+	 *     to verify origin of the message and prevent re-use of a signed message. Because of this, the message 'payload'
+	 *     is built and fetched from the backend, but this could be achieved on the client side if the message only
+	 *     contain generic information.
+	 *     Read code bellow, direct link to commented code is added on fetch calls
+	 *
+	 * 2 - The message is sign using the wallet chosen by the User.
+	 *
+	 * 3 - The signed message is sent to a secure backend for signature verification.
+	 *     This part cannot be done on client side if the result of the operation need to be trusted.
+	 *
+	 * 4 - Business logic resulting of the success or failure of the operation.
+	 *
+	 *
+	 * @param walletId
+	 */
 	async function loginWallet(walletId: Web3Wallet): Promise<void> {
 		// Sign message
 		wait = true;
+		/**
+		 * Get the signed message using the wallet chosen by the user,
+		 * message logic is encapsulated in signMessage(), same file, bellow.
+		 */
 		const signedMessage = await signMessage(walletId);
 
 		if (!signedMessage) {
@@ -71,6 +101,10 @@
 			return;
 		}
 
+		/**
+		 * Signed message is send to the secure backend for verification and user authentication attempt.
+		 * See API verification code: https://github.com/PaskLab/adastry-api/blob/1d32dcd637f58f726572db182c0ca0166d387286/src/auth/auth.service.ts#L101-L206
+		 */
 		// Login with signature
 		loginSignature(signedMessage.key, signedMessage.signature)
 			.then((res) => {
@@ -109,6 +143,15 @@
 			// Attempt to fetch message payload
 			let message: MessagePayloadType;
 			try {
+				/**
+				 * Fetch the 'payload' containing an expiring encrypted token from the backend.
+				 * The payload will be included in the signed message that will be sent for verification.
+				 *
+				 * Note: This part also take care of address transformation and return the right format for the
+				 *       message signing library, this could be done on client side.
+				 *
+				 * See API getAuthPayload code: https://github.com/PaskLab/adastry-api/blob/1d32dcd637f58f726572db182c0ca0166d387286/src/auth/auth.service.ts#L45-L71
+				 */
 				message = await getAuthPayload(await wallet.getChangeAddress());
 			} catch (e) {
 				errorModalBody = {
@@ -127,6 +170,9 @@
 			let signed: DataSignature | null = null;
 
 			try {
+				/**
+				 * Generate the signed message using the message and stakeAddress format returned by the 'getAuthPayload' API call.
+				 */
 				signed = await wallet.signData(
 					message.stakeAddress,
 					Buffer.from(JSON.stringify(message)).toString('hex')
