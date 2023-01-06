@@ -1,7 +1,7 @@
 <script lang="ts">
 	import config from '../../../lib/config.json';
 	import { page } from '$app/stores';
-	import { getAccount } from '../../../lib/api/wallets.ts';
+	import { getAccount } from '$lib/api/wallets';
 	import Skeleton from '../../../lib/components/global/skeleton.svelte';
 	import WalletIcon from '../../../lib/components/icons/wallet.svelte';
 	import BackArrow from '../../../lib/components/icons/back-arrow.svelte';
@@ -9,8 +9,8 @@
 	import TrophyIcon from '../../../lib/components/icons/trophy.svelte';
 	import BankIcon from '../../../lib/components/icons/bank.svelte';
 	import HourglassIcon from '../../../lib/components/icons/hourglass.svelte';
-	import { toAda } from '../../../lib/utils/helper.utils';
-	import { getURL } from '../../../lib/utils/api.utils';
+	import { toAda } from '$lib/utils/helper.utils';
+	import { getURL } from '$lib/utils/api.utils';
 	import { tweened } from 'svelte/motion';
 	import { expoOut } from 'svelte/easing';
 	import { getContext, onDestroy, onMount, setContext } from 'svelte';
@@ -21,8 +21,8 @@
 	import ExportView from '../cpnt/export/export.svelte';
 	import MainViewNav from '../cpnt/main-view-nav.svelte';
 	import SyncBadge from '../../../lib/components/global/sync-badge.svelte';
-	import type { AccountType } from '../../../lib/api/types/account.type';
-	import type { ViewType } from '../../../lib/types/view.type';
+	import type { AccountType } from '$lib/api/types/account.type';
+	import type { ViewType } from '$lib/types/view.type';
 	import type { Writable } from 'svelte/store';
 
 	setContext('historyPage', writable<number>(1));
@@ -35,6 +35,10 @@
 
 	const colors = config.theme.colors;
 	const lifetimeRewards = tweened(0.0, {
+		duration: 1600,
+		easing: expoOut
+	});
+	const withdrawableRewards = tweened(0.0, {
 		duration: 1600,
 		easing: expoOut
 	});
@@ -64,6 +68,7 @@
 		pAccount.then((res) => {
 			account = res;
 			lifetimeRewards.set(toAda(res.rewardsSum));
+			withdrawableRewards.set(toAda(res.withdrawable));
 			loyalty.set(res.loyalty);
 			syncEpoch.set(res.epoch ? res.epoch : 0);
 		});
@@ -133,16 +138,20 @@
 						</div>
 						<div class="d-flex flex-wrap justify-content-start">
 							<div class="d-flex flex-wrap">
+								<InfoBox label="Last Sync" info="Epoch {$syncEpoch.toFixed(0)}">
+									<HourglassIcon --color="#8d6e63" />
+								</InfoBox>
+
 								<InfoBox label="Lifetime Rewards" info="{$lifetimeRewards.toFixed(6)} ₳">
 									<GiftIcon --color="#8bc34a" />
 								</InfoBox>
 
-								<InfoBox label="Current delegation" info={account.pool.name}>
-									<BankIcon --color="#616161" />
+								<InfoBox label="Withdrawable Rewards" info="{$withdrawableRewards.toFixed(6)} ₳">
+									<WalletIcon --color="#7b34ca" />
 								</InfoBox>
 
-								<InfoBox label="Last Sync" info="Epoch {$syncEpoch.toFixed(0)}">
-									<HourglassIcon --color="#8d6e63" />
+								<InfoBox label="Current delegation" info={account.pool.name}>
+									<BankIcon --color="#616161" />
 								</InfoBox>
 
 								<InfoBox

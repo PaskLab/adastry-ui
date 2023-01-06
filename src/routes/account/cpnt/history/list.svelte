@@ -80,13 +80,21 @@
 									</Tooltip>
 								</td>
 								<td class="fw-bolder">
-									<Tooltip
-										text="{record.spotPrice.code} {(
-											record.spotPrice.price * toAda(record.rewards)
-										).toFixed(2)}"
-									>
-										{toAda(record.rewards)}
-									</Tooltip>
+									{#if record.revisedRewards > 0 && record.rewards === 0}
+										<Tooltip text="Sent to pool reward account">
+											<span class="text-muted"
+												>{toAda(record.revisedRewards + record.opRewards)}</span
+											>
+										</Tooltip>
+									{:else}
+										<Tooltip
+											text="{record.spotPrice.code} {(
+												record.spotPrice.price * toAda(record.rewards)
+											).toFixed(2)}"
+										>
+											{toAda(record.rewards)}
+										</Tooltip>
+									{/if}
 								</td>
 								<td class="fw-bolder">
 									<Tooltip
