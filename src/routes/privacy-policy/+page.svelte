@@ -175,6 +175,6 @@
 
 <style>
 	.page-content {
-		overflow: scroll;
+		overflow-y: scroll;
 	}
 </style>

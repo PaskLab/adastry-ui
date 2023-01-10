@@ -38,3 +38,9 @@
 		</div>
 	</div>
 </div>
+
+<style lang="scss">
+	:global(.dark-mode) .landing-bg {
+		background-color: #0b0d17;
+	}
+</style>
