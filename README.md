@@ -43,8 +43,35 @@ const config: UserConfig = {
 };
 ```
 
+#### node-fetch pollyfill
+
+Vite configuration to support node-fetch and avoid build fail with the following error:
+
+```
+'promisify' is not exported by __vite-browser-external 
+```
+
+Install node-fetch polyfill add the following to `vite.config.ts`:
+
+``` typescript
+
+const config: UserConfig = {
+	...
+	
+	resolve: {
+        alias: {
+          'node-fetch': 'node-fetch-polyfill',
+        },
+    },
+	
+	
+	...
+	
+};
+```
 
 ### Resources
 
 - https://github.com/Menci/vite-plugin-top-level-await
 - https://github.com/Menci/vite-plugin-wasm
+- https://www.npmjs.com/package/node-fetch-polyfill
