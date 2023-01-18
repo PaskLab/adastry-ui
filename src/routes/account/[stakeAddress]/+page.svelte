@@ -57,7 +57,6 @@
   const mainViewOptions: { id: string; view: ViewType; text: string }[] = [
     { id: 'history', view: { component: HistoryList, props: {} }, text: 'History' },
     { id: 'transactions', view: { component: TxList, props: {} }, text: 'Transaction' },
-    { id: 'export', view: { component: ExportView, props: {} }, text: 'Export Data' },
   ];
 
   setContext('mainView', writable<ViewType>(mainViewOptions[0].view));
@@ -67,6 +66,14 @@
     pAccount = getAccount($page.params.stakeAddress);
     pAccount.then((res) => {
       account = res;
+      mainViewOptions.push({
+        id: 'export',
+        view: {
+          component: ExportView,
+          props: { premium: account.premiumPlan !== 'none' },
+        },
+        text: 'Export Data',
+      });
       lifetimeRewards.set(toAda(res.rewardsSum));
       withdrawableRewards.set(toAda(res.withdrawable));
       loyalty.set(res.loyalty);
@@ -115,8 +122,12 @@
                   {#if $owner}
                     <div class="badge badge-light-primary mx-1 mb-2">Pool Owner</div>
                   {/if}
-                  {#if account.loyalty > 0}
-                    <div class="badge badge-light-info mx-1 mb-2">Armada Supporter</div>
+                  {#if account.premiumPlan === 'account'}
+                    <div class="badge badge-primary mx-1 mb-2">Paid Account</div>
+                  {:else if account.premiumPlan === 'pool'}
+                    <div class="badge badge-warning mx-1 mb-2">Paid Pool</div>
+                  {:else if account.premiumPlan === 'member'}
+                    <div class="badge badge-info mx-1 mb-2">Armada Supporter</div>
                   {/if}
                 </div>
 
