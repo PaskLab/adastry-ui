@@ -1,26 +1,26 @@
 <script lang="ts">
-	import { beforeUpdate } from 'svelte';
-	import { isTokenValid } from '../../../lib/stores/session.store';
-	import Header from '../../header.svelte';
-	import Footer from '../../footer.svelte';
+  import { beforeUpdate } from 'svelte';
+  import { isTokenValid } from '$lib/stores/session.store';
+  import Header from '../../header.svelte';
+  import Footer from '../../footer.svelte';
 
-	beforeUpdate(() => {
-		if (!$isTokenValid) {
-			location.href = '/';
-		}
-	});
+  beforeUpdate(() => {
+    if (!$isTokenValid) {
+      location.href = '/';
+    }
+  });
 </script>
 
 <div class="d-flex flex-column flex-root">
-	<div class="page d-flex flex-row flex-column-fluid">
-		<div class="wrapper d-flex flex-column flex-row-fluid">
-			<Header />
+  <div class="page d-flex flex-row flex-column-fluid">
+    <div class="wrapper d-flex flex-column flex-row-fluid">
+      <Header />
 
-			<div class="d-flex flex-column-fluid align-items-start container-xxl">
-				<slot />
-			</div>
+      <div class="d-flex flex-column-fluid align-items-start container-xxl">
+        <slot />
+      </div>
 
-			<Footer />
-		</div>
-	</div>
+      <Footer />
+    </div>
+  </div>
 </div>

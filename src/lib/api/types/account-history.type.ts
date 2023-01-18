@@ -1,4 +1,5 @@
 import type { PoolType } from '$lib/api/types/pool.type';
+import type { EpochType } from '$lib/api/types/epoch.type';
 
 export type AccountHistoryListType = {
   count: number;
@@ -20,12 +21,6 @@ export type AccountHistoryType = {
   owner: boolean;
   stakeShare: number;
   spotPrice: SpotPrice;
-};
-
-export type EpochType = {
-  epoch: number;
-  startTime: number;
-  endTime: number;
 };
 
 export type SpotPrice = {

@@ -1,4 +1,9 @@
 {
+  "billing": {
+    "paymentAddress": "addr1q98znjn7vn2vymnrkvlj2thfj45n7ncs9w9hahe7yj5n7fu0rg3ll6e9du5vqajcfa2y3udecptl9n7d2qlvgrpngvvsqeh7a3",
+    "accountUnitPrice": 2000000,
+    "poolUnitPrice": 50000000
+  },
   "routing":{
     "dashboard": "/dashboard",
     "accountDetail": "/account/{stakeAddress}"
@@ -22,6 +27,7 @@
         "userUpdateVerifiedAddress": "/user/verified-addresses",
         "userRemoveVerifiedAddress": "/user/verified-addresses/{stakeAddress}",
         "accountList": "/account/list",
+        "userPoolList": "/account/pool-list",
         "addAccount": "/account",
         "updateAccount": "/account",
         "deleteAccount": "/account/{stakeAddress}",
@@ -35,7 +41,10 @@
         "exportBulkRewards": "/account/export-rewards/{year}",
         "exportTransactions": "/account/{stakeAddress}/export-transactions/{year}",
         "exportBulkTransactions": "/account/export-transactions/{year}",
-        "lastEpoch": "/epoch/last"
+        "lastEpoch": "/epoch/last",
+        "getAccountsState": "/billing/accounts-state",
+        "createInvoice": "/billing/invoice",
+        "getUserInvoiceList": "/billing/invoice-list"
       }
     }
   },

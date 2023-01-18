@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  export let customClass = '';
+  export let text = 'Pending';
+  export let customClass = 'badge badge-light-warning w-80px pe-8';
   let count = 0;
 
   onMount(() => {
@@ -15,6 +16,7 @@
   });
 </script>
 
-<div class="badge badge-light-warning w-80px pe-8 {customClass}">
-  Syncing {'.'.repeat(count)}
+<div class="{customClass}">
+  {text}
+  {'.'.repeat(count)}
 </div>

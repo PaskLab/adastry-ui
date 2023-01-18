@@ -5,7 +5,7 @@
 	import TextInput from '$lib/components/form/text-input.svelte';
 	import ActionButton from '$lib/components/global/action-button.svelte';
 	import Modal from '$lib/components/global/modal.svelte';
-	import { getContext, onMount, setContext } from 'svelte';
+	import { getContext, onDestroy, onMount, setContext } from 'svelte';
 	import { getUserProfile, updateUserProfile } from '$lib/api/user';
 	import { writable } from 'svelte/store';
 	import VerifiedList from './verified/list.svelte';
@@ -18,13 +18,17 @@
 	// Routing
 	let verifiedView: ViewType;
 	setContext('verifiedView', writable<ViewType>({ component: VerifiedList, props: {} }));
-	getContext<Writable<ViewType>>('verifiedView').subscribe((v) => (verifiedView = v));
+	const unsubsriber1 = getContext<Writable<ViewType>>('verifiedView').subscribe(
+		(v) => (verifiedView = v)
+	);
 	let passwordView: ViewType;
 	setContext(
 		'passwordView',
 		writable<ViewType>({ component: PasswordForm, props: { saveProfile: saveProfile } })
 	);
-	getContext<Writable<ViewType>>('passwordView').subscribe((v) => (passwordView = v));
+	const unsubsriber2 = getContext<Writable<ViewType>>('passwordView').subscribe(
+		(v) => (passwordView = v)
+	);
 
 	// Modals
 	let successModal: typeof Modal;
@@ -85,9 +89,14 @@
 			username = res.username;
 		});
 	});
+
+	onDestroy(() => {
+		unsubsriber1();
+		unsubsriber2();
+	});
 </script>
 
-<svelte:component this={verifiedView.component} {...verifiedView.props} />
+<svelte:component this="{verifiedView.component}" {...verifiedView.props} />
 
 <div class="card mb-5 mb-xl-10">
 	<div class="card-header border-0">
@@ -106,12 +115,12 @@
 				>
 				<div class="col-lg-8 fv-row fv-plugins-icon-container">
 					<TextInput
-						label={false}
+						label="{false}"
 						name="username"
-						bind:this={usernameField}
-						bind:value={username}
+						bind:this="{usernameField}"
+						bind:value="{username}"
 						placeholder="Sign-In username"
-						schema={z.string().nonempty('Required')}
+						schema="{z.string().nonempty('Required')}"
 					/>
 					<div class="form-text">
 						<strong>Caution:</strong> This will change your login credentials.
@@ -127,22 +136,22 @@
 		<ActionButton
 			type="button"
 			text="Save Changes"
-			action={saveCredentials}
-			wait={waitCredential}
+			action="{saveCredentials}"
+			wait="{waitCredential}"
 		/>
 	</div>
 </div>
 
-<svelte:component this={passwordView.component} {...passwordView.props} />
+<svelte:component this="{passwordView.component}" {...passwordView.props} />
 
-<Modal bind:this={successModal} hideClose={true} outClick={true} actionBtnText="Continue">
+<Modal bind:this="{successModal}" hideClose="{true}" outClick="{true}" actionBtnText="Continue">
 	<svelte:fragment slot="title">Changes saved!</svelte:fragment>
 	<svelte:fragment slot="body">
 		<p class="text-center">Changes have been saved!</p>
 	</svelte:fragment>
 </Modal>
 
-<Modal bind:this={errorModal} hideAction={true}>
+<Modal bind:this="{errorModal}" hideAction="{true}">
 	<svelte:fragment slot="title">Failed to save data</svelte:fragment>
 	<div slot="body" class="text-center modal-error-message">
 		{#if errorModalBody}

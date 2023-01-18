@@ -2,16 +2,29 @@
 	import Aside from './landing/aside.svelte';
 	import Footer from './landing/footer.svelte';
 	import SignInForm from './landing/sign-in.svelte';
-	import { setContext, getContext } from 'svelte';
+	import { setContext, getContext, onDestroy, beforeUpdate } from 'svelte';
 	import { writable } from 'svelte/store';
+	import { isTokenValid } from '$lib/stores/session.store';
 	import type { SvelteComponent } from 'svelte';
 	import type { Writable } from 'svelte/store';
+
+	beforeUpdate(() => {
+		if ($isTokenValid) {
+			location.href = '/dashboard';
+		}
+	});
 
 	// Component Routing
 	let mainView: typeof SvelteComponent;
 
 	setContext('mainView', writable<typeof SvelteComponent>(SignInForm));
-	getContext<Writable<typeof SvelteComponent>>('mainView').subscribe((v) => (mainView = v));
+	const unsubsriber = getContext<Writable<typeof SvelteComponent>>('mainView').subscribe(
+		(v) => (mainView = v)
+	);
+
+	onDestroy(() => {
+		unsubsriber();
+	});
 </script>
 
 <div class="d-flex flex-column flex-root">
@@ -20,7 +33,7 @@
 		<div class="d-flex flex-column flex-lg-row-fluid py-10 landing-bg">
 			<div class="d-flex flex-center flex-column flex-column-fluid">
 				<div class="w-lg-500px p-10 p-lg-15 mx-auto">
-					<svelte:component this={mainView} />
+					<svelte:component this="{mainView}" />
 				</div>
 			</div>
 			<Footer />

@@ -6,11 +6,16 @@ import type { AccountListType } from '$lib/api/types/account-list.type';
 import type { AccountHistoryListType } from '$lib/api/types/account-history.type';
 import type { TransactionListType } from '$lib/api/types/account-transaction.type';
 import type { CSVFileType } from '$lib/api/types/csv-file.type';
+import type { UserPoolListType } from '$lib/api/types/user-pool-list.type';
 
 const PROVIDER = config.provider.adastry;
 
 export async function getUserAccounts(): Promise<AccountListType> {
   return request(PROVIDER.url + PROVIDER.endpoints.accountList);
+}
+
+export async function getUserPools(): Promise<UserPoolListType> {
+  return request(PROVIDER.url + PROVIDER.endpoints.userPoolList);
 }
 
 export async function addUserAccount(name: string, address: string): Promise<ResponseType> {

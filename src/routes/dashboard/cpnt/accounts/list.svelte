@@ -14,7 +14,7 @@
 	import PencilIcon from '$lib/components/icons/pencil.svelte';
 	import TrashIcon from '$lib/components/icons/trash.svelte';
 	import Modal from '$lib/components/global/modal.svelte';
-	import SyncBadge from '$lib/components/global/sync-badge.svelte';
+	import SyncBadge from '$lib/components/global/pending-badge.svelte';
 	import type { ViewType } from '$lib/types/view.type';
 	import type { Writable } from 'svelte/store';
 
@@ -69,7 +69,7 @@
 			{#await pAccounts then accounts}
 				{#if accounts.length > 1}
 					<button
-						on:click={() => mainView.set({ component: ExportMenu, props: {} })}
+						on:click="{() => mainView.set({ component: ExportMenu, props: {} })}"
 						type="button"
 						class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
 					>
@@ -81,7 +81,7 @@
 				{/if}
 			{/await}
 			<button
-				on:click={() => mainView.set({ component: AddAccount, props: {} })}
+				on:click="{() => mainView.set({ component: AddAccount, props: {} })}"
 				type="button"
 				class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
 			>
@@ -98,9 +98,9 @@
 			<table class="table align-middle gs-0 gy-5">
 				<thead>
 					<tr>
-						<th class="p-0 w-50px" />
-						<th class="p-0 min-w-200px" />
-						<th class="p-0 min-w-40px" />
+						<th class="p-0 w-50px"></th>
+						<th class="p-0 min-w-200px"></th>
+						<th class="p-0 min-w-40px"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -137,30 +137,33 @@
 							<tr>
 								<td>
 									<a
-										href={getURL(config.routing.accountDetail, {
+										href="{getURL(config.routing.accountDetail, {
 											stakeAddress: account.stakeAddress,
 											color: i % colors.length
-										})}
+										})}"
 										tabindex="-1"
 										class="btn btn-link p-0 symbol symbol-50px me-2"
 									>
 										<span class="symbol-label">
-											<WalletIcon --color={colors[i % colors.length]} />
+											<WalletIcon --color="{colors[i % colors.length]}" />
 										</span>
 									</a>
 								</td>
 								<td>
 									<a
-										href={getURL(config.routing.accountDetail, {
+										href="{getURL(config.routing.accountDetail, {
 											stakeAddress: account.stakeAddress,
 											color: i % colors.length
-										})}
+										})}"
 										tabindex="-1"
 										class="btn btn-link p-0 text-dark fw-bolder text-hover-primary mb-1 fs-6"
 										>{account.name}</a
 									>
 									{#if account.syncing}
-										<SyncBadge customClass="m-2 syncing-badge" />
+										<SyncBadge
+											text="Syncing"
+											customClass="badge badge-light-warning w-80px pe-8 m-2 syncing-badge"
+										/>
 									{/if}
 									<span class="d-none d-sm-block text-muted fw-bold d-block fs-7"
 										>{account.stakeAddress}</span
@@ -168,11 +171,11 @@
 								</td>
 								<td class="text-end">
 									<button
-										on:click={() =>
+										on:click="{() =>
 											mainView.set({
 												component: UpdateAccount,
 												props: { stakeAddress: account.stakeAddress, currentName: account.name }
-											})}
+											})}"
 										type="button"
 										tabindex="0"
 										class="btn btn-sm btn-icon btn-bg-light btn-active-color-warning"
@@ -182,7 +185,7 @@
 										</span>
 									</button>
 									<button
-										on:click={() => handleDelete(account.name, account.stakeAddress)}
+										on:click="{() => handleDelete(account.name, account.stakeAddress)}"
 										type="button"
 										tabindex="0"
 										class="btn btn-sm btn-icon btn-bg-light btn-active-color-danger"
@@ -192,10 +195,10 @@
 										</span>
 									</button>
 									<a
-										href={getURL(config.routing.accountDetail, {
+										href="{getURL(config.routing.accountDetail, {
 											stakeAddress: account.stakeAddress,
 											color: i % colors.length
-										})}
+										})}"
 										tabindex="0"
 										class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
 									>
@@ -220,12 +223,12 @@
 </div>
 
 <Modal
-	bind:this={deleteModal}
-	action={deleteAction}
+	bind:this="{deleteModal}"
+	action="{deleteAction}"
 	actionBtnText="Delete"
-	outClick={true}
+	outClick="{true}"
 	actionBtnClass="btn btn-danger"
-	callback={() => addAccountEvent.set(new Date())}
+	callback="{() => addAccountEvent.set(new Date())}"
 >
 	<svelte:fragment slot="title">
 		<span class="text-danger">Delete Confirmation</span>
@@ -238,7 +241,7 @@
 	</div>
 </Modal>
 
-<Modal bind:this={errorModal} hideAction={true}>
+<Modal bind:this="{errorModal}" hideAction="{true}">
 	<svelte:fragment slot="title">
 		<span class="text-danger">Server Error</span>
 	</svelte:fragment>
