@@ -1,8 +1,9 @@
-import { Blockfrost, Lucid, TxSigned } from 'lucid-cardano';
+import { Lucid, TxSigned } from 'lucid-cardano';
 import ShortUniqueId from 'short-unique-id';
 import config from '$lib/config.json';
 import type { NewInvoiceType } from '$lib/api/types/new-invoice.type';
 import type { TxHash, WalletApi } from 'lucid-cardano';
+import { AdastryProvider } from '$lib/lucid/adastry.provider';
 
 export default class Payment {
   private signedTx: TxSigned | undefined;
@@ -20,9 +21,7 @@ export default class Payment {
     poolIds: string[],
     lovelace: bigint,
   ): Promise<NewInvoiceType> {
-    const lucid = await Lucid.new(
-      new Blockfrost('https://cardano-mainnet.blockfrost.io/api/v0', ''),
-    );
+    const lucid = await Lucid.new(new AdastryProvider());
 
     lucid.selectWallet(this.api);
 
@@ -35,7 +34,7 @@ export default class Payment {
     const tx = await lucid
       .newTx()
       .payToAddress(config.billing.paymentAddress, { lovelace })
-      .attachMetadata(123456, { AdastryInvoice: this.invoiceId })
+      .attachMetadata(122334, { AdastryInvoice: this.invoiceId })
       .validTo(validUntil.valueOf())
       .complete();
 

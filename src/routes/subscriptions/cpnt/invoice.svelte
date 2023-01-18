@@ -3,21 +3,36 @@
   import Skeleton from '$lib/components/global/skeleton.svelte';
   import { createTimestamp, toAda } from '$lib/utils/helper.utils.js';
   import PendingBadge from '$lib/components/global/pending-badge.svelte';
-  import type { Readable } from 'svelte/store';
+  import type { Writable } from 'svelte/store';
   import type { InvoiceListType } from '$lib/api/types/invoice.type';
+  import { getAccountsState, getInvoiceList } from '$lib/api/billing';
+  import type { AccountStateType } from '$lib/api/types/account-state.type';
 
   // Context
   let pInvoices: Promise<InvoiceListType>;
-  const unsubsriber = getContext<Readable<Promise<InvoiceListType>>>('invoices').subscribe(
-    (v) => (pInvoices = v),
-  );
+  const invoicesStore = getContext<Writable<Promise<InvoiceListType>>>('invoices');
+  const accountsState = getContext<Writable<Promise<AccountStateType[]>>>('accountsState');
+  const unsubsriber = invoicesStore.subscribe((v) => (pInvoices = v));
+
+  // Refresh 3 minutes on pending invoice
+  $: pInvoices
+    .then((invoices) => {
+      if (invoices.data.some((i) => !i.confirmed && !i.canceled)) {
+        console.log('Check again in 3 minutes!');
+        setTimeout(() => {
+          invoicesStore.set(getInvoiceList());
+          accountsState.set(getAccountsState());
+        }, 3000 * 60);
+      }
+    })
+    .catch(console.error);
 
   onDestroy(() => {
     unsubsriber();
   });
 </script>
 
-<div class="card mb-xl-8 mt-10">
+<div class="card d-flex mb-xl-8 mb-10 pb-4">
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
       <span class="card-label fw-bolder fs-3 mb-1">Invoices</span>

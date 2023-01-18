@@ -31,7 +31,7 @@
   });
 </script>
 
-<div class="card mb-xl-8 mt-10">
+<div class="card mb-xl-8 mb-10">
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
       <span class="card-label fw-bolder fs-3 mb-1">Active Accounts</span>
@@ -89,6 +89,8 @@
                   date.setFullYear(date.getFullYear() + 1);
                   return createTimestamp(date);
                 })()}
+              {:else if account.type === 'member'}
+                Expires when you leave
               {/if}
             </div>
           </div>
