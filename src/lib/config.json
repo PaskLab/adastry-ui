@@ -1,6 +1,6 @@
 {
   "billing": {
-    "paymentAddress": "addr1q98znjn7vn2vymnrkvlj2thfj45n7ncs9w9hahe7yj5n7fu0rg3ll6e9du5vqajcfa2y3udecptl9n7d2qlvgrpngvvsqeh7a3",
+    "paymentAddress": "addr1q957n96th3g7pv3peh77mjvh9dk38f3gs7tvqcx59qulu7s90kkpfcll8nz48wz2lymdtczrptxx38sldmulxptn90pss6mmx9",
     "accountUnitPrice": 2000000,
     "poolUnitPrice": 50000000
   },
@@ -10,7 +10,7 @@
   },
   "provider": {
     "adastry": {
-      "url": "https://api.adastry.io",
+      "url": "http://localhost:3001",
       "endpoints": {
         "login": "/auth/login",
         "loginSignature": "/auth/login-signature",
