@@ -24,7 +24,7 @@
             <div class="card-body p-lg-17">
               <div class="d-flex flex-column">
                 <div class="mb-13 text-center">
-                  <h1 class="fs-2hx fw-bolder mb-5">Pricing & Plans</h1>
+                  <h1 class="fs-2hx fw-bolder mb-5">Plans & Pricing</h1>
                   <div class="text-gray-400 fw-bold fs-5">
                     ** Subscription enable premium features for a year, including all previous years
                     data. **
