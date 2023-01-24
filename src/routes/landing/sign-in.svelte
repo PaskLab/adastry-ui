@@ -222,7 +222,7 @@
   <div class="text-center d-flex gap-2 flex-wrap">
     <SubmitBtn
       type="button"
-      text="With Nami"
+      text="Nami"
       icon="{NamiIcon}"
       action="{() => loginWallet('nami')}"
       wait="{wait}"
@@ -230,7 +230,7 @@
     />
     <SubmitBtn
       type="button"
-      text="With Eternl"
+      text="Eternl"
       icon="{EternlIcon}"
       action="{() => loginWallet('eternl')}"
       wait="{wait}"
@@ -240,7 +240,7 @@
   <div class="text-center d-flex gap-2">
     <SubmitBtn
       type="button"
-      text="With Yoroi"
+      text="Yoroi"
       icon="{YoroiIcon}"
       action="{() => loginWallet('yoroi')}"
       wait="{wait}"
@@ -280,7 +280,10 @@
   >
   <div slot="body" class="text-center">
     <p>Please check your authentication credentials.</p>
-    <p>If using wallet authentication, make sure the right account is selected.</p>
+    <p>
+      If you are using <u>wallet authentication</u>, make sure the correct account is selected and
+      that you have already verified this account.
+    </p>
   </div>
 </Modal>
 
