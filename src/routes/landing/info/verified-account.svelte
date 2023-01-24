@@ -34,7 +34,7 @@
   </p>
   <h5 class="mt-5 text-info">How to sign in with wallet authentication ?</h5>
   <p>
-    Adastry wallet authentication require users to <strong>first</strong> link a verified account to
+    Adastry wallet authentication requires users to <strong>first</strong> link a verified account to
     their user account.
   </p>
   <p>
@@ -47,11 +47,11 @@
   </p>
   <h5 class="mt-5 text-info">Security and wallet authentication</h5>
   <p>
-    Wallet authentication is considered more secure than using password. Your password, weaker than
-    your wallet signature encryption, never leave your computer.
+    Wallet authentication is considered more secure than using a password. Your password, weaker
+    than your wallet signature encryption, never leaves your computer.
   </p>
   <p>
-    Message signing is safe. It is not a transaction, therefore have no cost. You encrypt, never
+    Message signing is safe. It is not a transaction, therefore has no cost. You encrypt, never
     decrypt.
   </p>
   <p>
