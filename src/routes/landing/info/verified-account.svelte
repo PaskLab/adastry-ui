@@ -40,7 +40,8 @@
   <p>
     This can be done either by creating a new user account using the <button
       type="button"
-      class="btn btn-link fs-7 p-0 lh-0"
+      class="btn btn-link fs-6 fw-normal p-0 position-relative"
+      style="bottom: 1px"
       on:click="{() => mainView.set(WalletSignup)}">ownership proof option</button
     >, or in an existing user account using the "Verified Accounts" feature available in
     <strong>Settings > Security</strong>.
