@@ -216,7 +216,7 @@
     <button
       on:click="{() => mainView.set(VerifiedAccountInfo)}"
       type="button"
-      class="btn btn-link text-uppercase fw-bolder fs-7 py-0">verified account</button
+      class="btn btn-link text-uppercase fw-bolder fs-7 py-0 lh-0">verified account</button
     >
   </div>
   <div class="text-center d-flex gap-2 flex-wrap">
