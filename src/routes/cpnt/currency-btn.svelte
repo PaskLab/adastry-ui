@@ -107,7 +107,7 @@
     />
   </div>
 
-  <div class="menu-item px-5 mh-400px overflow-scroll">
+  <div class="menu-item px-5 mh-400px overflow-y-scroll">
     {#if currencies.length}
       {#each currencies as currency}
         <div on:click="{() => changeCurrency(currency.code)}" type="button" class="menu-link px-5">
@@ -129,3 +129,9 @@
     {/if}
   </div>
 </div>
+
+<style lang="scss">
+  .overflow-y-scroll {
+    overflow-y: scroll;
+  }
+</style>
