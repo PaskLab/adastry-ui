@@ -144,7 +144,7 @@
                   </td>
                   <td>
                     {#if record.stakeShare}
-                      <Tooltip text="Affects rewards paid in epoch {record.epoch.epoch + 3}">
+                      <Tooltip text="Affects rewards paid in epoch {record.epoch.epoch + 2}">
                         {(record.stakeShare * 100).toFixed(4)}
                       </Tooltip>
                     {/if}
