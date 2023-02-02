@@ -2,46 +2,43 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Introduction
 
-Let's discover **Docusaurus in less than 5 minutes**.
+The purpose of Adastry's documentation is to give more in depth understanding of the provided services.
 
-## Getting Started
+Common questions should be answered along the way. If something is missing or need further explanation,
+please start a discussion on our
+[Github Q&A page](https://github.com/PaskLab/adastry-ui/discussions/categories/q-a).
 
-Get started by **creating a new site**.
+## What is Adastry
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+Adastry started as a rewards tracking service.
+The goal was to track user [stake account](/learn/docs/definitions#account) rewards history in a simple way.
 
-### What you'll need
+Depending on the jurisdiction, rewards count as income at the moment they are received, and most wallet
+software will show the rewards account balance without the payment history. This is where Adastry comes
+into play by fetching and processing these data, with some sugar on top of it..! 🍰
 
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+The service is set to grow with its user needs, so it is not limited to rewards tracking. Adastry already
+pack other useful features and we count on our user to share their needs with us.
 
-## Generate a new site
+## What Adastry is not
 
-Generate a new Docusaurus site using the **classic template**.
+- __**__ A tax reporting tool (ie: [Koinly](https://koinly.io/), [CoinTracker](https://www.cointracker.io/),
+[accointing](https://www.accointing.com/))
+- A blockchain explorer
+- A wallet client software
 
-The classic template will automatically be added to your project after you run the command:
+__**__ While the main use case for using Adastry is tax reporting need, we only facilitate the acquisition
+of your data. We do not provide profit/loss calculation. Each country have their own tax requirements,
+make sure to check with your local professional.
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+## Current limitation
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+Since the service was meant for staked accounts, addresses linked to unregistered stake credential cannot
+be monitored at the moment.
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+Without registering the stake credential on the blockchain, there is nothing for us to establish the relation
+between addresses under a same account.
 
-## Start your site
 
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.

@@ -171,7 +171,7 @@
     choice.
   </p>
   <p>
-    Then a new account will be generated with a <em><strong>random user name & password</strong></em
+    Then a new account will be generated with a <em><strong>random username & password</strong></em
     >. You can then change them in the <em><u>app settings</u></em> by signing in with that same wallet
     account.
   </p>
