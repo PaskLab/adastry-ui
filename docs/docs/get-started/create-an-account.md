@@ -28,3 +28,13 @@ By choosing the **Wallet Auth** option, you will first be asked to prove ownersh
 
 Then a new account will be generated with a random username & password. You can then change them in the app settings
 by signing in with that same wallet account.
+
+## Account recovery
+
+Email password recovery is not implemented at the moment. Instead we chose to go the **Web3** way and use the 
+proof of ownership.
+
+Once authenticated on the application, access the **"settings > security"** page and add one or more
+[verified accounts](/learn/docs/get-started/verified-accounts). This way, if you ever loose you password, you'll
+be able to sign in and set a new one.
+
