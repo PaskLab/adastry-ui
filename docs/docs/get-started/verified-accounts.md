@@ -4,6 +4,13 @@ sidebar_position: 2
 
 # Verified Accounts
 
+:::tip
+
+If you're a fast typer and do prefer password sign in, we strongly suggest verifying one or more accounts.
+This will give you a way to access your account if you lose your username or password.
+
+:::
+
 ### What are verified accounts ?
 **Verified accounts** are accounts where you have proven ownership through a message signature verification process.
 
@@ -20,6 +27,3 @@ Wallet authentication is considered more secure than using a password. Your pass
 wallet signature encryption, never leaves your computer.
 
 Message signing is safe. It is not a transaction, therefore has no cost. You encrypt, never decrypt.
-
-Tip: If you're a fast typer and do prefer password sign in, we strongly suggest verifying one or more accounts. 
-This will give you a way to access your account if you lose your username or password.
