@@ -31,7 +31,11 @@
       const pools = await $pPools;
 
       return pools
-        .filter((p) => !p.isMember && !$selectedPools.some((sP) => sP.poolId === p.poolId))
+        .filter(
+          (p) =>
+            !(p.isMember || p.isSubscribed || p.pending) &&
+            !$selectedPools.some((sP) => sP.poolId === p.poolId),
+        )
         .map((p) => ({ ...p, selected: false }));
     } catch (e) {
       console.error(e);

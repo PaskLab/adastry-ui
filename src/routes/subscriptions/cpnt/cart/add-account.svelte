@@ -30,9 +30,12 @@
   async function filterInactiveAccounts(): Promise<InactiveAccountType[]> {
     try {
       const accounts = await $pAccounts;
+
       return accounts
         .filter(
-          (a) => !a.active && !$selectedAccounts.some((sA) => sA.stakeAddress === a.stakeAddress),
+          (a) =>
+            !(a.active || a.pending) &&
+            !$selectedAccounts.some((sA) => sA.stakeAddress === a.stakeAddress),
         )
         .map((a) => ({ ...a, selected: false }));
     } catch (e) {
