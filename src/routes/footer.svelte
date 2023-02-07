@@ -15,7 +15,7 @@
       </li>
       <li class="menu-item">
         <a
-          href="https://github.com/PaskLab/adastry-ui/discussions/categories/ideas"
+          href="https://github.com/PaskLab/adastry-ui/discussions/categories/feature-request"
           target="_blank"
           class="menu-link px-2">Feature Request</a
         >
