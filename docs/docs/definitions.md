@@ -33,3 +33,8 @@ and a specific address.
 
 The spot price represent the value of ADA based on another currency at a given time.
 
+### MIR
+
+MIR stand for **"Move Instantaneous Rewards"**. These are special rewards moved from the treasury or reserve.
+They are sent for different reason, ie: Catalyst voting rewards.
+
