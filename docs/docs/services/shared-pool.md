@@ -4,15 +4,20 @@ sidebar_position: 3
 
 # Shared Pool
 
+:::info
+The following document applies to **stake pool operators only**.
+:::
+
 Multiple owners account can be registered on a *Pool registration certificate*, but only a single rewards account
 can be assigned. All stake rewards and operation fees will be sent to this account. Pool with multiple owners
 accounts are considered **Shared Pool** on Adastry, as well as pools where the rewards account differ from the one
 of the owner.
 
-This behavior can make accounting complicated in certain situation. Let consider 2 owners.
-One of the owners account is set as the rewards account. Therefor, all rewards will fall into this account,
-raising the active stake of the account, epoch after epoch. If both owner have an equal amount in their accounts and
-never touch it, the math are rather simple. But in other situation it might require advance calculation and tracking.
+This protocole behavior can make accounting complicated in certain situation. Let consider a pool with 2 owners.
+One of the owners account is set as the rewards account. Therefore, all rewards will fall into this account,
+raising the active stake of the account, epoch after epoch. If both owner have an equal amount in their respective
+account and never touch it, the math are rather simple. But in other situation, it might require more advance 
+calculation and tracking.
 
 ## Definitions related to shared pool
 
@@ -21,11 +26,19 @@ never touch it, the math are rather simple. But in other situation it might requ
 **Balance** refer to the portion of the active stake at the beginning of an epoch,
 excluding the rewards available for withdraw. This value is calculated for every epoch.
 
+:::info
+The **calculated balance** can only be viewed on the rewards history 
+[Multi-Owner SPO CSV Format](/learn/docs/export/rewards-csv#multi-owner-spo-format)
+:::
+
 ### Stake Share
 
 **Stake Share** refer to the active stake share of an owner account over the total active stake held by 
-accounts registered on the pool certificate. Note that the **calculated balance** is used as *active stake*
-in the calculation.
+accounts registered on the pool certificate.
+
+:::info
+Note that it is the **calculated balance** that is used as **active stake** in the calculation.
+:::
 
 ## Multi-Owner Calculation
 

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Rewards History
 
-The following documentation will provide additional information about accounts rewards history.
+The following documentation will provide additional information about account rewards history.
 
 ![Rewards history fields](img/rewards-history-fields.png)
 
@@ -25,18 +25,20 @@ The **Rewards** field displays the total amount of rewards received from a pool 
 
 :::tip
 
-Keep in mind that the rewards are displayed along with the epoch the became available for withdraw to the
+Keep in mind that the rewards are displayed along with the epoch they became available for withdraw to the
 wallet owner. Those rewards are for blocks minted by the pool 2 epochs before.
 
 :::
 
 :::info
 
-❗️ For SPO only: the field include both stake rewards and operations fees. If one or more owner accounts differ
+❗️ For SPO only: the **Rewards** field include both stake rewards and operation fees. If one or more owner accounts differ
 from the reward account, the following process applies:
-- Reward account: display the real rewards and fees amount received by the account
-- Owner accounts: display rewards relative to the stake share of the account, plus the total fees divided by
+- **Reward account:** display the real rewards and operation fees amount received by the account.
+- **Owner accounts:** display rewards relative to the stake share of the account, plus the total fees divided by
   the number of owners.
+
+See [Shared Pool](/learn/docs/services/shared-pool) for more information.
 
 :::
 
@@ -90,4 +92,4 @@ the reward account.
 
     Stake Share = Account Stake / (Owner's Accounts Stake + Reward Account Stake)
 
-
+See [Shared Pool > Stake Share](/learn/docs/services/shared-pool#stake-share) for more information about **Stake Share**. 

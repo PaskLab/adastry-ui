@@ -33,7 +33,7 @@ party paid for them.
 ## Multi-Signature
 
 In the case of smart contract and multi-party transaction, the tax impact is more complicated to assess.
-**Multi** transaction need to be reviewed and manually adjusted to reflect the real intended transfer of assets
+**Multi-Signatures** transactions need to be reviewed and manually adjusted to reflect the real intended transfer of assets
 between each implicated parties.
 
 Let consider the following situation:
@@ -41,13 +41,13 @@ Let consider the following situation:
     Alice, Bob and Charley engage in a transaction.
     Alice send Bob ₳20, Bob send ₳30 to Charley and Charley send ₳40 to Alice.
 
-In the common work, we would have 3 transactions to describe the following situation. But on Cardano, all this
+In the traditional world, we would have 3 transactions to describe the following situation. But on Cardano, all this
 can happen in a single transaction for the sake of saving fees. The issue here is that the real intent can be
-obscure in the resulting transaction.
+obscured in the resulting transaction.
 
 In fact, this transaction could be written in a different way, with the same end result:
 
     Bob send ₳10 to Alice, Charley send ₳10 to Alice.
 
-The issue here is that the fiscal impact in the second transaction if far lesser than in the first one.
-Which currently seems advantageous, but another situation could have the opposite effect.
+The issue is that the fiscal impact in the second transaction if far lesser than in the first one.
+Which currently seems advantageous, but other situations could have the opposite effect.

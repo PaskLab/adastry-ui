@@ -20,17 +20,17 @@ software will show the rewards account balance without the payment history. This
 into play by fetching and processing these data, with some sugar on top of it..! 🍰
 
 The service is set to grow with its user needs, so it is not limited to rewards tracking. Adastry already
-pack other useful features and we count on our user to share their needs with us.
+pack other useful features, and we count on our users to share their needs with us.
 
 ## What Adastry is not
 
-- __**__ A tax reporting tool (ie: [Koinly](https://koinly.io/), [CoinTracker](https://www.cointracker.io/),
+- __**__ A tax reporting tool. (ie: [Koinly](https://koinly.io/), [CoinTracker](https://www.cointracker.io/),
 [accointing](https://www.accointing.com/))
-- A blockchain explorer
-- A wallet client software
+- A blockchain explorer.
+- A wallet client software.
 
-__**__ While the main use case for using Adastry is tax reporting need, we only facilitate the acquisition
-of your data. We do not provide profit/loss calculation. Each country have their own tax requirements,
+__**__ While the main use case for using Adastry is tax reporting need, we only facilitate the acquisition and
+processing of your data. We do not provide profit/loss calculation. Each country have their own tax requirements,
 make sure to check with your local professional.
 
 ## Current limitation
@@ -38,7 +38,7 @@ make sure to check with your local professional.
 Since the service was meant for staked accounts, addresses linked to unregistered stake credential cannot
 be monitored at the moment.
 
-Without registering the stake credential on the blockchain, there is nothing for us to establish the relation
+Without registering the stake credential on the blockchain, there is nothing to allow us to deduce the relation
 between addresses under a same account.
 
 

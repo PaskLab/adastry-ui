@@ -8,11 +8,11 @@ In order to insure Adastry sustainability, some features like `CSV Export` are o
 
 The free **Basic Plan** will allow you to try the application and see if it could be a right fit for your needs.
 
-**Plan** applies to wallet account, not user account. Some user linked wallet accounts can be included in certain
+**Plans** apply to wallet account, not user account. Some user linked wallet accounts can be included in certain
 premium plan, while other are left out.
 
 **Paid Plans** gives access to all features and will last a year.
-Once expired, it is up to the user to renew its subscription.
+Once expired, it is up to the user to renew his subscriptions.
 
 See [Adastry's plans & pricing here](https://adastry.io/pricing).
 
