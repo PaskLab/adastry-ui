@@ -38,3 +38,10 @@ The spot price represent the value of ADA based on another currency at a given t
 MIR stand for **"Move Instantaneous Rewards"**. These are special rewards moved from the treasury or reserve.
 They are sent for different reason, ie: Catalyst voting rewards.
 
+### Shared Pool
+
+Multiple owners account can be registered on a *Pool registration certificate*, but only a single rewards account
+can be assigned. All stake rewards and operation fees will be sent to this account. Pool with multiple owners
+accounts are considered **Shared Pool** on Adastry, as well as pools where the rewards account differ from the one
+of the owner.
+
