@@ -105,7 +105,7 @@ const config = {
             items: [
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/PaskLab',
+                href: 'https://twitter.com/Adastry',
               },
               {
                 label: 'Telegram',
