@@ -29,10 +29,10 @@
                     ** Subscription enable premium features for a year, including all previous years
                     data. **
                   </div>
-                  <!--                  <div class="text-gray-400 fw-bold fs-5">-->
-                  <!--                    If you need more info about our services, please check-->
-                  <!--                    <a href="https://adastry.io" class="link-primary fw-bolder">Adastry Docs</a>.-->
-                  <!--                  </div>-->
+                  <div class="text-gray-400 fw-bold fs-5">
+                    If you need more info about our services, please check
+                    <a href="https://adastry.io/learn/docs/intro" class="link-primary fw-bolder">Adastry Docs</a>.
+                  </div>
                 </div>
                 <div class="row justify-content-center g-10">
                   <Plan
