@@ -4,19 +4,19 @@ sidebar_position: 4
 
 # Statistics
 
-Statistics is a good way to follow and compare how your different accounts are doing.
-A few basic statistics are currently offered on Adastry, but there still a lot of work to
+Statistics are a good way to follow and compare how your different accounts are doing.
+A few basic statistics are currently offered on Adastry, but there's still a lot of work to
 be done on this side.
 
 ## Dashboard Statistics
 
 ### Monthly Rewards
 
-This graph represent the average monthly rewards amount received for all yours accounts.
+This graph represent the average monthly rewards amount received for all your accounts.
 
 ### Average Stake
 
-This graph represent the combined average monthly active stake of yours accounts.
+This graph represent the combined average monthly active stake of your accounts.
 
 ## Stake Pools
 

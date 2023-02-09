@@ -12,7 +12,7 @@ You can filter by **Year** and **Period** (Q1, Q2, Q3, Q4 or Full year).
 
 ## Format Options
 
-Each available **.csv** format options are described bellow along with supplementary details where needed.
+Each available **.csv** format options are described below along with additional details where needed.
 
 ### Default Format
 
@@ -21,19 +21,19 @@ Each available **.csv** format options are described bellow along with supplemen
 | 2022-02-24 21:44:51Z |             |               | 1.5             | ADA               |            |              | 1.73             | USD                |       | MINTING/BURNING                                                   | 76c24dc40ab2...               | [{"label":"721","json_metadata": "..."}] |
 |                      |             |               | 1               | SpaceBud4040      |            |              |                  |                    |       | SpaceBud4040 - asset1zkug... (Subpart of txHash: 76c24dc40ab2...) | (SpaceBud4040)76c24dc40ab2... | [{"label":"721","json_metadata": "..."}] |                                        |
 
-- Based on **Koinly Format** bellow, with the addition of the transaction **Metadata** field.
+- Based on **Koinly Format** below, with the addition of the transaction **Metadata** field.
 - **Sent & Received**
-  - A transaction can both send and received at the same time.
-  - Each record line contain a single asset type (Sent or Received currency type).
+  - A transaction can both be sent and received at the same time.
+  - Each record line contains a single asset type (Sent or Received currency type).
 - **Description**
   - The **"Subpart of** notice along with transaction hash will be added if required.
 - **TxHash**
   - The transaction hash will be prepended with the asset name if required. 
 
 :::info
-Transaction handling multiple different asset are split among multiple lines.
+Transaction handling multiple asset are split among multiple lines.
 - The subpart of the transaction is identified as is in description field.
-- Asset name is prepended to TxHash ID to make the record unique, which help to prevent duplicate
+- Asset name is prepended to TxHash ID to make the record unique, which helps to prevent duplicates
   when importing the same file multiple times.
 :::
 
@@ -44,9 +44,9 @@ Transaction handling multiple different asset are split among multiple lines.
 | 2022-02-24 21:44:51Z |             |               | 1.5             | ADA               |            |              | 1.73             | USD                |       | MINTING/BURNING                                                          | 76c24dc40ab2...               |
 |                      |             |               | 1               | NFT1              |            |              |                  |                    |       | NFT1 = SpaceBud4040 [asset1zkug...] (Subpart of txHash: 76c24dc40ab2...) | (SpaceBud4040)76c24dc40ab2... |
 
-- Same to above **Default** format, except for the **Metadata** field and currency symbol.
+- Same as above **Default** format, except for the **Metadata** field and currency symbol.
 - **Sent & Received Native Assets (token & NFT)**
-  - Support for Cardano native assets is not completed yet on **Koinly**, the current official workaround is the use of placeholders.
+  - Support for Cardano native assets is not yet completed on **Koinly**, the current official workaround is the use of placeholders.
     - The **NFT** asset name is replaced by placeholder like NFT1, NFT2, etc. The real name and asset fingerprint will be added in the description field. 
     - The **Token** asset name is replaced by placeholder like NULL1, NULL2, etc. The real name and asset fingerprint will be added in the description field.
   - Some token are currently supported on Koinly, you can later edit the transaction and search for the right asset using its fingerprint, ie: asset1h7jsujzt4s8...
@@ -65,7 +65,7 @@ Every user should review the import on Koinly and first try to replace the place
 
 If the asset isn't supported yet, the user should keep a personal record of each different asset and assign them a unique placeholder.
 
-This will help Koinly software to calculate the right profit/loss for unsupported NFTs and Tokens.
+This will help Koinly's software to calculate the right profit/loss for unsupported NFTs and Tokens.
 
 ###### Example of a personal index record
 

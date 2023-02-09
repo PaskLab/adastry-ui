@@ -23,14 +23,14 @@ We currently support the following tax software:
 
 ## Export Options
 
-There is two main option to choose from, and some sub-options to filter and format the data to fit your needs.
+There are two main options to choose from, and some sub-options to filter and format the data to fit your needs.
 
 ### "Account" VS "Bulk" export
 
 You can export each account individually by accessing the **"Export Data"** tab under
 **"Dashboard > View Account > Export Data Tab"**.
 
-But if you would like to consider many accounts as a single accounts for the sake of simplicity,
+But if you would like to consider many accounts as a single account for the sake of simplicity,
 you can choose the **Bulk Export** option available directly on the dashboard.
 
 :::tip

@@ -6,7 +6,7 @@ sidebar_position: 2
 
 Rewards history is one of the data category you can actually export on Adastry.
 
-The rewards will be exported on a per Epoch basic along with its net worth based on your preferred currency
+The rewards will be exported on a per-Epoch basis along with its net worth based on your preferred currency
 and the epoch ADA spot price.
 
 ## Filter Options
@@ -48,15 +48,15 @@ Each available **.csv** format options are described bellow along with supplemen
 | 2023-01-05 21:44:51Z | 386   | 548.349132 | 0   | 167.57           | USD                | 20739.034394 | 20521.586431    | 183.981623    | 364.367509 | 0            | 0         | Epoch 386 for stake1u9... |
 
 - **Rewards**
-  - Total rewards received during the epoch. Include both stake rewards and operation fee.
-  - The rewards are displayed even if sent to a separated rewards account. See [Shared Pool](/learn/docs/services/shared-pool).
+  - Total rewards received during the epoch. Includes both stake rewards and operation fee.
+  - The rewards are displayed even if sent to a separate rewards account. See [Shared Pool](/learn/docs/services/shared-pool).
   - If the pool is shared among multiple owners, or the rewards account differ from the pledge account, the Multi-owner format is preferred.
 - **Account Balance**
   - The account balance is calculated to determine the right stake share of an account. See [Shared Pool](/learn/docs/services/shared-pool).
 - **Stake Rewards**
   - Share of the received rewards related to the **Active Stake** of the account.
 - **Op Rewards**
-  - Share of the operation fees. Operation fees are split equally among owners account.
+  - Share of the operation fees. Operation fees are split equally among owners accounts.
 
 ### Multi-Owner SPO Format
 
@@ -66,9 +66,9 @@ Each available **.csv** format options are described bellow along with supplemen
 
 - Same as **SPO Format**, with 2 more fields.
 - **Real Rewards**
-  - Real amount received by the account when rewards are sent to a separated rewards account. See [Shared Pool](/learn/docs/services/shared-pool).
+  - Real amount received by the account when rewards are sent to a separate rewards account. See [Shared Pool](/learn/docs/services/shared-pool).
 - **Stake Share**
-  - Represent the weight of the account active stake on the total amount of owners accounts stake. Determine the share of the rewards, excluding the fees. See [Shared Pool](/learn/docs/services/shared-pool).
+  - Represents the weight of the account active stake on the total amount of owners accounts stake. Determines the share of the rewards, excluding the fees. See [Shared Pool](/learn/docs/services/shared-pool).
 
 ### As transaction Format
 

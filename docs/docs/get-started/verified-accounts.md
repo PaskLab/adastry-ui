@@ -7,7 +7,7 @@ sidebar_position: 2
 :::tip
 
 Even if you're a fast typer and do prefer password authentication, we still strongly suggest verifying 
-one or more accounts. This will give you a way to access your account if you lose your username or password.
+one or more accounts. This will allow you to access your account if you lose your username or password.
 
 :::
 

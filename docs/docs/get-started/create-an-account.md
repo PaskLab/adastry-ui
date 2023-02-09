@@ -7,7 +7,7 @@ sidebar_position: 1
 A user account is required to access Adastry services. The account will allow you to link wallet accounts
 and save preferences.
 
-There is 2 ways to create a new user account: **Classic Form** or **Wallet Auth**.
+There are 2 ways to create a new user account: **Classic Form** or **Wallet Auth**.
 
 ## Classic Form
 
@@ -20,7 +20,7 @@ special character.
 
 ## Wallet Auth
 
-Adastry feature a secure authentication system using a generic message signature. The core concept is proving
+Adastry features a secure authentication system using a generic message signature. The core concept is proving
 ownership over a specific stake credential *(wallet account)* and linking it to your user account, so you can later
 use it to authenticate yourself.
 
@@ -31,10 +31,10 @@ by signing in with that same wallet account.
 
 ## Account recovery
 
-Email password recovery is not implemented at the moment. Instead we chose to go the **Web3** way and use the 
+Email password recovery is not implemented at the moment. Instead, we chose to go the **Web3** way and use the 
 proof of ownership.
 
 Once authenticated on the application, access the **"settings > security"** page and add one or more
-[verified accounts](/learn/docs/get-started/verified-accounts). This way, if you ever loose you password, you'll
+[verified accounts](/learn/docs/get-started/verified-accounts). This way, if you ever lose your password, you'll
 be able to sign in and set a new one.
 

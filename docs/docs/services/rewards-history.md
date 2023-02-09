@@ -19,7 +19,7 @@ receiving rewards every 5 days. Depending on your local jurisdiction, these even
 
 ## Rewards
 
-Rewards are payment received on an epoch basis for participating in the protocole consensus.
+Rewards are payment received on an epoch basis for participating in the protocol consensus.
 The **Rewards** field displays the total amount of rewards received from a pool at the start a given epoch,
 *excluding MIR Rewards*.
 
@@ -32,7 +32,7 @@ wallet owner. Those rewards are for blocks minted by the pool 2 epochs before.
 
 :::info
 
-❗️ For SPO only: the **Rewards** field include both stake rewards and operation fees. If one or more owner accounts differ
+❗️ For SPO only: the **Rewards** field includes both stake rewards and operation fees. If one or more owner accounts differ
 from the reward account, the following process applies:
 - **Reward account:** display the real rewards and operation fees amount received by the account.
 - **Owner accounts:** display rewards relative to the stake share of the account, plus the total fees divided by
@@ -51,12 +51,12 @@ They are sent for different reason, ie: Catalyst voting rewards.
 
 ## Active Stake
 
-Active Stake represent the amount of stake that will take part in the consensus protocol for the related epoch.
+Active Stake represents the amount of stake that will take part in the consensus protocol for the related epoch.
 The account will receive rewards related to this amount 2 epochs later.
 
 ## Spot
 
-Spot refer to ADA price in the user preferred currency at the beginning of the epoch, when rewards are received.
+Spot refers to ADA price in the user preferred currency at the beginning of the epoch, when rewards are received.
 
 Preferred currency can be set using the top left dollar ($) sign icon.
 
@@ -67,13 +67,13 @@ using the known rewards history.
 
 ## Withdrawn
 
-Withdrawn represent the amount of rewards that have been withdrawn during the epoch. Note that the rewards are not
+Withdrawn represents the amount of rewards that have been withdrawn during the epoch. Note that the rewards are not
 spent, but added to the account balance.
 
 ## Stake Rewards (SPO Only)
 
 Stake Rewards refer to calculated rewards share of the account, based on its stake share. The amount of this field
-exclude the operation fees.
+excludes the operation fees.
 
     Stake Rewards = (Pool Rewards excluding fees) * Stake Share
   

@@ -11,7 +11,7 @@ The free **Basic Plan** will allow you to try the application and see if it coul
 **Plans** apply to wallet account, not user account. Some user linked wallet accounts can be included in certain
 premium plan, while other are left out.
 
-**Paid Plans** gives access to all features and will last a year.
+**Paid Plans** give access to all features and will last a year.
 Once expired, it is up to the user to renew his subscriptions.
 
 See [Adastry's plans & pricing here](https://adastry.io/pricing).
@@ -28,8 +28,8 @@ The plan is made to allow a user to try and understand what the application is a
 
 - *premium features included*
 
-Any wallet account delegated to any Armada Alliance pools for at least 4 consecutive epochs will be included
-in this plan as long as the account remain delegated to a member pool.
+Any wallet account delegated to any Armada Alliance pool for at least 4 consecutive epochs will be included
+in this plan as long as the account remains delegated to a member pool.
 
 If the delegation streak is broken, the 4 consecutive epochs requirement will apply again.
 
@@ -39,7 +39,7 @@ See [Armada Alliance member pools here](https://armada-alliance.com/stake-pools)
 
 - *premium features included*
 
-This plan allow a user to enable premium features access on a *per-account* basis.
+This plan allows a user to enable premium features access on a *per-account* basis.
 Many accounts can be selected at a time.
 
 ## Whole Pool Paid Plan
