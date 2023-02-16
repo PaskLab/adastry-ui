@@ -2,7 +2,7 @@
   import type Component from 'svelte/types/compiler/compile/Component';
   export let type = 'button';
   export let text = 'Ok';
-  export let icon: Component = undefined;
+  export let icon: Component | undefined = undefined;
   export let wait = false;
   export let customClass = 'btn btn-primary';
   export let action = () => undefined;

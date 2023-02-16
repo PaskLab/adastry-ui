@@ -1,3 +1,7 @@
+<script lang="ts">
+  import config from '$lib/config.json';
+</script>
+
 <div class="footer pb-4 d-flex flex-lg-column">
   <div
     class="container-xxl d-flex flex-column flex-md-row align-items-center justify-content-between"
@@ -11,10 +15,10 @@
 
     <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
       <li class="menu-item">
-        <a href="https://adastry.io/learn/" class="menu-link px-2">Docs</a>
+        <a href="{config.routing.docs}" class="menu-link px-2">Docs</a>
       </li>
       <li class="menu-item">
-        <a href="/pricing" class="menu-link px-2">Pricing</a>
+        <a href="{config.routing.pricing}" class="menu-link px-2">Pricing</a>
       </li>
       <li class="menu-item">
         <a

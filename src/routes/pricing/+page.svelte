@@ -1,4 +1,5 @@
 <script lang="ts">
+  import config from '$lib/config.json';
   import Aside from '../landing/aside.svelte';
   import Footer from '../landing/footer.svelte';
   import Plan from './plan.svelte';
@@ -31,7 +32,9 @@
                   </div>
                   <div class="text-gray-400 fw-bold fs-5">
                     If you need more info about our services, please check
-                    <a href="https://adastry.io/learn/docs/intro" class="link-primary fw-bolder">Adastry Docs</a>.
+                    <a href="{config.routing.docs}/docs/intro" class="link-primary fw-bolder"
+                      >Adastry Docs</a
+                    >.
                   </div>
                 </div>
                 <div class="row justify-content-center g-10">
