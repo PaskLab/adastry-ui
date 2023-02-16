@@ -7,8 +7,14 @@
   import { getGlobalMapping } from '$lib/api/mapping';
   import TextInput from '$lib/components/form/text-input.svelte';
   import SearchIcon from '$lib/components/icons/search.svelte';
+  import Modal from '$lib/components/global/modal.svelte';
+  import HelpIcon from '$lib/components/icons/question.svelte';
+  import Tooltip from '$lib/components/global/tooltip.svelte';
   import type { Writable } from 'svelte/store';
   import type { GlobalMappingListType } from '$lib/api/types/global-mapping.type';
+
+  // Help Modal
+  let infoModal: typeof Modal;
 
   // Search
   let search = '';
@@ -60,12 +66,22 @@
     <Skeleton height="800px" />
   {:then mapping}
     <div class="card-header border-0 pt-5">
-      <h3 class="card-title align-items-start flex-column">
-        <span class="card-label fw-bolder fs-3 mb-1">Global Asset Mapping</span>
+      <div class="card-title align-items-start flex-column">
+        <h3 class="card-label fw-bolder fs-3 mb-1">
+          Global Asset Mapping
+          <button
+            on:click="{() => infoModal.open()}"
+            class="btn btn-active-light-primary ms-1 p-1 btn-icon-warning"
+          >
+            <span class="svg-icon svg-icon-2x position-relative " style="left: 3px"
+              ><HelpIcon /></span
+            >
+          </button>
+        </h3>
         <span class="text-muted mt-1 fw-bold fs-7"
           >{mapping.count} mapping record{mapping.count > 1 ? 's' : ''}</span
         >
-      </h3>
+      </div>
       <Pager pageSize="{limit}" totalItems="{mapping.count}" bind:currentPage />
     </div>
     <div class="card-body py-3">
@@ -79,8 +95,10 @@
             <thead>
               <tr class="fw-bolder text-muted">
                 <th class="ps-2">Asset</th>
-                <th class="w-150px">Koinly ID</th>
-                <th class="w-150px text-center">Koinly ID State</th>
+                <th class="w-150px"><Tooltip text="Official Koinly ID">Koinly ID</Tooltip></th>
+                <th class="w-150px text-center"
+                  ><Tooltip text="ID review state">Koinly ID State</Tooltip></th
+                >
               </tr>
             </thead>
             <tbody class="font-monospace">
@@ -118,6 +136,28 @@
     <div class="text-center text-danger p-20">{config.messages.failedFetch}</div>
   {/await}
 </div>
+
+<Modal bind:this="{infoModal}" hideClose="{true}" outClick="{true}" actionBtnText="Continue">
+  <svelte:fragment slot="title">What is global mapping?</svelte:fragment>
+  <svelte:fragment slot="body">
+    <p class="text-dark">
+      Unlike user mapping, <strong>Global Mapping</strong> is shared among all Adastry users.
+    </p>
+    <p class="text-dark">
+      As official support is added by tax software for native tokens, a request can be made through
+      the <strong>Mapping Request</strong> section to add official support for a specific asset.
+    </p>
+    <p class="text-dark">
+      New entry to the global mapping must first be reviewed by our team before activation. User
+      mapping can be replaced by the global mapping when available.
+    </p>
+    <p class="text-dark mt-10">
+      Learn more by reading <a href="{config.routing.docs}/" target="_blank"
+        >Mapping Documentation</a
+      >.
+    </p>
+  </svelte:fragment>
+</Modal>
 
 <style>
   thead {

@@ -17,7 +17,7 @@
   let mainView: ViewType;
 
   const mainViewOptions: NavOptionType[] = [
-    { id: 'user', type: 'view', view: { component: UserMapping, props: {} }, text: 'User Mapping' },
+    { id: 'user', type: 'view', view: { component: UserMapping, props: {} }, text: 'Mapping' },
     {
       id: 'global',
       type: 'view',

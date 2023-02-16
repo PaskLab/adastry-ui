@@ -1,13 +1,18 @@
 <script lang="ts">
   import { z } from 'zod';
+  import config from '$lib/config.json';
   import TextInput from '$lib/components/form/text-input.svelte';
   import SubmitBtn from '$lib/components/global/action-button.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import GlobalMapping from '../global/mapping.svelte';
   import { submitMappingRequest } from '$lib/api/mapping';
   import { getContext } from 'svelte';
+  import HelpIcon from '$lib/components/icons/question.svelte';
   import type { Writable } from 'svelte/store';
   import type { ViewType } from '$lib/types/view.type';
+
+  // Help Modal
+  let infoModal: typeof Modal;
 
   // View Context
   let view = getContext<Writable<ViewType>>('mainView');
@@ -52,14 +57,32 @@
 
 <div class="card card-bordered mb-xl-8">
   <div class="card-header">
-    <h3 class="card-title align-items-start flex-column">
-      <span class="card-label fw-bolder fs-3 mb-1">Request a mapping</span>
-    </h3>
+    <div class="card-title align-items-start flex-column">
+      <h3 class="card-label fw-bolder fs-3 mb-1">
+        Request Koinly official mapping
+        <button
+          on:click="{() => infoModal.open()}"
+          class="btn btn-active-light-primary ms-1 p-1 btn-icon-warning"
+        >
+          <span class="svg-icon svg-icon-2x position-relative " style="left: 3px"><HelpIcon /></span
+          >
+        </button>
+      </h3>
+    </div>
   </div>
 
   <div class="card-body py-3">
     <div class="offset-md-3 col-md-6">
       <form class="form" novalidate="novalidate">
+        <div class="notice bg-light-warning rounded border-primary border border-dashed p-3 mb-10">
+          <p class="fw-bold fs-6 text-gray-700 mb-0">
+            <strong>Asset fingerprint</strong> cannot be used at the moment, please use the
+            <strong>asset Hex ID</strong>
+          </p>
+          <p class="fw-bold fs-6 text-gray-700 mb-0">
+            Hex ID is represented by the Policy Hex ID + Hex encoded asset name.
+          </p>
+        </div>
         <div class="my-10">
           <TextInput
             bind:this="{hexIdField}"
@@ -134,4 +157,25 @@
       Please try again or contact support.
     {/if}
   </div>
+</Modal>
+
+<Modal bind:this="{infoModal}" hideClose="{true}" outClick="{true}" actionBtnText="Continue">
+  <svelte:fragment slot="title">What are official mapping request?</svelte:fragment>
+  <svelte:fragment slot="body">
+    <p class="text-dark">
+      Mapping request allow a user to notify Adastry team about official support availability.
+    </p>
+    <p class="text-dark">
+      With millions of different assets, it is currently impossible for our team to know the state
+      of each one.
+    </p>
+    <p class="text-dark">
+      Once requested, the team will verify the information and activate the official mapping.
+    </p>
+    <p class="text-dark mt-10">
+      Check out our <a href="{config.routing.docs}/" target="_blank"
+        >Mapping Request Documentation</a
+      > to learn how to check for official support.
+    </p>
+  </svelte:fragment>
 </Modal>
