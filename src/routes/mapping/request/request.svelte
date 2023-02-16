@@ -163,7 +163,7 @@
   <svelte:fragment slot="title">What are official mapping request?</svelte:fragment>
   <svelte:fragment slot="body">
     <p class="text-dark">
-      Mapping request allow a user to notify Adastry team about official support availability.
+      Mapping request allows a user to notify Adastry team about official support availability.
     </p>
     <p class="text-dark">
       With millions of different assets, it is currently impossible for our team to know the state
