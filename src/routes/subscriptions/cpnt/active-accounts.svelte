@@ -8,7 +8,7 @@
   // Context
   let pAccounts: Promise<AccountStateType[]>;
   let pActiveAccounts: Promise<AccountStateType[]>;
-  const unsubsriber = getContext<Readable<Promise<AccountStateType[]>>>('accountsState').subscribe(
+  const unsubscriber = getContext<Readable<Promise<AccountStateType[]>>>('accountsState').subscribe(
     (v) => {
       pAccounts = v;
       // Process data
@@ -27,7 +27,7 @@
   }
 
   onDestroy(() => {
-    unsubsriber();
+    unsubscriber();
   });
 </script>
 

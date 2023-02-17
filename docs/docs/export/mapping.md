@@ -83,7 +83,8 @@ Support for asset fingerprint will be added later on.
 Many token exist on multiple network and can easily be mixed. Make sure to follow all the steps bellow
 in order to properly identify a Cardano based asset.
 
-The **Asset Fingerprint** must absolutely be used for searching, otherwise you might get false positive.
+The **Asset Fingerprint** must absolutely first be used for searching, otherwise you might get false positive.
+Note that there is *some* occasions where Cardano assets are referenced by their symbol and name instead of their fingerprint.
 
 :::
 

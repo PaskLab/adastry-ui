@@ -60,7 +60,7 @@
   ];
 
   setContext('mainView', writable<ViewType>(mainViewOptions[0].view));
-  let unsubsriber = getContext<Writable<ViewType>>('mainView').subscribe((v) => (mainView = v));
+  let unsubscriber = getContext<Writable<ViewType>>('mainView').subscribe((v) => (mainView = v));
 
   onMount(() => {
     pAccount = getAccount($page.params.stakeAddress);
@@ -82,7 +82,7 @@
   });
 
   onDestroy(() => {
-    unsubsriber();
+    unsubscriber();
   });
 </script>
 

@@ -12,7 +12,7 @@
   let pInvoices: Promise<InvoiceListType>;
   const invoicesStore = getContext<Writable<Promise<InvoiceListType>>>('invoices');
   const accountsState = getContext<Writable<Promise<AccountStateType[]>>>('accountsState');
-  const unsubsriber = invoicesStore.subscribe((v) => (pInvoices = v));
+  const unsubscriber = invoicesStore.subscribe((v) => (pInvoices = v));
 
   // Refresh 3 minutes on pending invoice
   $: pInvoices
@@ -28,7 +28,7 @@
     .catch(console.error);
 
   onDestroy(() => {
-    unsubsriber();
+    unsubscriber();
   });
 </script>
 

@@ -19,12 +19,12 @@
   let mainView: typeof SvelteComponent;
 
   setContext('mainView', writable<typeof SvelteComponent>(SignInForm));
-  const unsubsriber = getContext<Writable<typeof SvelteComponent>>('mainView').subscribe(
+  const unsubscriber = getContext<Writable<typeof SvelteComponent>>('mainView').subscribe(
     (v) => (mainView = v),
   );
 
   onDestroy(() => {
-    unsubsriber();
+    unsubscriber();
   });
 </script>
 

@@ -8,10 +8,10 @@
   // Routing
   let mainView: ViewType;
   setContext('mainView', writable<ViewType>({ component: AccountList, props: {} }));
-  const unsubsriber = getContext<Writable<ViewType>>('mainView').subscribe((v) => (mainView = v));
+  const unsubscriber = getContext<Writable<ViewType>>('mainView').subscribe((v) => (mainView = v));
 
   onDestroy(() => {
-    unsubsriber();
+    unsubscriber();
   });
 </script>
 

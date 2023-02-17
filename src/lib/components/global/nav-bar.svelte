@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext, onDestroy } from 'svelte';
   import type { ViewType } from '$lib/types/view.type';
   import type { Writable } from 'svelte/store';
   import type { NavOptionType } from '$lib/types/nav-option.type';
@@ -9,10 +9,20 @@
   export let active = options[0].id;
   let view = getContext<Writable<ViewType>>(contextKey);
 
+  const unsubscriber = view.subscribe((v) =>
+    options.forEach((opts) => {
+      if (opts.view?.component === v.component) active = opts.id;
+    }),
+  );
+
   function handleClick(option: NavOptionType) {
     if (active != option.id) active = option.id;
     if (option.view) view.set(option.view);
   }
+
+  onDestroy(() => {
+    unsubscriber();
+  });
 </script>
 
 <ul

@@ -43,10 +43,10 @@
 
   let mainView: ViewType;
   setContext('mainView', writable<ViewType>(mainViewOptions[0].view));
-  const unsubsriber = getContext<Writable<ViewType>>('mainView').subscribe((v) => (mainView = v));
+  const unsubscriber = getContext<Writable<ViewType>>('mainView').subscribe((v) => (mainView = v));
 
   onDestroy(() => {
-    unsubsriber();
+    unsubscriber();
   });
 </script>
 
