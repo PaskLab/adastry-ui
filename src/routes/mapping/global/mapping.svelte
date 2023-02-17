@@ -152,7 +152,7 @@
       mapping can be replaced by the global mapping when available.
     </p>
     <p class="text-dark mt-10">
-      Learn more by reading <a href="{config.routing.docs}/" target="_blank"
+      Learn more by reading <a href="{config.routing.docs.mapping}#global-mapping" target="_blank"
         >Mapping Documentation</a
       >.
     </p>

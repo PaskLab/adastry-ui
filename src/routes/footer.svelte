@@ -15,7 +15,7 @@
 
     <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
       <li class="menu-item">
-        <a href="{config.routing.docs}" class="menu-link px-2">Docs</a>
+        <a href="{config.routing.documentation}" class="menu-link px-2">Docs</a>
       </li>
       <li class="menu-item">
         <a href="{config.routing.pricing}" class="menu-link px-2">Pricing</a>

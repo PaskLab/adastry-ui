@@ -44,3 +44,7 @@ Multiple owners accounts can be registered on a *Pool registration certificate*,
 can be assigned. All stake rewards and operation fees will be sent to this account. Pool with multiple owners
 accounts are considered **Shared Pool** on Adastry, as well as pools where the rewards account differ from the owner's.
 
+### Mapping Placeholder / ID
+
+A mapping placeholder or ID is a unique identifier that will be used instead of the asset symbole on another platform
+to bring support when the asset is not recognized. The ID/placeholder can be official or attributed by the user.
