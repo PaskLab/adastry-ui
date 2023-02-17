@@ -32,7 +32,7 @@
                   </div>
                   <div class="text-gray-400 fw-bold fs-5">
                     If you need more info about our services, please check
-                    <a href="{config.routing.docs}/docs/intro" class="link-primary fw-bolder"
+                    <a href="{config.routing.docs.intro}" class="link-primary fw-bolder"
                       >Adastry Docs</a
                     >.
                   </div>

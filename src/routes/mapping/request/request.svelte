@@ -173,8 +173,9 @@
       Once requested, the team will verify the information and activate the official mapping.
     </p>
     <p class="text-dark mt-10">
-      Check out our <a href="{config.routing.docs}/" target="_blank"
-        >Mapping Request Documentation</a
+      Check out our <a
+        href="{config.routing.docs.mapping}#request-koinly-official-mapping"
+        target="_blank">Mapping Request Documentation</a
       > to learn how to check for official support.
     </p>
   </svelte:fragment>

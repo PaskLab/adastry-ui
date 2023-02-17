@@ -13,7 +13,11 @@
     "pricing": "/pricing",
     "privacy": "/privacy-policy",
     "terms": "/terms-and-conditions",
-    "docs": "/learn"
+    "documentation": "/learn",
+    "docs": {
+      "intro": "/learn/docs/intro",
+      "mapping": "/learn/docs/export/mapping"
+    }
   },
   "provider": {
     "adastry": {

@@ -59,20 +59,14 @@ Transaction handling multiple asset are split among multiple lines.
 #### Correct handling of NFT & Token with placeholders
 
 In order to establish the right acquisition and disposal price of an asset, each asset should have a unique identifier.
-Unfortunately it is impossible at the moment for Adastry to attribute a unique placeholder to each asset existing on Cardano.
 
-Every user should review the import on Koinly and first try to replace the placeholder with the right supported asset (if available).
+Because not every asset is supported on different tax tools, Adastry need to attribute a unique supported placeholder to each asset exported for these software.
 
-If the asset isn't supported yet, the user should keep a personal record of each different asset and assign them a unique placeholder.
+Adastry's mapping feature will generate the mapping automatically, but user should review the import on Koinly and make sure every appearance of an
+asset bear the same identifier.
 
 This will help Koinly's software to calculate the right profit/loss for unsupported NFTs and Tokens.
 
-###### Example of a personal index record
-
-| Name                      | Fingerprint   | Assigned Placeholder | Type  |
-|---------------------------|---------------|----------------------|-------|
-| Spacebudz4040             | asset1zkug... | NFT1                 | NFT   |
-| [WMT] World Mobile Token  | asset1h7js... | NULL1                | TOKEN |
-| Clay Nation #1214         | asset1jszw... | NFT2                 | NFT   |
+See [CSV Export > Mapping](/learn/docs/export/mapping) for more information.
 
 :::

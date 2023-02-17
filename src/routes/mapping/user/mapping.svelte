@@ -166,7 +166,7 @@
       >.
     </p>
     <p class="text-dark mt-10">
-      Learn more by reading <a href="{config.routing.docs}/" target="_blank"
+      Learn more by reading <a href="{config.routing.docs.mapping}" target="_blank"
         >Mapping Documentation</a
       >.
     </p>
