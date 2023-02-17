@@ -78,10 +78,24 @@ Support for asset fingerprint will be added later on.
 
 ### Request Koinly official mapping
 
+:::caution
+
+Many token exist on multiple network and can easily be mixed. Make sure to follow all the steps bellow
+in order to properly identify a Cardano based asset.
+
+The **Asset Fingerprint** must absolutely be used for searching, otherwise you might get false positive.
+
+:::
+
 To find an asset numerical identifier on Koinly, follow the following instructions:
 
-1. Go to the Markets tab on Koinly (link currently located in the footer) and search
-    for the token you want to import. Let's say that I wanted to import the World Mobile Token (WMT).
-    ![Koinly Market Screenshot](./img/koinly-market.png)
-2. After clicking on the token you want, you will see the Koinly ID in the URL: https://app.koinly.io/p/markets/58284 .
+1. Go on the Transaction tab on Koinly and search for the token you want to import using its **fingerprint**
+    in the `Currency` filter field. Let's say that I wanted to import the World Mobile Token (WMT).
+    ![Koinly Identification Screenshot](./img/koinly-identification.png)
+2. After clicking on the token you want, you will see the Koinly ID in the browser URL: 
+
+       https://app.koinly.io/p/transactions?currency_id=58284&perPage=25
+
+   The `currency_id=58284` will indicate you the correct identifier number.
+
 3. You can now create the mapping request by using the following Koinly identifier: **ID:58284** .
