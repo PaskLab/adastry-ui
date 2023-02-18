@@ -279,10 +279,15 @@
     ><span class="text-danger">Invalid credentials</span></svelte:fragment
   >
   <div slot="body" class="text-center">
-    <p>Please check your authentication credentials.</p>
+    <p>User account not found, please check your credentials.</p>
     <p>
       If you are using <u>wallet authentication</u>, make sure the correct account is selected and
       that you have already verified this account.
+    </p>
+    <p>
+      <strong class="text-warning">**Note:</strong> Creating a user account still required before
+      using
+      <u>wallet authentication</u>.
     </p>
   </div>
 </Modal>
