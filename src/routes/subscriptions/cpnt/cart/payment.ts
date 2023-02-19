@@ -2,7 +2,7 @@ import { Lucid, TxSigned } from 'lucid-cardano';
 import ShortUniqueId from 'short-unique-id';
 import config from '$lib/config.json';
 import type { NewInvoiceType } from '$lib/api/types/new-invoice.type';
-import type { TxHash, WalletApi } from 'lucid-cardano';
+import type { WalletApi } from 'lucid-cardano';
 import { AdastryProvider } from '$lib/lucid/adastry.provider';
 
 export default class Payment {
@@ -54,14 +54,9 @@ export default class Payment {
     return {
       invoiceId: this.invoiceId,
       txHash: this.signedTx ? this.signedTx.toHash() : '',
+      txBody: this.signedTx ? this.signedTx.toString() : '',
       accounts: this.stakeAddresses,
       pools: this.poolIds,
     };
-  }
-
-  async submit(): Promise<TxHash | undefined> {
-    if (this.signedTx) {
-      return this.signedTx.submit();
-    }
   }
 }

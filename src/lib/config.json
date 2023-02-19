@@ -64,8 +64,7 @@
           "getProtocolParameters": "/proxy/protocol-parameters",
           "getUtxos": "/proxy/addresses/{address}/utxos",
           "getUtxosWithUnit": "/proxy/addresses/{address}/utxos/{asset}",
-          "getTxInfo": "/proxy/tx/{hash}",
-          "submit": "/proxy/submit"
+          "getTxInfo": "/proxy/tx/{hash}"
         }
       }
     }

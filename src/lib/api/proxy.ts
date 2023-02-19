@@ -20,7 +20,3 @@ export async function getUtxosWithUnit(address: string, asset: string, page?: nu
 export async function getTxInfo(hash: string) {
   return request(PROVIDER.url + getURL(PROVIDER.endpoints.proxy.getTxInfo, { hash }));
 }
-
-export async function submit(body: any) {
-  return request(PROVIDER.url + getURL(PROVIDER.endpoints.proxy.submit, { body }), 'POST');
-}

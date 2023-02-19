@@ -38,7 +38,6 @@
   let errorModal: typeof Modal;
   let connectorErrorModal: typeof Modal;
   let networkErrorModal: typeof Modal;
-  let submitErrorModal: typeof Modal;
   let fundsErrorModal: typeof Modal;
   let successModal: typeof Modal;
   let successTxHash = '';
@@ -47,7 +46,6 @@
   let wait = false;
 
   async function pay(walletId: Web3Wallet) {
-    console.log('clicked!');
     wait = true;
     if (cardano && cardano[walletId]) {
       const connector = cardano[walletId];
@@ -83,20 +81,20 @@
         .then((invoiceBody: NewInvoiceType) => {
           // Submit new invoice
           createInvoice(invoiceBody)
-            .then(() => {
-              payment
-                .submit()
-                .then((txHash) => {
-                  const fallbackHash = payment.getTxHash() ?? '';
-                  successTxHash = txHash ? txHash : fallbackHash;
-                  handleSuccess();
-                })
-                .catch((e) => {
-                  submitErrorModal.open();
-                });
+            .then((res) => {
+              if (res.error) {
+                errorModalBody = {
+                  statusCode: res.statusCode,
+                  message: res.message,
+                  error: res.error,
+                };
+                errorModal.open();
+              } else {
+                successTxHash = payment.getTxHash() ?? '';
+                updateUI();
+              }
             })
-            .catch((e) => {
-              console.error(e);
+            .catch(() => {
               errorModal.open();
             });
         })
@@ -120,7 +118,7 @@
     }
   }
 
-  function handleSuccess() {
+  function updateUI() {
     accountsState.set(getAccountsState());
     userPools.set(getUserPools());
     invoices.set(getInvoiceList());
@@ -137,9 +135,11 @@
     </h3>
     <div class="card-toolbar">
       <button
+        disabled="{wait}"
         on:click="{() => mainView.set({ component: CartList, props: {} })}"
         type="button"
-        class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
+        class="btn
+        btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
       >
         <span class="svg-icon svg-icon-2 position-relative" style="top: -1px;">
           <BackArrow />
@@ -230,17 +230,6 @@
   <svelte:fragment slot="body">
     <p slot="body" class="text-center">
       Only <strong>Mainnet</strong> is supported, make sure to set your wallet to the right network.
-    </p>
-  </svelte:fragment>
-</Modal>
-
-<Modal bind:this="{submitErrorModal}" hideAction="{true}" callback="{() => (wait = false)}">
-  <svelte:fragment slot="title"
-    ><span class="text-danger">TX submission failed</span></svelte:fragment
-  >
-  <svelte:fragment slot="body">
-    <p slot="body" class="text-center">
-      The payment has not been sent, an error occurred while submitting.
     </p>
   </svelte:fragment>
 </Modal>

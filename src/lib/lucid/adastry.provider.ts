@@ -11,13 +11,7 @@ import type {
   Delegation,
   RewardAddress,
 } from 'lucid-cardano';
-import {
-  getProtocolParameters,
-  getTxInfo,
-  getUtxos,
-  getUtxosWithUnit,
-  submit,
-} from '$lib/api/proxy';
+import { getProtocolParameters, getTxInfo, getUtxos, getUtxosWithUnit } from '$lib/api/proxy';
 import { C, toHex, fromHex } from 'lucid-cardano';
 
 export class AdastryProvider implements AdastryProvider {
@@ -107,15 +101,27 @@ export class AdastryProvider implements AdastryProvider {
     return this.blockfrostUtxosToUtxos(result);
   }
 
+  /**
+   * DO NOT USE
+   */
   // @ts-ignore
   async getUtxoByUnit(unit: Unit): Promise<UTxO> {}
 
+  /**
+   * DO NOT USE
+   */
   // @ts-ignore
   async getUtxosByOutRef(outRefs: OutRef[]): Promise<UTxO[]> {}
 
+  /**
+   * DO NOT USE
+   */
   // @ts-ignore
   async getDelegation(rewardAddress: RewardAddress): Promise<Delegation> {}
 
+  /**
+   * DO NOT USE
+   */
   // @ts-ignore
   async getDatum(datumHash: DatumHash): Promise<Datum> {}
 
@@ -132,13 +138,11 @@ export class AdastryProvider implements AdastryProvider {
     });
   }
 
+  /**
+   * DO NOT USE
+   */
   async submitTx(tx: Transaction): Promise<TxHash> {
-    const result = await submit(fromHex(tx));
-    if (!result || result.error) {
-      if (result?.status_code === 400) throw new Error(result.message);
-      else throw new Error('Could not submit transaction.');
-    }
-    return result;
+    return '';
   }
 
   private async blockfrostUtxosToUtxos(result: BlockfrostUtxoResult): Promise<UTxO[]> {
