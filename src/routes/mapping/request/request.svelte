@@ -31,7 +31,11 @@
     const fields = [hexIdField.validate(), koinlyIdField.validate()];
     if (fields.every((field) => field)) {
       wait = true;
-      submitMappingRequest({ hexId: hexId.trim(), koinlyId: koinlyId.trim() })
+      koinlyId = koinlyId.trim();
+      submitMappingRequest({
+        hexId: hexId.trim(),
+        koinlyId: koinlyId.indexOf('ID:') === 0 ? koinlyId : 'ID:' + koinlyId,
+      })
         .then((res) => {
           if ([200, 201].includes(res.statusCode)) {
             successModal.open();
@@ -103,12 +107,15 @@
             bind:value="{koinlyId}"
             name="koinlyId"
             label="Koinly ID"
-            placeholder="ID:12345"
+            placeholder="12345 or ID:12345"
             schema="{z.preprocess(
               (val) => val.trim(),
               z
                 .string()
-                .regex(new RegExp('^ID:\\d+$'), 'Must be a valid Koinly ID. (ie: ID:12345)')
+                .regex(
+                  new RegExp('^(ID:)?\\d+$'),
+                  'Must be a valid Koinly ID. (ie: 12345 or ID:12345)',
+                )
                 .max(15, 'Max 15 characters'),
             )}"
           />
