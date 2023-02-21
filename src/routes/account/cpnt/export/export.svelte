@@ -2,24 +2,22 @@
   import ExportBtn from './export-btn.svelte';
   import YearPicker from './year-picker.svelte';
   import FormatPicker from './format-picker.svelte';
+  import MonthPicker from './month-picker.svelte';
   import QuarterPicker from './quarter-picker.svelte';
   import RestrictionNotice from './restriction-notice.svelte';
   import { page } from '$app/stores';
   import { getRewardsCSV, getTransactionCSV } from '$lib/api/wallets';
+  import type { ExportParamsType } from '$lib/types/export-params.type';
 
   export let premium = false;
 
-  type ExportParamsType = {
-    stakeAddress: string;
-    year: number;
-    format: string;
-    quarter: number | undefined;
-  };
   const currentYear = new Date().getFullYear();
   const stakeAddress = $page.params.stakeAddress;
 
   // Rewards Export params
   let rwSelectedYear = currentYear;
+  let rwStartMonth = 1;
+  let rwSelectedPeriod: number | null = null;
   const rwFormats = {
     default: 'Default',
     koinly: 'Koinly',
@@ -27,11 +25,11 @@
     multiowner: 'Multi-Owner SPO',
     transaction: 'As transactions',
   };
-  let rwSelectedPeriod: number | null = null;
   let rwSelectedFormat = 'default';
   let rewardParams: ExportParamsType;
   // Transactions Export params
   let txSelectedYear = currentYear;
+  let txStartMonth = 1;
   let txSelectedPeriod: number | null = null;
   const txFormats = { default: 'Default', koinly: 'Koinly' };
   let txSelectedFormat = 'default';
@@ -42,12 +40,14 @@
     stakeAddress,
     year: rwSelectedYear,
     format: rwSelectedFormat,
+    startMonth: rwStartMonth,
     quarter: rwSelectedPeriod ? rwSelectedPeriod : undefined,
   };
   $: txParams = {
     stakeAddress,
     year: txSelectedYear,
     format: txSelectedFormat,
+    startMonth: txStartMonth,
     quarter: txSelectedPeriod ? txSelectedPeriod : undefined,
   };
 </script>
@@ -65,6 +65,12 @@
         <div class="card-body border-top p-9">
           <div class="d-flex flex-wrap align-items-end">
             <YearPicker from="{2020}" to="{currentYear}" bind:selectedYear="{rwSelectedYear}" />
+          </div>
+
+          <div class="separator separator-dashed my-6"></div>
+
+          <div class="d-flex flex-wrap align-items-end">
+            <MonthPicker bind:selected="{rwStartMonth}" />
           </div>
 
           <div class="separator separator-dashed my-6"></div>
@@ -95,6 +101,12 @@
         <div class="card-body border-top p-9">
           <div class="d-flex flex-wrap align-items-end">
             <YearPicker from="{2017}" to="{currentYear}" bind:selectedYear="{txSelectedYear}" />
+          </div>
+
+          <div class="separator separator-dashed my-6"></div>
+
+          <div class="d-flex flex-wrap align-items-end">
+            <MonthPicker bind:selected="{txStartMonth}" />
           </div>
 
           <div class="separator separator-dashed my-6"></div>

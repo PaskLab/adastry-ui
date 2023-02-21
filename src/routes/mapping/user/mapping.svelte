@@ -58,7 +58,11 @@
       />
     </form>
 
-    <button type="submit" on:click|preventDefault="{handleSearch}" class="btn btn-primary px-4">
+    <button
+      type="submit"
+      on:click|preventDefault="{handleSearch}"
+      class="btn btn-primary px-4 py-0"
+    >
       <span class="svg-icon svg-icon-1 position-relative" style="top: -1px; left: 2px">
         <SearchIcon />
       </span>

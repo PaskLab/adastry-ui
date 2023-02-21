@@ -7,6 +7,8 @@ import type { AccountHistoryListType } from '$lib/api/types/account-history.type
 import type { TransactionListType } from '$lib/api/types/account-transaction.type';
 import type { CSVFileType } from '$lib/api/types/csv-file.type';
 import type { UserPoolListType } from '$lib/api/types/user-pool-list.type';
+import type { BulkExportParamsType } from '$lib/types/bulk-export-params.type';
+import type { ExportParamsType } from '$lib/types/export-params.type';
 
 const PROVIDER = config.provider.adastry;
 
@@ -73,15 +75,15 @@ export async function getTransactions(
   );
 }
 
-export async function getRewardsCSV(
-  stakeAddress: string,
-  year: number,
-  format: string,
-  quarter?: number,
-): Promise<CSVFileType> {
+export async function getRewardsCSV(params: ExportParamsType): Promise<CSVFileType> {
+  return request(PROVIDER.url + getURL(PROVIDER.endpoints.exportRewards, params), 'GET', {}, {}, [
+    404,
+  ]);
+}
+
+export async function getBulkRewardsCSV(params: BulkExportParamsType): Promise<CSVFileType> {
   return request(
-    PROVIDER.url +
-      getURL(PROVIDER.endpoints.exportRewards, { stakeAddress, year, format, quarter }),
+    PROVIDER.url + getURL(PROVIDER.endpoints.exportBulkRewards, params),
     'GET',
     {},
     {},
@@ -89,13 +91,9 @@ export async function getRewardsCSV(
   );
 }
 
-export async function getBulkRewardsCSV(
-  year: number,
-  format: string,
-  quarter?: number,
-): Promise<CSVFileType> {
+export async function getTransactionCSV(params: ExportParamsType): Promise<CSVFileType> {
   return request(
-    PROVIDER.url + getURL(PROVIDER.endpoints.exportBulkRewards, { year, format, quarter }),
+    PROVIDER.url + getURL(PROVIDER.endpoints.exportTransactions, params),
     'GET',
     {},
     {},
@@ -103,29 +101,9 @@ export async function getBulkRewardsCSV(
   );
 }
 
-export async function getTransactionCSV(
-  stakeAddress: string,
-  year: number,
-  format: string,
-  quarter?: number,
-): Promise<CSVFileType> {
+export async function getBulkTransactionCSV(params: BulkExportParamsType): Promise<CSVFileType> {
   return request(
-    PROVIDER.url +
-      getURL(PROVIDER.endpoints.exportTransactions, { stakeAddress, year, format, quarter }),
-    'GET',
-    {},
-    {},
-    [404],
-  );
-}
-
-export async function getBulkTransactionCSV(
-  year: number,
-  format: string,
-  quarter?: number,
-): Promise<CSVFileType> {
-  return request(
-    PROVIDER.url + getURL(PROVIDER.endpoints.exportBulkTransactions, { year, format, quarter }),
+    PROVIDER.url + getURL(PROVIDER.endpoints.exportBulkTransactions, params),
     'GET',
     {},
     {},

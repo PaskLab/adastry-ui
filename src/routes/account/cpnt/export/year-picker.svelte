@@ -27,7 +27,7 @@
   </div>
 {:else}
   <div>
-    <div class="fs-6 fw-bolder text-gray-700">Selected year</div>
+    <div class="fs-6 fw-bolder text-gray-700">Selected Year</div>
     <div>
       <button on:click="{() => (selectView = true)}" class="btn btn-primary mt-2">
         {selectedYear}

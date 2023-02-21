@@ -3,15 +3,10 @@
   import ActionBtn from '$lib/components/global/action-button.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import type { CSVFileType } from '$lib/api/types/csv-file.type';
+  import type { BulkExportParamsType } from '$lib/types/bulk-export-params.type';
 
-  type ExportParamsType = {
-    year: number;
-    format: string;
-    quarter?: number;
-  };
-
-  export let action: (year: number, format: string, quarter?: number) => Promise<CSVFileType>;
-  export let params: ExportParamsType;
+  export let action: (params: BulkExportParamsType) => Promise<CSVFileType>;
+  export let params: BulkExportParamsType;
   let wait = false;
   let errorModal: typeof Modal;
   let errorModalBody: { statusCode: number; message: string; error: string };
@@ -19,7 +14,7 @@
 
   function handleExport() {
     wait = true;
-    action(params.year, params.format, params.quarter)
+    action(params)
       .then((res) => {
         wait = false;
         if (res.statusCode && res.statusCode === 404) {

@@ -3,20 +3,9 @@
   import ActionBtn from '$lib/components/global/action-button.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import type { CSVFileType } from '$lib/api/types/csv-file.type';
+  import type { ExportParamsType } from '$lib/types/export-params.type';
 
-  type ExportParamsType = {
-    stakeAddress: string;
-    year: number;
-    format: string;
-    quarter?: number;
-  };
-
-  export let action: (
-    stakeAddress: string,
-    year: number,
-    format: string,
-    quarter?: number,
-  ) => Promise<CSVFileType>;
+  export let action: (params: ExportParamsType) => Promise<CSVFileType>;
   export let params: ExportParamsType;
   let wait = false;
   let errorModal: typeof Modal;
@@ -25,7 +14,7 @@
 
   function handleExport() {
     wait = true;
-    action(params.stakeAddress, params.year, params.format, params.quarter)
+    action(params)
       .then((res) => {
         wait = false;
         if (res.statusCode && res.statusCode === 404) {

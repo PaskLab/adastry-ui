@@ -22,7 +22,7 @@
   </div>
 {:else}
   <div>
-    <div class="fs-6 fw-bolder text-gray-700">Selected file format</div>
+    <div class="fs-6 fw-bolder text-gray-700">Selected File Format</div>
     <div>
       <button on:click="{() => (selectView = true)}" class="btn btn-warning mt-2">
         {formats[selectedFormat]}
