@@ -13,6 +13,9 @@ and the epoch ADA spot price.
 
 You can filter by **Year** and **Period** (Q1, Q2, Q3, Q4 or Full year).
 
+You can customize the **Fiscal Year Start Month** to match your company or local legislation needs.
+The **Period** will adapt to the chosen start month.
+
 ## Format Options
 
 Each available **.csv** format options are described bellow along with supplementary details where needed.
