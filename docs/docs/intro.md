@@ -35,25 +35,17 @@ make sure to check with your local professional.
 
 ## Current limitation
 
-### Registered stake account only
-
-Since the service was meant for staked accounts, addresses linked to unregistered stake credential cannot
-be monitored at the moment.
-
-Without registering the stake credential on the blockchain, there is nothing to allow us to deduce the relation
-between addresses under a same account.
-
 ### UTC Timezone only
 
 Adastry currently only supports UTC timezone. This mean that exporting a specific year might not cover the exact
 same range as your local time. Consider exporting end or start of adjacent year depending on you location.
 
-Support export range supporting local timezone is planned.
+*\*Support export range supporting local timezone is planned.*
 
 ### Spot price
 
 Spot price is currently available only for rewards.
 
-Support for transaction spot price is planned.
+*\*Support for transaction spot price is planned.*
 
 
