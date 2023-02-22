@@ -161,7 +161,10 @@
                   <WalletIcon --color="#7b34ca" />
                 </InfoBox>
 
-                <InfoBox label="Current delegation" info="{account.pool.name}">
+                <InfoBox
+                  label="Current delegation"
+                  info="{account.pool ? account.pool.name : 'Not delegated'}"
+                >
                   <BankIcon --color="#616161" />
                 </InfoBox>
 
