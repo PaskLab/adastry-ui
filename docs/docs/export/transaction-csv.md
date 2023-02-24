@@ -6,6 +6,36 @@ sidebar_position: 3
 
 Transaction history is one of the data category you can actually export on Adastry.
 
+## Transaction Fee
+
+Depending on the chosen export format, fee can be included into or excluded from the amount sent.
+
+### Default format
+
+The fee is excluded from the amount sent.
+
+###### Example
+
+Let consider a transaction where 2Ada are sent. The export file would show **2** as **"Sent Amount"** 
+and about **0.17** as **"Fee Amount"**.
+
+### Koinly format
+
+The fee is excluded from the amount sent.
+
+:::info
+
+If the transaction has be sent to the same account it originated, the fee will be moved to the "Sent"
+side. Since the transaction has been sent to yourself, the *moved* amount would be zero with a fee.
+
+Since this is not allowed on Koinly, moving the fee to the **"Sent Amount/Currency"** is a proper
+work-around.
+
+When moving funds between accounts you own, Koinly automatically sort the difference between sent
+and received amount as fee.
+
+:::
+
 ## Filter Options
 
 You can filter by **Year** and **Period** (Q1, Q2, Q3, Q4 or Full year).
