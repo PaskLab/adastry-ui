@@ -13,10 +13,10 @@
     "pricing": "/pricing",
     "privacy": "/privacy-policy",
     "terms": "/terms-and-conditions",
-    "documentation": "/learn",
+    "documentation": "https://adastry.io/learn",
     "docs": {
-      "intro": "/learn/docs/intro",
-      "mapping": "/learn/docs/export/mapping"
+      "intro": "https://adastry.io/learn/docs/intro",
+      "mapping": "https://adastry.io/learn/docs/export/mapping"
     }
   },
   "provider": {
@@ -60,6 +60,13 @@
         "globalMapping": "/asset/global-mapping",
         "toggleMappingOptions": "/asset/user-mapping/toggle-options",
         "mappingRequest": "/asset/mapping-request",
+        "category": {
+          "list": "/account/category/list",
+          "add": "/account/category",
+          "update": "/account/category",
+          "delete": "/account/category/{slug}",
+          "accountsList": "/account/category/{slug}/accounts"
+        },
         "proxy": {
           "getProtocolParameters": "/proxy/protocol-parameters",
           "getUtxos": "/proxy/addresses/{address}/utxos",
@@ -82,8 +89,8 @@
       "#dc3545",
       "#fd7e14",
       "#ffc107",
-      "#198754",
-      "#20c997"
+      "#20c997",
+      "#198754"
     ],
     "shortMonths": [
       "Jan",

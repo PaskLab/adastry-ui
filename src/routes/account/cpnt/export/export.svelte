@@ -85,7 +85,7 @@
             <FormatPicker formats="{rwFormats}" bind:selectedFormat="{rwSelectedFormat}" />
           </div>
 
-          <ExportBtn action="{getRewardsCSV}" bind:params="{rewardParams}" />
+          <ExportBtn action="{() => getRewardsCSV(rewardParams)}" />
         </div>
       </div>
     </div>
@@ -121,7 +121,7 @@
             <FormatPicker formats="{txFormats}" bind:selectedFormat="{txSelectedFormat}" />
           </div>
 
-          <ExportBtn action="{getTransactionCSV}" bind:params="{txParams}" />
+          <ExportBtn action="{() => getTransactionCSV(txParams)}" />
         </div>
       </div>
     </div>

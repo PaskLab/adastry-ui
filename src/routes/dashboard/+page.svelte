@@ -3,18 +3,20 @@
   import WalletIcon from '$lib/components/icons/wallet.svelte';
   import BankIcon from '$lib/components/icons/bank.svelte';
   import BranchIcon from '$lib/components/icons/branch.svelte';
-  import MainViewNav from './cpnt/main-view-nav.svelte';
+  import MainViewNav from './main-view-nav.svelte';
   import { getContext, onDestroy, setContext } from 'svelte';
   import { writable } from 'svelte/store';
-  import Accounts from './cpnt/accounts/accounts.svelte';
-  import Pools from './cpnt/pools/list.svelte';
-  import Stats from './cpnt/stats/stats.svelte';
+  import Accounts from './accounts/accounts.svelte';
+  import Pools from './pools/list.svelte';
+  import Stats from './stats/stats.svelte';
+  import Categories from './category/category.svelte';
   import type { Writable } from 'svelte/store';
   import type { NavOptionType } from '$lib/types/nav-option.type';
   import type { ViewType } from '$lib/types/view.type';
 
   // Events
   setContext('add-account', writable<Date>(new Date()));
+  setContext('refresh-category', writable<Date>(new Date()));
 
   // Main View Routing
   const mainViewOptions: NavOptionType[] = [
@@ -54,14 +56,27 @@
   <title>Dashboard - Adastry</title>
 </svelte:head>
 
-<div class="content flex-row-fluid">
-  <div class="row gy-0 gx-10">
-    <div class="col-xl-8 pb-10 pb-xl-0">
-      <MainViewNav options="{mainViewOptions}" />
-      <svelte:component this="{mainView.component}" />
+<div class="content">
+  <div class="row">
+    <div class="column col-xl-8 mb-7 mb-xl-0">
+      <div class="row">
+        <div class="column mb-7">
+          <MainViewNav options="{mainViewOptions}" />
+        </div>
+        <div class="column">
+          <svelte:component this="{mainView.component}" {...mainView.props} />
+        </div>
+      </div>
     </div>
-    <div class="col-xl-4">
-      <Stats />
+    <div class="column col-xl-4">
+      <div class="row">
+        <div class="flex-column-fluid mb-7 mb-md-0 col-12 col-md-6 col-xl-12 mb-xl-7">
+          <Categories />
+        </div>
+        <div class="flex-column-fluid col-12 col-md-6 col-xl-12">
+          <Stats />
+        </div>
+      </div>
     </div>
   </div>
 </div>

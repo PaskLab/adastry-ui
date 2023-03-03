@@ -104,10 +104,6 @@
   .modal-body {
     font-size: 16px;
     overflow-x: scroll;
-
-    :global(p:first-letter) {
-      text-transform: capitalize;
-    }
   }
   .modal-body,
   .modal-title {

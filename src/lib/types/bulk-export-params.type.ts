@@ -3,4 +3,5 @@ export type BulkExportParamsType = {
   format: string;
   startMonth?: number;
   quarter?: number;
+  slug?: string;
 };

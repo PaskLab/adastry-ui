@@ -3,17 +3,21 @@
   import ExportBtn from './export-btn.svelte';
   import { getContext } from 'svelte';
   import AccountList from './list.svelte';
-  import YearPicker from '../../../account/cpnt/export/year-picker.svelte';
+  import YearPicker from '../../account/cpnt/export/year-picker.svelte';
   import MonthPicker from '$route/account/cpnt/export/month-picker.svelte';
-  import FormatPicker from '../../../account/cpnt/export/format-picker.svelte';
-  import QuarterPicker from '../../../account/cpnt/export/quarter-picker.svelte';
+  import FormatPicker from '../../account/cpnt/export/format-picker.svelte';
+  import QuarterPicker from '../../account/cpnt/export/quarter-picker.svelte';
   import { getBulkRewardsCSV } from '$lib/api/wallets';
   import type { Writable } from 'svelte/store';
   import type { ViewType } from '$lib/types/view.type';
   import type { BulkExportParamsType } from '$lib/types/bulk-export-params.type';
 
+  export let categoryName = '';
+  export let categorySlug = '';
+  export let categoryColor = '';
+
   // Routing
-  let mainView = getContext<Writable<ViewType>>('mainView');
+  let mainView = getContext<Writable<ViewType>>('accountView');
 
   const currentYear = new Date().getFullYear();
 
@@ -37,18 +41,30 @@
     format: rwSelectedFormat,
     startMonth: rwStartMonth,
     quarter: rwSelectedPeriod ? rwSelectedPeriod : undefined,
+    ...(categorySlug && categorySlug.length ? { slug: categorySlug } : {}),
   };
 </script>
 
-<div class="card card-bordered mb-xl-8">
+<div
+  class="card"
+  style="{categoryColor && categoryColor.length ? 'border: solid 3px ' + categoryColor : ''}"
+>
   <div class="card-header">
-    <div class="card-title m-0">
-      <h3 class="fw-bolder m-0">Export Rewards History</h3>
-    </div>
+    <h3 class="card-title">
+      {#if categoryName && categoryName.length}
+        <span style="{categoryColor && categoryColor.length ? 'color: ' + categoryColor : ''}"
+          >{categoryName} ></span
+        >
+      {/if}
+      <span>Export Rewards History</span>
+    </h3>
     <div class="card-toolbar">
-      <!--begin::Menu-->
       <button
-        on:click="{() => mainView.set({ component: AccountList, props: {} })}"
+        on:click="{() =>
+          mainView.set({
+            component: AccountList,
+            props: { categoryName, categorySlug, categoryColor },
+          })}"
         type="button"
         class="btn btn-sm btn-color-gray-700 btn-color-primary btn-active-light-primary"
       >
@@ -83,6 +99,6 @@
       <FormatPicker formats="{rwFormats}" bind:selectedFormat="{rwSelectedFormat}" />
     </div>
 
-    <ExportBtn action="{getBulkRewardsCSV}" bind:params="{rewardParams}" />
+    <ExportBtn action="{() => getBulkRewardsCSV(rewardParams)}" />
   </div>
 </div>

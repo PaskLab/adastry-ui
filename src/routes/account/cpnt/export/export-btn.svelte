@@ -3,10 +3,9 @@
   import ActionBtn from '$lib/components/global/action-button.svelte';
   import Modal from '$lib/components/global/modal.svelte';
   import type { CSVFileType } from '$lib/api/types/csv-file.type';
-  import type { ExportParamsType } from '$lib/types/export-params.type';
 
-  export let action: (params: ExportParamsType) => Promise<CSVFileType>;
-  export let params: ExportParamsType;
+  export let action: () => Promise<CSVFileType>;
+
   let wait = false;
   let errorModal: typeof Modal;
   let errorModalBody: { statusCode: number; message: string; error: string };
@@ -14,7 +13,7 @@
 
   function handleExport() {
     wait = true;
-    action(params)
+    action()
       .then((res) => {
         wait = false;
         if (res.statusCode && res.statusCode === 404) {
