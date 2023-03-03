@@ -101,6 +101,9 @@
                 <li>{poolId}</li>
               {/each}
             </ul>
+            {#if invoice.note.length}
+              <div class="text-danger text-break">{invoice.note}</div>
+            {/if}
           </div>
         {/each}
       {/if}

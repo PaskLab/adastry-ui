@@ -13,4 +13,5 @@ export type InvoiceType = {
   canceled: boolean;
   confirmedAt: string;
   createdAt: string;
+  note: string;
 };

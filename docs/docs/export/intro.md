@@ -39,3 +39,10 @@ Note that the **Bulk Export button** will be
 displayed only if you have linked more than 1 account.
 
 :::
+
+## Categories and Bulk Export
+
+Categories can be used for separation of concern when using **bulk export**.
+
+If you wish to only export a subgroup of accounts, create a dedicated category for them
+and use the *Bulk export button* from the category view.
