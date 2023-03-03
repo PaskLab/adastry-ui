@@ -53,10 +53,10 @@
     <h3 class="card-title">
       {#if categoryName && categoryName.length}
         <span style="{categoryColor && categoryColor.length ? 'color: ' + categoryColor : ''}"
-          >{categoryName} ></span
-        >
+          >{categoryName} >
+        </span>
       {/if}
-      <span>Export Rewards History</span>
+      <span class="ps-1">Export Rewards History</span>
     </h3>
     <div class="card-toolbar">
       <button

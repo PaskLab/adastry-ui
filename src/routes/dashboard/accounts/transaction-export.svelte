@@ -47,10 +47,10 @@
     <h3 class="card-title m-0">
       {#if categoryName && categoryName.length}
         <span style="{categoryColor && categoryColor.length ? 'color: ' + categoryColor : ''}"
-          >{categoryName} ></span
-        >
+          >{categoryName} >
+        </span>
       {/if}
-      <span>Export Transactions History</span>
+      <span class="ps-1">Export Transactions History</span>
     </h3>
     <div class="card-toolbar">
       <button
