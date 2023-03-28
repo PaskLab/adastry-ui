@@ -46,3 +46,9 @@ Categories can be used for separation of concern when using **bulk export**.
 
 If you wish to only export a subgroup of accounts, create a dedicated category for them
 and use the *Bulk export button* from the category view.
+
+## Characters Encoding
+
+Adastry only support UTF-8 encoding. Foreign encoding can break CSV file format.
+
+Native assets non-utf8 encoded name will be replaced by the asset fingerprint. ie: `asset1jn7zhe5xnpgh5f...`

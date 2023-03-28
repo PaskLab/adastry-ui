@@ -48,4 +48,6 @@ Spot price is currently available only for rewards.
 
 *\*Support for transaction spot price is planned.*
 
+### Encoding
 
+Adastry only support UTF-8 characters encoding.

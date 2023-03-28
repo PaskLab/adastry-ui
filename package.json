@@ -1,6 +1,9 @@
 {
   "name": "adastry-ui",
   "version": "1.0.0",
+  "license": "MIT",
+  "author": "Pascal Lapointe",
+  "private": true,
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
