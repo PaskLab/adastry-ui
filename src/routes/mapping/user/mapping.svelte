@@ -46,19 +46,6 @@
   }
 </script>
 
-<div class="notice bg-light-warning rounded border-primary border border-dashed p-3 mb-10">
-  <h4>User Mapping Reset Notice - Feb 25th, 2023</h4>
-  <p class="fs-5">
-    A bug has been found causing the user mapping to be wrongly incremented. Unfortunately, all
-    users mapping needed to be rebooted to properly fix the issue.
-  </p>
-  <p class="fs-5">
-    For Koinly export only, user will need to export again their transaction history to keep
-    matching <strong>"asset to placeholder"</strong> relation.
-  </p>
-  <p class="fs-5">We are sorry for the inconvenience caused by the bug.</p>
-</div>
-
 <div class="card mb-10">
   <div class="card-body d-flex">
     <form on:submit|preventDefault="{handleSearch}" class="w-100 me-4">
