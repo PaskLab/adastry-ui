@@ -12,11 +12,12 @@ and they both share a common attribute: an efficient simplicity.
 Adastry’s UI leverages both and I loved the experience so far.
 Since I remember struggling a little getting started, I thought sharing my experience would help.
 
-
 ## Quick start instructions
 
 To get Lucid to work on SvelteKit, you must install and tweak a few things beforehand.
 Here's what I did to get in gear:
+
+### Installations Steps
 
 #### Obviously, install Lucid library:
 
@@ -51,7 +52,7 @@ like I do, you’ll need this work-around:
 npm i vite-plugin-top-level-await
 ```
 
-### Do some project configurations
+### Config Files Updates
 
 Now, adjust your vite.config.ts file accordingly with the libraries we just installed.
 Feel free to take out some parts if you don't need the fetch polyfill or the top level await plugin.
@@ -107,7 +108,7 @@ and `tsconfig.json`.
 }
 ````
 
-### And... you're good to go!
+### And... Good to go!
 
 The errors triggered by SvelteKit weren't so obvious when I researched this solution, so I hope it
 will save you some time. Let me know if you find anything missing to my instructions.

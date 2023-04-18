@@ -41,13 +41,13 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/PaskLab/adastry-ui/tree/main/docs/docs',
+          editUrl: 'https://github.com/PaskLab/adastry-ui/tree/main/docs',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/PaskLab/adastry-ui/tree/main/docs/blog',
+          editUrl: 'https://github.com/PaskLab/adastry-ui/tree/main/docs',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
